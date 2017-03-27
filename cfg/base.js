@@ -27,10 +27,11 @@ module.exports = {
     publicPath: defaultSettings.publicPath,
     noInfo: false,
     proxy: {
-        '/alpha/api': {
-            target: 'http://dev.genwoshua.com/alpha/api/',
-            changeOrigin: true
-        }
+        '/alpha/api/': {
+            target: 'http://dev.genwoshua.com',
+            changeOrigin: true,
+            pathRewrite: {'^/alpha/api/' : '/alpha/api/'},        
+          }
     }
   },
   resolve: {

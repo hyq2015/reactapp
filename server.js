@@ -14,8 +14,10 @@ let isInitialCompilation = true;
 
 const compiler = webpack(config);
 
+
+
 new WebpackDevServer(compiler, config.devServer)
-.listen(config.port, '192.168.31.204', (err) => {
+.listen(config.port, 'localhost', (err) => {
   if (err) {
     console.log(err);
   }

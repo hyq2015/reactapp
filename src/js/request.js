@@ -23,7 +23,8 @@ module.exports = {
   "searchThings":"/api/app/index/search",
   "queryProduct":"/api/product/query",
   "queryArticle":"/api/article/query",
-  "queryShop":"/api/shop/query"
+  "queryShop":"/api/shop/query",
+  "indexData":"/api/app/index/data"
   },
   'CurrentVersion':'developversion/',
   'http':{
