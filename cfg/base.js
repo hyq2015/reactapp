@@ -25,7 +25,13 @@ module.exports = {
     hot: true,
     port: defaultSettings.port,
     publicPath: defaultSettings.publicPath,
-    noInfo: false
+    noInfo: false,
+    proxy: {
+        '/alpha/api': {
+            target: 'http://dev.genwoshua.com/alpha/api/',
+            changeOrigin: true
+        }
+    }
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
