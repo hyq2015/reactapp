@@ -16,8 +16,9 @@ module.exports = {
   devtool: 'eval',
   output: {
     path: path.join(__dirname, '/../dist/assets'),
-    filename: 'app.js',
-    publicPath: defaultSettings.publicPath
+    filename: '[name].js',
+    publicPath: defaultSettings.publicPath,
+    chunkFilename: '[name].js'
   },
   devServer: {
     contentBase: './src/',
