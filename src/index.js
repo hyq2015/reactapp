@@ -6,6 +6,7 @@ import App from './components/Main';
 import Play from './components/Play';
 import Mall from './components/Mall';
 import Mine from './components/Mine';
+import './styles/reset.css';
 import { Router, Route, IndexRoute, Link ,hashHistory } from 'react-router';
 
 if ('addEventListener' in document) {

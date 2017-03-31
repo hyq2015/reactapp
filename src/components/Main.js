@@ -3,7 +3,6 @@ import 'styles/App.css';
 
 import React,{Component} from 'react';
 import Tabbar from './Tabbar';
-let yeomanImage = require('../images/yeoman.png');
 
 
 class AppComponent extends Component {

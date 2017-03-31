@@ -1,8 +1,8 @@
 /**
  * Created by Administrator on 2017/3/23.
  */
-var _ =require('lodash');
-var queryString = require('query-string');
+let _ =require('lodash');
+let queryString = require('query-string');
 module.exports = {
   'baseUrl':"/alpha",
   'alphaPath':{
@@ -24,7 +24,8 @@ module.exports = {
   "queryProduct":"/api/product/query",
   "queryArticle":"/api/article/query",
   "queryShop":"/api/shop/query",
-  "indexData":"/api/app/index/data"
+  "indexData":"/api/app/index/data",
+  "findnearby":"/api/shop/findNearbyShop"
   },
   'CurrentVersion':'developversion/',
   'http':{
