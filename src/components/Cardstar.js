@@ -14,7 +14,7 @@ export default class Cardstar extends Component{
             <ul className="carditems clearfloat">
                 {this.props.nearlist ? this.props.nearlist.map((cardItem,index)=>
                 <li key={index} className={this.props.class}>
-                    <div className="card-pic" style={{backgroundImage:'url('+(cardItem.imgurl ? cardItem.imgurl : '../static/images/loaderr.png')+')',backgroundSize:'cover'}}></div>
+                    <div className="card-pic" style={{backgroundImage:'url('+(cardItem.imgurl ? cardItem.imgurl : '/static/images/loaderr.png')+')',backgroundSize:'cover'}}></div>
                     <p className="cardTitle">{cardItem.name}</p>
                     <Star score={cardItem.score}></Star>
                     <div className="SandP">
@@ -26,9 +26,9 @@ export default class Cardstar extends Component{
                       <div className="nIcon icon-youwan_icon-ad iconfont"></div>
                       <div className="nearbyDistance">{cardItem.town}</div>
                   </div>
-                </li>) : ''} 
+                </li>) : ''}
             </ul>
-            
+
         )
     }
 }

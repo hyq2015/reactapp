@@ -15,7 +15,7 @@ module.exports = {
   debug: true,
   devtool: 'eval',
   output: {
-    path: path.join(__dirname, '/../dist/assets'),
+    path: path.join(__dirname, '/../dist/'),
     filename: '[name].js',
     publicPath: defaultSettings.publicPath,
     chunkFilename: '[name].js'
@@ -31,7 +31,7 @@ module.exports = {
         '/alpha/api/': {
             target: 'http://dev.genwoshua.com',
             changeOrigin: true,
-            pathRewrite: {'^/alpha/api/' : '/alpha/api/'},        
+            pathRewrite: {'^/alpha/api/' : '/alpha/api/'},
           }
     }
   },

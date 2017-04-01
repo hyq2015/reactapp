@@ -7,6 +7,8 @@ let defaultSettings = require('./defaults');
 
 // Add needed plugins here
 let BowerWebpackPlugin = require('bower-webpack-plugin');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let extractLESS = new ExtractTextPlugin('../src/styles/[name].less');
 
 let config = Object.assign({}, baseConfig, {
   entry: {app:[
@@ -27,7 +29,7 @@ let config = Object.assign({}, baseConfig, {
     }),
     new BowerWebpackPlugin({
       searchResolveModulesDirectories: false
-    })
+    }),
   ],
   module: defaultSettings.getDefaultModules()
 });
@@ -41,5 +43,16 @@ config.module.loaders.push({
     [ path.join(__dirname, '/../src') ]
   )
 });
+config.module.loaders.push(
+{
+  test: /\.css$/,
+    loader: 'style-loader!css-loader'
+}
+);
+config.module.loaders.push({
+  test: /\.less/,
+  loader: 'style-loader!css-loader!less-loader'
+});
+
 
 module.exports = config;

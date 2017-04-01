@@ -8,7 +8,10 @@
 
 const path = require('path');
 const srcPath = path.join(__dirname, '/../src');
+console.log(path.join(__dirname, '/../src'))
 const dfltPort = 8000;
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let extractLESS = new ExtractTextPlugin('/src/styles/[name].less');
 
 /**
  * Get the default modules object for webpack
@@ -24,10 +27,7 @@ function getDefaultModules() {
     //   }
     // ],
     loaders: [
-      {
-        test: /\.css$/,
-        loader: 'style-loader!css-loader'
-      },
+
       {
         test: /\.sass/,
         loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded&indentedSyntax'
@@ -35,10 +35,6 @@ function getDefaultModules() {
       {
         test: /\.scss/,
         loader: 'style-loader!css-loader!sass-loader?outputStyle=expanded'
-      },
-      {
-        test: /\.less/,
-        loader: 'style-loader!css-loader!less-loader'
       },
       {
         test: /\.styl/,
@@ -62,7 +58,7 @@ function getDefaultModules() {
 
 module.exports = {
   srcPath: srcPath,
-  publicPath: '/assets/',
+  publicPath: '/',
   port: dfltPort,
   getDefaultModules: getDefaultModules
 };
