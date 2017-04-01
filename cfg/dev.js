@@ -14,7 +14,8 @@ let config = Object.assign({}, baseConfig, {
     'webpack/hot/only-dev-server',
     './src/index'
   ],
-  vendor: ['react','react-dom']
+  vendor: ['react','react-dom'],
+  vendor1: ['fastclick'],
 },
   cache: true,
   devtool: 'eval-source-map',
@@ -22,8 +23,7 @@ let config = Object.assign({}, baseConfig, {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor'],
-      filename: 'vendor.js'
+      names: ['vendor','vendor1']
     }),
     new BowerWebpackPlugin({
       searchResolveModulesDirectories: false

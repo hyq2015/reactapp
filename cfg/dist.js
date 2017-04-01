@@ -13,7 +13,8 @@ let BowerWebpackPlugin = require('bower-webpack-plugin');
 let config = Object.assign({}, baseConfig, {
   entry: {
     app:path.join(__dirname, '../src/index'),
-    vendor: ['react','react-dom']
+    vendor: ['react','react-dom','react-router'],
+    vendor1:['fastclick']
   },
   cache: false,
   devtool: 'sourcemap',
@@ -23,8 +24,7 @@ let config = Object.assign({}, baseConfig, {
       'process.env.NODE_ENV': '"production"'
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor'],
-      filename: 'vendor.js'
+      names: ['vendor','vendor1']
     }),
     new BowerWebpackPlugin({
       searchResolveModulesDirectories: false
