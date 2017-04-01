@@ -3,8 +3,8 @@
  */
 import React,{Component} from 'react';
 import {render} from 'react-dom';
-import '../styles/iconfont.css';
-import '../styles/searchbar.less';
+import '../static/styles/iconfont.css';
+import '../static/styles/searchbar.less';
 export  default class Searchbar extends Component{
   constructor(props){
     super(props);

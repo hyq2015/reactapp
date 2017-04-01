@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {render} from 'react-dom';
 import Star from './Star';
-import '../styles/cardstar.less';
+import '../static/styles/cardstar.less';
 export default class Cardstar extends Component{
     constructor(props){
         super(props);

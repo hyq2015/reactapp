@@ -7,10 +7,10 @@ import NewSwiper from 'swiper';
 import Card from './Card';
 import Cardstar from './Cardstar';
 let request=require('../static/js/request');
-import '../styles/swiper-3.4.1.min.css';
-import '../styles/play.less';
-import '../styles/play.css';
-import '../styles/R-chart.css';
+import '../static/styles/swiper-3.4.1.min.css';
+import '../static/styles/play.less';
+import '../static/styles/play.css';
+import '../static/styles/R-chart.css';
 
 
 const playStyle={
@@ -67,7 +67,7 @@ export default class extends Component{
                 chancelist:res.CHANCE
 
             });
-            
+
         })
     }
     _fetchNearby(){
@@ -76,7 +76,7 @@ export default class extends Component{
             this.setState({
                 nearlist:res
             });
-            
+
         })
     }
     render(){

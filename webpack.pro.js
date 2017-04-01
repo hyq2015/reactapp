@@ -6,6 +6,7 @@ let CopyWebpackPlugin = require('copy-webpack-plugin');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
 let BowerWebpackPlugin = require('bower-webpack-plugin');
+let CompressionWebpackPlugin = require('compression-webpack-plugin');
 let webpack = require('webpack');
 console.log(path.join(__dirname, '/src/index1.html'));
 console.log(path.posix.join('static', 'css/all.css'));
@@ -13,7 +14,7 @@ module.exports={
   entry: {
     app:path.join(__dirname, '/src/index'),
     vendor: ['react','react-dom','react-router'],
-    vendor1:['fastclick']
+    vendor1:['fastclick','swiper']
   },
   output: {
     path: path.join(__dirname, '/dist/'),
@@ -46,7 +47,7 @@ module.exports={
       },
       {
         test: /\.(png|jpg|gif)$/,
-        loader: 'url-loader?limit=8192'
+        loader: 'url-loader?limit=8192&name=/[hash:8].[name].[ext]'
       },
       {
         test: /\.(woff|woff2|ttf)\??.*$/,
@@ -67,6 +68,9 @@ module.exports={
   },
 
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {NODE_ENV: '"production"'}
+    }),
     new webpack.optimize.DedupePlugin(),
 
     new ExtractTextPlugin(path.posix.join('static', 'css/all.css')),
@@ -76,7 +80,12 @@ module.exports={
     new BowerWebpackPlugin({
       searchResolveModulesDirectories: false
     }),
-    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      },
+      sourceMap: true
+    }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
     new HtmlWebpackPlugin({
@@ -92,6 +101,17 @@ module.exports={
       },
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency'
+    }),
+    new CompressionWebpackPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: new RegExp(
+        '\\.(' +
+        ['js', 'css'].join('|') +
+        ')$'
+      ),
+      threshold: 10240,
+      minRatio: 0.8
     }),
     new CopyWebpackPlugin([
       {

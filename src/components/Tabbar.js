@@ -5,8 +5,8 @@ import React,{Component} from 'react';
 import {render} from 'react-dom';
 import { Link, browserHistory} from 'react-router'
 
-import '../styles/iconfont.css';
-import '../styles/Tabbar.less';
+import '../static/styles/iconfont.css';
+import '../static/styles/Tabbar.less';
 export default class Tabbar extends Component{
   constructor(props){
     super(props);
@@ -26,7 +26,7 @@ export default class Tabbar extends Component{
     });
     return true
   }
-  
+
   render(){
     return(
       <div className="tabBar-container">

@@ -1,9 +1,0 @@
-.cardItem, .chanceItem {
-    position: relative;
-    width: calc((100% - 8px) / 2);
-    height: auto;
-    padding-bottom: 10px;
-    float: left;
-    background: #fff;
-    margin-top: 6px;
-}

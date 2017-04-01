@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {render} from 'react-dom';
 import { Link} from 'react-router';
-import '../styles/play.less';
+import '../static/styles/play.less';
 const playStyle={
     minHeight:'calc(100vh - 49px)'
 }

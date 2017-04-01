@@ -1,5 +1,5 @@
 import 'normalize.css/normalize.css';
-import 'styles/App.css';
+import '../static/styles/App.css';
 
 import React,{Component} from 'react';
 import Tabbar from './Tabbar';

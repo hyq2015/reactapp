@@ -1,6 +1,7 @@
 var express = require('express');
 var session = require('express-session');
 var app = express();
+var path=require('path');
 
 app.use(session({
     secret: '123',
@@ -9,7 +10,7 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.use('/', express.static('./dist/'));
+app.use('/', express.static(path.join(__dirname,'/dist/')));
 var host = '127.0.0.1';
 var port = 7070;
 var server = app.listen(port, function() {

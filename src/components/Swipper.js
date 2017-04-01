@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {render} from 'react-dom';
-import '../styles/swiper.css';
+import '../static/styles/swiper.css';
 export default class Swiper extends Component{
     constructor(props){
         super(props);
@@ -23,9 +23,9 @@ export default class Swiper extends Component{
                             <div className="niceName"><span>{item.title}</span>人参加</div>
                     </div>
                     ) : ''}
-                
-            </div>    
-            
+
+            </div>
+
         )
     }
 }
