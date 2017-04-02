@@ -1,0 +1,15 @@
+{
+  "presets": ["stage-0", "react", "es2015"],
+  "plugins": [
+    [
+      "antd","babel-runtime",
+      {
+        "helpers": false,
+        "polyfill": false,
+        "regenerator": true,
+        "moduleName": "babel-runtime"
+      }
+    ]
+
+  ]
+}
