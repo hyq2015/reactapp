@@ -31,9 +31,7 @@ module.exports = {
   'http':{
     get:function (url,params) {
       let url1=url+'?'+queryString.stringify(params);
-      return fetch(url1).then(
-        (res)=> res.json()
-      )
+      return fetch(url1)
     },
     post:function (url,body) {
       let option = {
@@ -45,10 +43,7 @@ module.exports = {
 
       };
       option = _.extend(option, {'body':JSON.stringify(body)});
-      return fetch(url,option).then(
-        (res)=>res.json()
-
-      )
+      return fetch(url,option)
     }
   }
 };

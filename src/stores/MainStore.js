@@ -9,17 +9,18 @@ const request=require('../static/js/request');
 
 const f = () => {
   return new Promise((resolve, reject) => {
-    request.http.post(request.baseUrl+request.alphaPath.currentShopCar,{}).then((res)=>{
+    request.http.post(request.baseUrl+request.alphaPath.indexData,{}).then((res)=>{
       console.log(res);
       if(res.status==403){//没有权限
         reject('noRight');
+      }else if(res.status!=200){
+        reject('error');
       }else{
-        resolve(res)
+        resolve(res.json())
       }
-      
     }).catch((err)=>{
       reject(err)
-    })
+    });
     // setTimeout(() => {
     //   reject(234);
     //   // resolve(234);
@@ -42,13 +43,14 @@ let MainStore = Reflux.createStore({
       this.data.grammar = '123';
       this.data.playData = t;
     } catch (err) {
+      console.log(err);
       if(err=='noRight'){
         this.data.grammar = 'noRight';
       }else{
         this.data.grammar = 'error';
       }
       
-      this.data.playData = {};
+      this.data.playData = null;
     } finally {
       this.trigger(this.data)
     }
