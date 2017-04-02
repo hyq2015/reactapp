@@ -20,7 +20,7 @@ class App extends Component{
   render(){
     
     return (
-      <div>
+      <div style={{textAlign:'center',fontSize:20,height:30}}>
         <Link to='play'>游玩</Link>
         <Link to='index'>主页</Link>
         {this.props.children}
