@@ -60,15 +60,15 @@ export default class extends Component{
     }
     _fetchData(){
         request.http.post(request.baseUrl+request.alphaPath.indexData,{}).then((res)=>{
-            console.log(res);
-            this.setState({
-                hotlist:res.RANK,
-                featurelist:res.NICE,
-                chancelist:res.CHANCE
-
-            });
-
-        })
+        console.log(res);
+        this.setState({
+          hotlist:res.RANK,
+          featurelist:res.NICE,
+          chancelist:res.CHANCE
+      
+        });
+    
+      })
     }
     _fetchNearby(){
         request.http.post(request.baseUrl+request.alphaPath.findnearby,{"lat":"104.06487","lng":"30.54742"}).then((res)=>{

@@ -36,7 +36,8 @@ module.exports = {
     }
   },
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    modulesDirectories: ['node_modules', path.join(__dirname, '../node_modules')],
+    extensions: ['', '.web.js', '.jsx', '.js', '.json'],
     alias: {
       actions: `${defaultSettings.srcPath}/actions/`,
       components: `${defaultSettings.srcPath}/components/`,

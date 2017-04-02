@@ -7,18 +7,17 @@ let defaultSettings = require('./defaults');
 
 // Add needed plugins here
 let BowerWebpackPlugin = require('bower-webpack-plugin');
-let ExtractTextPlugin = require('extract-text-webpack-plugin');
-let extractLESS = new ExtractTextPlugin('../src/styles/[name].less');
 
 let config = Object.assign({}, baseConfig, {
-  entry: {app:[
-    'webpack-dev-server/client?http://localhost:' + defaultSettings.port,
-    'webpack/hot/only-dev-server',
-    './src/index'
-  ],
-  vendor: ['react','react-dom'],
-  vendor1: ['fastclick'],
-},
+  entry: {
+    app:[
+      'webpack-dev-server/client?http://192.168.1.5:' + defaultSettings.port,
+      'webpack/hot/only-dev-server',
+      './src/main'
+    ],
+    vendor:['react','react-dom','react-router'],
+    vendor1:['fastclick']
+  },
   cache: true,
   devtool: 'eval-source-map',
   plugins: [
