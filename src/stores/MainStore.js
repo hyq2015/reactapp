@@ -3,6 +3,7 @@
  */
 import Reflux from 'reflux';
 import MainActions from '../actions/MainActions';
+import ListStore from './ListStore';
 // import Promise from 'bluebird';
 const request=require('../static/js/request');
 
@@ -21,10 +22,6 @@ const f = () => {
     }).catch((err)=>{
       reject(err)
     });
-    // setTimeout(() => {
-    //   reject(234);
-    //   // resolve(234);
-    // }, 2000);
   });
 };
 let MainStore = Reflux.createStore({
@@ -52,7 +49,9 @@ let MainStore = Reflux.createStore({
       
       this.data.playData = null;
     } finally {
-      this.trigger(this.data)
+      ListStore.onChangename();
+      this.trigger(this.data);
+      
     }
     
   }

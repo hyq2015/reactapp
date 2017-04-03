@@ -12,8 +12,8 @@ console.log(path.join(__dirname, '/src/index1.html'));
 console.log(path.posix.join('static', 'css/all.css'));
 module.exports={
   entry: {
-    app:path.join(__dirname, '/src/index'),
-    vendor: ['react','react-dom','react-router'],
+    app:path.join(__dirname, '/src/main'),
+    vendor: ['react','react-dom','react-router','react-mixin','reflux'],
     vendor1:['fastclick','swiper']
   },
   output: {
@@ -123,7 +123,7 @@ module.exports={
     new webpack.NoErrorsPlugin()
   ],
   resolve: {
-    extensions: ['', '.js', '.jsx'],
+    extensions: ['', '.web.js', '.jsx', '.js', '.json'],
     alias: {
       actions: path.join(__dirname,'/src/actions/'),
       components: path.join(__dirname,'/src/components/'),
