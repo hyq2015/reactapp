@@ -13,7 +13,7 @@ let config = Object.assign({}, baseConfig, {
     app:[
       'webpack-dev-server/client?http://192.168.1.5:' + defaultSettings.port,
       'webpack/hot/only-dev-server',
-      './src/main'
+      './src/reduxindex'
     ],
     vendor:['react','react-dom','react-router'],
     vendor1:['fastclick']
