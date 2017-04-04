@@ -2,36 +2,30 @@
  * Created by admin on 2017/4/4.
  */
 import { LOAD_ARTICLES, LOAD_ARTICLES_SUCCESS,LOAD_ARTICLES_ERROR } from '../actions/Reduxcounter';
-let initialState={
-  loading:true,
-  error:false,
-  count:1
-};
-function previewList(state=0,action) {
-  console.log(action.type)
+const initialState={
+  counter:1,
+  list:[1,2,34,67]
+}
+function counter(state = initialState,action) {
   switch(action.type){
-    case LOAD_ARTICLES:{
-      return state++;
-      
-    }
-    case LOAD_ARTICLES_SUCCESS:{
-      return{
+    case LOAD_ARTICLES:
+      state.counter+=1;
+      return {
         ...state,
-        loading:false,
-        error:false,
-        articleList:action.payload.articleList
+        loading:true,
+        error:false
       };
-    }
-    case LOAD_ARTICLES_ERROR:{
-      return{
-        ...state,
-        loading:false,
-        error:true
-      };
-    }
+    
+    case LOAD_ARTICLES_SUCCESS:
+      state.counter-=1;
+      return {...state};
+    
+    case LOAD_ARTICLES_ERROR:
+      state.counter*=2;
+      return {...state};
     default:
       return state
     
   }
 }
-export default previewList;
+export default counter;

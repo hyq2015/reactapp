@@ -2,8 +2,8 @@
  * Created by admin on 2017/4/4.
  */
 import {combineReducers} from 'redux';
-import Reduxcounter from './PreviewListredux';
+import counter from './PreviewListredux';
 const rootReducer = combineReducers({
-  Reduxcounter
+  counter
 });
 export default rootReducer;

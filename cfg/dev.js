@@ -15,17 +15,12 @@ let config = Object.assign({}, baseConfig, {
       'webpack/hot/only-dev-server',
       './src/reduxindex'
     ],
-    vendor:['react','react-dom','react-router'],
-    vendor1:['fastclick']
   },
   cache: true,
   devtool: 'eval-source-map',
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor','vendor1']
-    }),
     new BowerWebpackPlugin({
       searchResolveModulesDirectories: false
     }),

@@ -2,32 +2,21 @@
  * Created by admin on 2017/4/4.
  */
 import React,{Component,PropTypes} from 'react';
-import Preview from './Reduxpreview';
-export default class ReduxpreviewList extends Component{
+export default class Counter extends Component{
   static propTypes={
     loading:PropTypes.bool,
     articleList:PropTypes.object,
     error:PropTypes.bool,
-    loadArticles:PropTypes.func,
-    counter:PropTypes.number
+    loadArticles:PropTypes.func
   };
   render(){
-    const {loading,error,Load,loadArticles,counter}=this.props;
-    if(error){
-      return <p>something is error</p>
-    }
-    
-    if(loading){
-      return <p>loading...</p>
-    }
+    const {Load,Add,counter}=this.props;
     return (
     <div>
-      {counter}
-      <button onClick={Load}>点击</button>
+      <span>{counter.counter}</span>
+      {counter.list.map((item,index)=><p key={index}>{item}</p>)}
+      <button onClick={Add}>点击</button>
       </div>
     );
-    // return articleList.map((item)=>
-    //   <Preview {...item} key={item.id} />
-    // )
   }
 }

@@ -9,9 +9,9 @@ import {hashHistory } from 'react-router';
 import {Provider} from 'react-redux';
 import {syncHistoryWithStore} from 'react-router-redux';
 import routes from './routes/index';
+import Home from './components/Reduxhome';
 
 const store=configureStore();
-const history=syncHistoryWithStore(hashHistory,store);
 
 ReactDOM.render(<Provider store={store}>
   <div>
