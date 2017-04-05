@@ -26,9 +26,6 @@ let MineStore = Reflux.createStore({
       }
       this.data.indexData = null;
     }finally{
-      if(!window.sessionStorage.user){
-          window.sessionStorage.user=JSON.stringify(this.data.indexData.user)
-      }
       this.trigger(this.data);
     }
   }

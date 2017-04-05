@@ -31,6 +31,11 @@ export default class Mine extends Component{
     }
 
     componentDidMount(){
+        if(window.sessionStorage.user){
+          this.setState({
+                user:JSON.parse(window.sessionStorage.user)
+            })
+        }
       this.unsubscribe = MineStore.listen(function(state) {
         this.setState(state);
         if(!window.sessionStorage.user){
@@ -41,9 +46,7 @@ export default class Mine extends Component{
       }
       }.bind(this));
       this._fetchData();
-      if(window.sessionStorage.user){
-          this.state.user=JSON.parse(window.sessionStorage.user)
-      }
+      
       
     }
     _fetchData(){
@@ -55,9 +58,9 @@ export default class Mine extends Component{
                 <div className="topbg">
                     <Link className="set-address">收货地址</Link>
                     <div className="avatar-bg">
-                        <img className="avatar" src={this.state.user.headimgurl ? this.state.user.headimgurl : ''} alt=""/>
+                        <img className="avatar" src={this.state.user.headimgurl} alt=""/>
                     </div>
-                    <div className="username">{this.state.user.nickname ? this.state.user.nickname : ''}</div>
+                    <div className="username">{this.state.user.nickname}</div>
                     <div className="navbar">
                         <nav>
                             <Link to="/mine">
