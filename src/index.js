@@ -9,6 +9,7 @@ import Mine from './components/Mine';
 import './static/styles/reset.css';
 import { Router, Route, IndexRoute, Link ,hashHistory } from 'react-router';
 
+
 if ('addEventListener' in document) {
 	document.addEventListener('DOMContentLoaded', function() {
 		FastClick.attach(document.body);

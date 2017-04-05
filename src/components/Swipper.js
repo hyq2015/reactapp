@@ -8,6 +8,7 @@ export default class Swiper extends Component{
 
         }
     }
+    
     render(){
         return(
             <div className="swiper-wrapper">

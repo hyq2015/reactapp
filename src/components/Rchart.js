@@ -1,8 +1,8 @@
 /**
  * Created by Administrator on 2017/4/1.
  */
-import React,{Component} from 'react';
-import {render} from 'react-dom';
+import React,{Component,findDOMNode} from 'react';
+import {render,ReactDOM} from 'react-dom';
 let windowWidth=window.innerWidth;
 function getPixelRatio(context) {
   var backingStore = context.backingStorePixelRatio ||
@@ -65,7 +65,8 @@ export default class Rchart extends Component{
     options.dashedHeight = options.realCanvasHeight / 4;
     options.canvasContainerHeight = options.realCanvasHeight + options.topBarMarginTop + options.canvasMarginTop + options.xAxisBottom +options.canvasMarginBottom;
     options.perWidth = (options.innerWidth - options.canvasPaddingLeft * 2) / options.hotTypeName.length;
-    RmyCanvas = document.getElementById("R-myCanvas");
+    // RmyCanvas = document.getElementById("R-myCanvas");
+    RmyCanvas = this.refs.Rcanvas;
     cxt = RmyCanvas.getContext("2d");
     devicePixelRatio=getPixelRatio(cxt);
     this.state.options=options;
@@ -73,50 +74,11 @@ export default class Rchart extends Component{
       options:options,
       devicePixelRatio:devicePixelRatio
     });
-    this.drawCss();
-
-
-
+    this.drawCss(cxt);
   }
-  drawCss(){
-
-    /*
-     * css样式
-     * */
-    this.setState({
-      lineObj:{
-        width:this.state.options.innerWidth - this.state.options.canvasPaddingLeft * 2 ,
-        height: this.state.options.dashedHeight ,
-        left: this.state.options.canvasPaddingLeft
-      },
-      RmyCanvasStyle:{
-        backgroundColor: this.state.options.canvasBackgroundColor,
-        width:this.state.options.innerWidth,
-        height:this.state.options.canvasContainerHeight
-      },
-      linexStyle:Object.assign({},this.state.lineObj,{
-        bottom: this.state.options.xAxisBottom + this.state.options.canvasMarginBottom
-      }),
-      line0Style: Object.assign({},this.state.lineObj,{
-          bottom: this.state.options.xAxisBottom + this.state.options.canvasMarginBottom + this.state.options.dashedHeight * 1
-        }),
-      line1Style:Object.assign({},this.state.lineObj,{
-          bottom: this.state.options.xAxisBottom + this.state.options.canvasMarginBottom + this.state.options.dashedHeight * 2
-      }),
-
-
-      line2Style:Object.assign({},this.state.lineObj,{
-        bottom: this.state.options.xAxisBottom + this.state.options.canvasMarginBottom + this.state.options.dashedHeight * 3
-      })
-
-
-    });
+  drawLine(cxt){
     let locationArr = [];
-    let ParentNode=document.getElementById(this.props.parentId);
-    ParentNode.style.height=this.state.options.canvasContainerHeight ;
-
-
-    /*
+      /*
      * 各个坐标点
      * */
     var mostHot = {x: 0, y: 0};
@@ -147,7 +109,7 @@ export default class Rchart extends Component{
     for (let a = 0; a < this.state.options.originLocationArr.length; a++) {
       locationArr.push({y: ((this.state.options.realCanvasHeight * (this.state.options.originLocationArr[a].y / mostHot.y)).toFixed(2) + this.state.options.xAxisBottom + this.state.options.canvasMarginBottom)})
     }
-
+  
     /*
      * 绘制最上面的标线
      * */
@@ -164,6 +126,7 @@ export default class Rchart extends Component{
     cxt.stroke();
     cxt.closePath();
     cxt.restore();
+    
 
     /*
      * 绘制y轴坐标
@@ -250,12 +213,52 @@ export default class Rchart extends Component{
     let circleBox=document.getElementById('Rcircle');
     let circleBoxHeight=circleBox.offsetHeight;
     let circleBoxWidth=circleBox.offsetWidth;
-    toolTip.style.left=(mostHot.x) * this.state.options.perWidth + this.state.options.canvasPaddingLeft + this.state.options.perWidth/2 - toolTipWidth/2;
-    toolTip.style.top=this.state.options.canvasContainerHeight-this.state.options.xAxisBottom-this.state.options.canvasMarginBottom-this.state.options.realCanvasHeight-toolTipHeight-circleBoxHeight/2;
-    circleBox.style.left=(mostHot.x) * this.state.options.perWidth + this.state.options.canvasPaddingLeft + this.state.options.perWidth/2 - circleBoxWidth/2;
-    circleBox.style.top=this.state.options.canvasContainerHeight-this.state.options.xAxisBottom-this.state.options.canvasMarginBottom-this.state.options.realCanvasHeight-circleBoxHeight/2;
+    toolTip.style.left=(mostHot.x) * this.state.options.perWidth + this.state.options.canvasPaddingLeft + this.state.options.perWidth/2 - toolTipWidth/2+'px';
+    toolTip.style.top=this.state.options.canvasContainerHeight-this.state.options.xAxisBottom-this.state.options.canvasMarginBottom-this.state.options.realCanvasHeight-toolTipHeight-circleBoxHeight/2+'px';
+    circleBox.style.left=(mostHot.x) * this.state.options.perWidth + this.state.options.canvasPaddingLeft + this.state.options.perWidth/2 - circleBoxWidth/2+'px';
+    circleBox.style.top=this.state.options.canvasContainerHeight-this.state.options.xAxisBottom-this.state.options.canvasMarginBottom-this.state.options.realCanvasHeight-circleBoxHeight/2+'px';
+  }
+  drawCss(cxt){
+    /*
+     * css样式
+     * */
+    let lineObj={
+        width:this.state.options.innerWidth - this.state.options.canvasPaddingLeft * 2 ,
+        height: this.state.options.dashedHeight ,
+        left: this.state.options.canvasPaddingLeft
+    }
+    this.setState({
+      lineObj:lineObj,
+      RmyCanvasStyle:{
+        backgroundColor: this.state.options.canvasBackgroundColor,
+        width:this.state.options.innerWidth,
+        height:this.state.options.canvasContainerHeight
+      },
+      linexStyle:Object.assign({},lineObj,{
+        bottom: this.state.options.xAxisBottom + this.state.options.canvasMarginBottom
+      }),
+      line0Style: Object.assign({},lineObj,{
+          bottom: this.state.options.xAxisBottom + this.state.options.canvasMarginBottom + this.state.options.dashedHeight * 1
+        }),
+      line1Style:Object.assign({},lineObj,{
+          bottom: this.state.options.xAxisBottom + this.state.options.canvasMarginBottom + this.state.options.dashedHeight * 2
+      }),
 
+      line2Style:Object.assign({},lineObj,{
+        bottom: this.state.options.xAxisBottom + this.state.options.canvasMarginBottom + this.state.options.dashedHeight * 3
+      })
 
+    });
+    
+    let ParentNode=document.getElementById(this.props.parentId);
+    ParentNode.style.height=this.state.options.canvasContainerHeight+'px' ;
+    this.drawLine(cxt);
+  }
+  componentDidUpdate(){
+    RmyCanvas = this.refs.Rcanvas;
+    cxt = RmyCanvas.getContext("2d");
+    cxt.clearRect(0,0,this.state.options.innerWidth*this.state.devicePixelRatio,this.state.options.canvasContainerHeight*this.state.devicePixelRatio)
+    this.drawLine(cxt);
   }
   render(){
     return(
@@ -267,7 +270,7 @@ export default class Rchart extends Component{
         <div className="R-canvas-line R-canvas-line0" style={this.state.line0Style}></div>
         <div className="R-canvas-line R-canvas-line1" style={this.state.line1Style}></div>
         <div className="R-canvas-line R-canvas-line2" style={this.state.line2Style}></div>
-        <canvas id="R-myCanvas" style={this.state.RmyCanvasStyle} width={this.state.options.innerWidth*this.state.devicePixelRatio} height={this.state.options.canvasContainerHeight*this.state.devicePixelRatio}></canvas>
+        <canvas id="R-myCanvas" ref="Rcanvas" style={this.state.RmyCanvasStyle} width={this.state.options.innerWidth*this.state.devicePixelRatio} height={this.state.options.canvasContainerHeight*this.state.devicePixelRatio}></canvas>
       </div>
     )
 

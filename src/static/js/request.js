@@ -3,7 +3,7 @@
  */
 let _ =require('lodash');
 let queryString = require('query-string');
-module.exports = {
+var CONFIG={
   'baseUrl':"/alpha",
   'alphaPath':{
   "saveAddress":"/api/user/saveshippingaddr",
@@ -25,13 +25,18 @@ module.exports = {
   "queryArticle":"/api/article/query",
   "queryShop":"/api/shop/query",
   "indexData":"/api/app/index/data",
-  "findnearby":"/api/shop/findNearbyShop"
+  "findnearby":"/api/shop/findNearbyShop",
+  "userIndexinfo":"/api/user/userIndexInfo"
   },
   'CurrentVersion':'developversion/',
   'http':{
     get:function (url,params) {
-      let url1=url+'?'+queryString.stringify(params);
-      return fetch(url1)
+      let hasKey=false;
+      for(let key in params){
+        hasKey=true;
+      }
+      let url1=hasKey ? url+'?'+queryString.stringify(params) : url;
+      return fetch(url1,{credentials:'include'})
     },
     post:function (url,body) {
       let option = {
@@ -47,3 +52,37 @@ module.exports = {
     }
   }
 };
+export default CONFIG;
+export function XHR(url,jsondata,type) {
+  if(type.toUpperCase()=='POST'){
+    return new Promise((resolve, reject) => {
+      CONFIG.http.post(url,jsondata).then((res)=>{
+        console.log(res);
+        if(res.status==403){//没有权限
+          reject('noRight');
+        }else if(res.status!=200){
+          reject('error');
+        }else{
+          resolve(res.json())
+        }
+      }).catch((err)=>{
+        reject(err)
+      });
+    });
+  }else if(type.toUpperCase()=='GET'){
+    return new Promise((resolve, reject) => {
+      CONFIG.http.get(url,jsondata).then((res)=>{
+        console.log(res);
+        if(res.status==403){//没有权限
+          reject('noRight');
+        }else if(res.status!=200){
+          reject('error');
+        }else{
+          resolve(res.json())
+        }
+      }).catch((err)=>{
+        reject(err)
+      });
+    });
+  }
+}

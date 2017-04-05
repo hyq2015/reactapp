@@ -33,7 +33,7 @@
             'lineWidth':1,
             'shadowBackgroundColor':'rgba(255,255,255,0.4)'//阴影部分背景色
         };
-        this.options = $.extend({}, this.defaults, options);
+        this.options = Object.assign({}, this.defaults, options);
         this.options.dashedHeight = this.options.realCanvasHeight / 4;
         this.options.canvasContainerHeight = this.options.realCanvasHeight + this.options.topBarMarginTop + this.options.canvasMarginTop + this.options.xAxisBottom + this.options.canvasMarginBottom;
         this.options.perWidth = (this.options.innerWidth - this.options.canvasPaddingLeft * 2) / this.options.hotTypeName.length;
@@ -76,9 +76,9 @@
             });
             var locationArr = [];
             this.element.css('height', this.options.canvasContainerHeight + 'px');
-            $('#R-myCanvas').attr('width', this.options.innerWidth*devicePixelRatio);
-            $('#R-myCanvas').attr('height', this.options.canvasContainerHeight*devicePixelRatio);
-            $('#R-myCanvas').css({
+            RmyCanvas.setAttribute('width', this.options.innerWidth*devicePixelRatio);
+            RmyCanvas.setAttribute('height', this.options.canvasContainerHeight*devicePixelRatio);
+            RmyCanvas.css({
                 backgroundColor: this.options.canvasBackgroundColor,
                 width:this.options.innerWidth,
                 height:this.options.canvasContainerHeight

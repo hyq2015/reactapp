@@ -3,36 +3,53 @@
  */
 import Reflux from 'reflux';
 import MainActions from '../actions/MainActions';
-import ListStore from './ListStore';
+// import ListStore from './ListStore';
 // import Promise from 'bluebird';
-const request=require('../static/js/request');
+import CONFIG,{XHR} from '../static/js/request'
 
-
-const f = () => {
-  return new Promise((resolve, reject) => {
-    request.http.post(request.baseUrl+request.alphaPath.indexData,{}).then((res)=>{
-      console.log(res);
-      if(res.status==403){//没有权限
-        reject('noRight');
-      }else if(res.status!=200){
-        reject('error');
-      }else{
-        resolve(res.json())
-      }
-    }).catch((err)=>{
-      reject(err)
-    });
-  });
-};
 let MainStore = Reflux.createStore({
   init: function () {
     this.data = {
-      name:'ricky'
+      msg:'ok',
+      indexData:{},
+      nearList:[]
     };
   },
   listenables: MainActions,
   getInitialState() {
     return this.data
+  },
+  onGetIndexList:async function(){
+    try {
+      const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.indexData,{},'post');
+      this.data.indexData=res;
+      this.data.msg='ok';
+    }catch(err){
+      if(err=='noRight'){
+        this.data.msg = 'noRight';
+      }else{
+        this.data.msg = 'error';
+      }
+      this.data.indexData = null;
+    }finally{
+      this.trigger(this.data);
+    }
+  },
+  onGetNearBy:async function(){
+    try {
+      const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.findnearby,{"lat":"104.06487","lng":"30.54742"},'post');
+      this.data.nearList=res;
+      this.data.msg='ok';
+    }catch(err){
+      if(err=='noRight'){
+        this.data.msg = 'noRight';
+      }else{
+        this.data.msg = 'error';
+      }
+      this.data.nearList = null;
+    }finally{
+      this.trigger(this.data);
+    }
   },
   onAdd:async function(grammar){
     try {
@@ -46,14 +63,14 @@ let MainStore = Reflux.createStore({
       }else{
         this.data.grammar = 'error';
       }
-      
+
       this.data.playData = null;
     } finally {
-      ListStore.onChangename();
+      // ListStore.onChangename();
       this.trigger(this.data);
-      
+
     }
-    
+
   }
 });
 export default MainStore

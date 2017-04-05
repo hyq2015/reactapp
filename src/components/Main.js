@@ -3,6 +3,12 @@ import '../static/styles/App.css';
 
 import React,{Component} from 'react';
 import Tabbar from './Tabbar';
+import 'babel-polyfill';
+import Reflux from 'reflux';
+import reactMixin from 'react-mixin';
+import 'babel-polyfill';
+import MainActions from '../actions/MainActions';
+import MainStore from '../stores/MainStore';
 
 
 class AppComponent extends Component {
@@ -51,5 +57,5 @@ class AppComponent extends Component {
 AppComponent.defaultProps = {
 };
 
-
+reactMixin.onClass(AppComponent, Reflux.connect(MainStore));
 export default AppComponent;

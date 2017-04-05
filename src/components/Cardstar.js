@@ -9,6 +9,9 @@ export default class Cardstar extends Component{
 
         }
     }
+    componentDidMount(){
+      console.log(this.props.nearlist)
+    }
     render(){
         return(
             <ul className="carditems clearfloat">
