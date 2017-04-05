@@ -4,6 +4,7 @@ import { Link} from 'react-router';
 import Searchbar from './Searchbar';
 import Swiper from './Swipper';
 import NewSwiper from 'swiper';
+import Rchart from './Rchart';
 import Card from './Card';
 import Cardstar from './Cardstar';
 let request=require('../static/js/request');
@@ -12,10 +13,27 @@ import '../static/styles/play.less';
 import '../static/styles/play.css';
 import '../static/styles/R-chart.css';
 
-
+const options={
+  hotTypeName:['赏花','野菜','川西','温泉','骑行','爬山','步道','古镇'],//x轴坐标名字与热度指数一一对应
+  originLocationArr: [{x: 0, y: 2540}, {x: 1, y: 2560}, {x: 2, y: 1651}, {x: 3, y: 2270}, {x: 4, y: 2740}, {
+    x: 5,
+    y: 1578
+  }, {x: 6, y: 1410}, {x: 7, y: 1470}],//热度指数
+  realCanvasHeight:120,  //图表区域高度
+  canvasMarginTop: 30,
+  tooltipId:'whiteboard1',
+  canvasBackgroundColor:'rgba(255,255,255,0)',
+  'topBarMarginTop': 45,
+  'xAxisFontSize':'12',
+  'yAxisFontSize':'9',
+  'lineWidth':2,
+  'fontColor':'rgba(255,255,255,0.8)',
+  'optionTop': 6,//y轴坐标下间距
+  'yAxisAdditionalLeft': 4,//y轴坐标左间距
+};
 const playStyle={
     minHeight:'calc(100vh - 49px)'
-}
+};
 export default class extends Component{
     constructor(props){
         super(props);
@@ -27,25 +45,25 @@ export default class extends Component{
     componentDidMount(){
         this._fetchData();
         this._fetchNearby();
-        let newChart=$('#canvas').Rchart({
-                hotTypeName:['赏花','野菜','川西','温泉','骑行','爬山','步道','古镇'],//x轴坐标名字与热度指数一一对应
-                originLocationArr: [{x: 0, y: 2540}, {x: 1, y: 2560}, {x: 2, y: 1651}, {x: 3, y: 2270}, {x: 4, y: 2740}, {
-                    x: 5,
-                    y: 1578
-                }, {x: 6, y: 1410}, {x: 7, y: 1470}],//热度指数
-                realCanvasHeight:120,  //图表区域高度
-                canvasMarginTop: 30,
-                tooltipId:'whiteboard1',
-                canvasBackgroundColor:'rgba(255,255,255,0)',
-                'topBarMarginTop': 45,
-                'xAxisFontSize':'12',
-                'yAxisFontSize':'9',
-                'lineWidth':2,
-                'fontColor':'rgba(255,255,255,0.8)',
-                'optionTop': 6,//y轴坐标下间距
-                'yAxisAdditionalLeft': 4,//y轴坐标左间距
-            });
-            newChart.build();
+        // let newChart=$('#canvas').Rchart({
+        //         hotTypeName:['赏花','野菜','川西','温泉','骑行','爬山','步道','古镇'],//x轴坐标名字与热度指数一一对应
+        //         originLocationArr: [{x: 0, y: 2540}, {x: 1, y: 2560}, {x: 2, y: 1651}, {x: 3, y: 2270}, {x: 4, y: 2740}, {
+        //             x: 5,
+        //             y: 1578
+        //         }, {x: 6, y: 1410}, {x: 7, y: 1470}],//热度指数
+        //         realCanvasHeight:120,  //图表区域高度
+        //         canvasMarginTop: 30,
+        //         tooltipId:'whiteboard1',
+        //         canvasBackgroundColor:'rgba(255,255,255,0)',
+        //         'topBarMarginTop': 45,
+        //         'xAxisFontSize':'12',
+        //         'yAxisFontSize':'9',
+        //         'lineWidth':2,
+        //         'fontColor':'rgba(255,255,255,0.8)',
+        //         'optionTop': 6,//y轴坐标下间距
+        //         'yAxisAdditionalLeft': 4,//y轴坐标左间距
+        //     });
+        //     newChart.build();
     }
     componentDidUpdate(){
         console.log('update');
@@ -86,6 +104,7 @@ export default class extends Component{
                     <Searchbar></Searchbar>
                     <div id="canvas">
                         <div id="whiteboard1">TOP1</div>
+                      <Rchart parentId="canvas" options={options}></Rchart>
                     </div>
                 </div>
                 <div className="thehot">
