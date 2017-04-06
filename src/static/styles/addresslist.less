@@ -5,8 +5,65 @@
 @contentColor:#000;
 @graycolor:#f2f2f2;
 #addresscontainer{
+    min-height: calc(100vh);background-color: @graycolor;
     color: @contentColor;
-}
-.address-panel{
-    margin: 0;padding: 0;
+    .addaddress{
+        position: fixed;bottom: 0;display: block;left: 0;height: 50px;width: 100%;
+        line-height: 50px;text-align: center;
+        color: @bluecolor;background-color: #fff;
+        &:before{
+            content:" ";
+            position:absolute;left: 0;right: 0;top: 0;height: 1px;
+            transform: scaleY(0.5);
+            border-top: 1px solid #c1c1c1;
+        }
+    }
+    .addtext{
+        font-size: 16px;
+    }
+    .icon-llalbumshopselectorcreate{
+        font-size: 20px;margin-right: 5px;
+    }
+    .address-panel{
+        margin: 0;padding: 0;background-color: #fff;
+        .address-box{
+            padding: 15px;
+        }
+        .address-box__title{
+            font-size: 17px;font-weight: 400;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;word-break: break-all;word-wrap: break-word;margin-bottom: 8px;
+        }
+        .address-box__desc{
+            color: @strongColor;font-size: 13px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+        .address-box_text{
+            padding: 15px;position: relative;
+            &:before{
+                content: " ";
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 1px;
+                border-top: 1px solid #E5E5E5;
+                color: #E5E5E5;
+                -webkit-transform-origin: 0 0;
+                transform-origin: 0 0;
+                -webkit-transform: scaleY(0.5);
+                transform: scaleY(0.5);
+                left: 15px;
+            }
+            .address-box_text_desc{
+                overflow: hidden;width: 100%;display: flex;align-items: center;color: @strongColor;font-size: 13px;justify-content: space-between;
+            }
+            .blueColor{
+                color: @bluecolor;
+            }
+            .editMenuright{
+                float: right;text-align: right;min-width: 145px;height: 100%;
+            }
+        }
+    }
+    
 }

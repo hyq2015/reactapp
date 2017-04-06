@@ -33,7 +33,6 @@ export default class Mine extends Component{
     }
 
     componentDidMount(){
-        console.log(2222222222222222)
         if(window.sessionStorage.user){
           this.setState({
                 user:JSON.parse(window.sessionStorage.user)

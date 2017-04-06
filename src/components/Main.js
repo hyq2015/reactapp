@@ -54,7 +54,6 @@ class AppComponent extends Component {
         }
   }
   changeTab(index){
-    console.log(this.props.location.pathname);
     this.setState({
       activebar:index,
       tabshow:true

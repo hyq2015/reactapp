@@ -55,16 +55,22 @@ export default class Play extends Component{
     componentDidUpdate(){
         if(_.has(this.state.indexData,'RANK')){
             if(!mySwiper){
-                mySwiper = new NewSwiper ('.swiperFir', {
-                    slidesPerView: 'auto',
-                    freeMode: true
-                });
+                setTimeout(function(){
+                    mySwiper = new NewSwiper ('.swiperFir', {
+                        slidesPerView: 'auto',
+                        freeMode: true
+                    });
+                },200)
+                
             }
             if(!mySwiper1){
-                mySwiper1 = new NewSwiper ('.swiperSec', {
-                    slidesPerView: 'auto',
-                    freeMode: true
-                });
+                setTimeout(function(){
+                    mySwiper1 = new NewSwiper ('.swiperSec', {
+                        slidesPerView: 'auto',
+                        freeMode: true
+                    });
+                },200)
+                
             }
         }
         
@@ -95,7 +101,8 @@ export default class Play extends Component{
                     <p className="theme">热度排行</p>
                     <p className="feature">"大家都在玩，来一场浪漫的邂逅"</p>
                     <div className="swiper-container swiperFir">
-                        <Swiper hotlist={this.state.indexData.RANK ? this.state.indexData.RANK : []}></Swiper>
+                        {this.state.indexData.RANK && this.state.indexData.RANK.length>0 ? <Swiper hotlist={this.state.indexData.RANK}></Swiper> : ''}
+                        
                     </div>
                 </div>
 
@@ -103,7 +110,8 @@ export default class Play extends Component{
                     <p className="theme">独具特色</p>
                     <p className="feature">"这地方特别好，可你却不知道"</p>
                     <div className="swiper-container swiperSec">
-                        <Swiper featurelist={this.state.indexData.NICE}></Swiper>
+                        {this.state.indexData.NICE && this.state.indexData.NICE.length>0 ? <Swiper featurelist={this.state.indexData.NICE}></Swiper> : ''}
+                        
                     </div>
                 </div>
 
