@@ -3,6 +3,7 @@
  */
 let _ =require('lodash');
 let queryString = require('query-string');
+import 'whatwg-fetch';
 var CONFIG={
   'baseUrl':"/alpha",
   'alphaPath':{

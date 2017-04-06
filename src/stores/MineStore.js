@@ -1,6 +1,6 @@
 import Reflux from 'reflux';
 import MineActions from '../actions/MineActions';
-// import ListStore from './ListStore';
+import AppStore from './AppStore';
 // import Promise from 'bluebird';
 import CONFIG,{XHR} from '../static/js/request';
 let MineStore = Reflux.createStore({
@@ -28,6 +28,12 @@ let MineStore = Reflux.createStore({
     }finally{
       this.trigger(this.data);
     }
+  },
+  onGoAddresslist:function(){
+      AppStore.onDisabletab();
+  },
+  onInit:function(){
+    AppStore.onMineTab();
   }
 });
 export default MineStore;

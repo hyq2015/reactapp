@@ -7,8 +7,8 @@ import MineStore from '../stores/MineStore';
 import MineActions from '../actions/MineActions';
 import '../static/styles/mine.less';
 const playStyle={
-    height:'calc(100vh - 50px)',
-    overflowY:'scroll'
+    minHeight:'calc(100vh - 50px)',
+    paddingBottom:50
 }
 export default class Mine extends Component{
     constructor(props){
@@ -21,7 +21,9 @@ export default class Mine extends Component{
                 cardList:[]
             },
             user:{}
-        }
+        };
+        this._addresslist=this._addresslist.bind(this);
+        this._init=this._init.bind(this);
     }
     componentWillUnmount() {
       if (_.isFunction(this.unsubscribe)){
@@ -31,6 +33,7 @@ export default class Mine extends Component{
     }
 
     componentDidMount(){
+        console.log(2222222222222222)
         if(window.sessionStorage.user){
           this.setState({
                 user:JSON.parse(window.sessionStorage.user)
@@ -46,17 +49,24 @@ export default class Mine extends Component{
       }
       }.bind(this));
       this._fetchData();
+      this._init();
       
       
     }
+    _init(){
+        MineActions.init();
+    }
     _fetchData(){
         MineActions.getIndexInfo();
+    }
+    _addresslist(){
+        MineActions.goAddresslist();
     }
     render(){
         return(
             <div id="mineContainer" style={playStyle}>
                 <div className="topbg">
-                    <Link className="set-address">收货地址</Link>
+                    <Link to="address/list" className="set-address" onClick={this._addresslist}>收货地址</Link>
                     <div className="avatar-bg">
                         <img className="avatar" src={this.state.user.headimgurl} alt=""/>
                     </div>

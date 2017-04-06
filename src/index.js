@@ -6,6 +6,7 @@ import App from './components/Main';
 import Play from './components/Play';
 import Mall from './components/Mall';
 import Mine from './components/Mine';
+import AddressList from './components/AddressList';
 import './static/styles/reset.css';
 import { Router, Route, IndexRoute, Link ,hashHistory } from 'react-router';
 
@@ -22,6 +23,7 @@ ReactDOM.render((<Router history={hashHistory}>
       <Route path="mall" components={Mall}>
         <Route path="users/:userId" component={App} />
       </Route>
-      <Route path="mine" components={Mine} />
+      <Route path="mine" components={Mine}/>
+      <Route path="address/list" components={AddressList}/>
     </Route>
 </Router>), document.getElementById('app'));

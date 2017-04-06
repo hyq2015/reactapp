@@ -7,48 +7,64 @@ import 'babel-polyfill';
 import Reflux from 'reflux';
 import reactMixin from 'react-mixin';
 import 'babel-polyfill';
-import MainActions from '../actions/MainActions';
-import MainStore from '../stores/MainStore';
+import AppActions from '../actions/AppActions';
+import AppStore from '../stores/AppStore';
 
 
 class AppComponent extends Component {
+  
   constructor(props){
     super(props);
     this.changeTab=this.changeTab.bind(this);
     this.state={
-      activebar:2
+      activebar:2,
+      tabshow:true
     }
   }
   componentDidMount(){
-        switch(this.props.location.pathname){
+        this.checkRoute(this.props.location.pathname);
+        // browserHistory.getCurrentLocation().pathname
+  }
+  
+  checkRoute(name){
+    switch(name){
             case '/play':
             this.setState({
-              activebar:1
+              activebar:1,
+              tabshow:true
             });
             break;
             case '/mall':
             this.setState({
-              activebar:2
+              activebar:2,
+              tabshow:true
             });
             break;
             case '/mine':
             this.setState({
-              activebar:3
+              activebar:3,
+              tabshow:true
             });
             break;
+            case '/address/list':
+            this.setState({
+              tabshow:false
+            })
+            break;
         }
-        // browserHistory.getCurrentLocation().pathname
   }
   changeTab(index){
+    console.log(this.props.location.pathname);
     this.setState({
-      activebar:index
+      activebar:index,
+      tabshow:true
     })
   }
   render() {
     return (
       <div className="index" id="index-container">
         {this.props.children}
-        <Tabbar activetab={this.state.activebar} changeTab={this.changeTab}/>
+        {this.state.tabshow ? <Tabbar activetab={this.state.activebar} changeTab={this.changeTab}/> : ''}
       </div>
     );
   }
@@ -57,5 +73,5 @@ class AppComponent extends Component {
 AppComponent.defaultProps = {
 };
 
-reactMixin.onClass(AppComponent, Reflux.connect(MainStore));
+reactMixin.onClass(AppComponent, Reflux.connect(AppStore));
 export default AppComponent;

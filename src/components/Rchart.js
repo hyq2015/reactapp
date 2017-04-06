@@ -3,6 +3,7 @@
  */
 import React,{Component,findDOMNode} from 'react';
 import {render,ReactDOM} from 'react-dom';
+import _ from 'lodash';
 let windowWidth=window.innerWidth;
 function getPixelRatio(context) {
   var backingStore = context.backingStorePixelRatio ||
@@ -14,7 +15,7 @@ function getPixelRatio(context) {
 
   return (window.devicePixelRatio || 1) / backingStore;
 }
-const defaultSetting={
+let defaultSetting={
   'innerWidth': windowWidth,
   'realCanvasHeight': 150,//图表区域高度
   'canvasPaddingLeft': 10,//图表左右间距
@@ -26,12 +27,9 @@ const defaultSetting={
   'canvasMarginTop': 40,
   'topBarMarginTop': 55,
   'canvasBackgroundColor': '#00c8fb',//canvas背景色
-  'originLocationArr': [{x: 0, y: 2500}, {x: 1, y: 2600}, {x: 2, y: 1501}, {x: 3, y: 2700}, {x: 4, y: 2400}, {
-    x: 5,
-    y: 1580
-  }, {x: 6, y: 1100}, {x: 7, y: 1400}],
-  'hotTypeName': ['温泉', '采摘', '钓鱼', '烧烤', '画展', 'K歌', '赏花', '篝火'],
-  'tooltipId':'whiteboard',
+  'originLocationArr': [{x:0,y:1500},{x:1,y:5645}],
+  'hotTypeName': ['dfg','df'],
+  'tooltipId':'whiteboard1',
   'xAxisFontSize':'14',
   'fontFamily':'PingFang SC,Microsoft YaHei,Microsoft JhengHei',
   'fontWeight':'normal',
@@ -42,52 +40,79 @@ const defaultSetting={
   'lineWidth':1,
   'shadowBackgroundColor':'rgba(255,255,255,0.4)'//阴影部分背景色
 };
-let devicePixelRatio=1;
-var RmyCanvas,cxt;
+var devicePixelRatio=1;
+var options={};
+var RmyCanvas=null,cxt=null,lineObj={},linexStyle={},line0Style={},line1Style={},line2Style={},RmyCanvasStyle={},drawed=false;
 export default class Rchart extends Component{
   constructor(props){
     super(props);
     this.drawCss=this.drawCss.bind(this);
     this.state={
-      options:{},
-      lineObj:{},
-      linexStyle:{},
-      line0Style:{},
-      line1Style:{},
-      line2Style:{},
-      RmyCanvasStyle:{},
+      options:{
+        innerWidth:10,
+        canvasContainerHeight:200
+      },
+      drawed:false,
       devicePixelRatio:1
     }
   }
-  componentDidMount(){
-    let options={};
+  componentWillMount(){
+    options={};
     options = Object.assign({}, defaultSetting, this.props.options);
     options.dashedHeight = options.realCanvasHeight / 4;
     options.canvasContainerHeight = options.realCanvasHeight + options.topBarMarginTop + options.canvasMarginTop + options.xAxisBottom +options.canvasMarginBottom;
     options.perWidth = (options.innerWidth - options.canvasPaddingLeft * 2) / options.hotTypeName.length;
-    // RmyCanvas = document.getElementById("R-myCanvas");
-    RmyCanvas = this.refs.Rcanvas;
-    cxt = RmyCanvas.getContext("2d");
-    devicePixelRatio=getPixelRatio(cxt);
-    this.state.options=options;
+    
+    let realoption={
+      canvasContainerHeight:options.canvasContainerHeight,
+      innerWidth:windowWidth
+    }
     this.setState({
-      options:options,
-      devicePixelRatio:devicePixelRatio
-    });
-    this.drawCss(cxt);
+      options:realoption
+    })
   }
+  componentDidUpdate(){
+    console.log('updated')
+  }
+  componentDidMount(){
+    let that=this;
+    setTimeout(function(){
+      RmyCanvas = that.refs.Rcanvas;
+      cxt = RmyCanvas.getContext("2d");
+      devicePixelRatio=getPixelRatio(cxt);
+      
+      that.setState({
+        devicePixelRatio:devicePixelRatio
+      })
+      if(options.originLocationArr && options.originLocationArr.length>0 &&  options.hotTypeName && options.hotTypeName.length>0 && cxt){
+        that.drawCss(cxt);
+      }
+    },10)
+    
+  }
+  
+
   drawLine(cxt){
+    if(this.state.drawed){
+      return
+    }
+    console.log(options);
+    this.setState({
+      drawed:true
+    });
+    
     let locationArr = [];
       /*
      * 各个坐标点
      * */
     var mostHot = {x: 0, y: 0};
-    for (let n = 0; n < this.state.options.originLocationArr.length; n++) {
-      if (this.state.options.originLocationArr[n].y > mostHot.y) {
-        mostHot = this.state.options.originLocationArr[n]
+    for (let n = 0; n < options.originLocationArr.length; n++) {
+      if (options.originLocationArr[n].y > mostHot.y) {
+        mostHot = options.originLocationArr[n]
       }
 
     }
+    console.log(cxt)
 
     /*
      * y轴坐标转换成最大的整数
@@ -106,40 +131,41 @@ export default class Rchart extends Component{
     /*
      * 将获取到的坐标数据转换成按照比例换算的数据
      * */
-    for (let a = 0; a < this.state.options.originLocationArr.length; a++) {
-      locationArr.push({y: ((this.state.options.realCanvasHeight * (this.state.options.originLocationArr[a].y / mostHot.y)).toFixed(2) + this.state.options.xAxisBottom + this.state.options.canvasMarginBottom)})
+    for (let a = 0; a < options.originLocationArr.length; a++) {
+      locationArr.push({y: ((options.realCanvasHeight * (options.originLocationArr[a].y / mostHot.y)).toFixed(2) + options.xAxisBottom + options.canvasMarginBottom)})
     }
-  
+    console.log(locationArr)
+
     /*
      * 绘制最上面的标线
      * */
     cxt.save();
     cxt.beginPath();
-    cxt.strokeStyle = this.state.options.fontColor;
-    cxt.moveTo((this.state.options.canvasPaddingLeft)*devicePixelRatio, (this.state.options.canvasMarginTop)*devicePixelRatio);
-    cxt.lineTo((mostHot.x * this.state.options.perWidth + this.state.options.canvasPaddingLeft + this.state.options.perWidth / 2 - 10)*devicePixelRatio, this.state.options.canvasMarginTop*devicePixelRatio);
-    cxt.lineTo((mostHot.x * this.state.options.perWidth + this.state.options.canvasPaddingLeft + this.state.options.perWidth / 2)*devicePixelRatio, (this.state.options.canvasMarginTop + 10)*devicePixelRatio);
-    cxt.lineTo((mostHot.x * this.state.options.perWidth + this.state.options.canvasPaddingLeft + this.state.options.perWidth / 2 + 10)*devicePixelRatio, this.state.options.canvasMarginTop*devicePixelRatio);
-    cxt.lineTo((this.state.options.innerWidth - 10)*devicePixelRatio, this.state.options.canvasMarginTop*devicePixelRatio);
-    cxt.moveTo((mostHot.x * this.state.options.perWidth + this.state.options.canvasPaddingLeft + this.state.options.perWidth / 2)*devicePixelRatio, (this.state.options.canvasMarginTop + 10)*devicePixelRatio);
-    cxt.lineTo((mostHot.x * this.state.options.perWidth + this.state.options.canvasPaddingLeft + this.state.options.perWidth / 2)*devicePixelRatio, (this.state.options.canvasContainerHeight - this.state.options.xAxisBottom - this.state.options.canvasMarginBottom)*devicePixelRatio);
+    cxt.strokeStyle = options.fontColor;
+    cxt.moveTo((options.canvasPaddingLeft)*devicePixelRatio, (options.canvasMarginTop)*devicePixelRatio);
+    cxt.lineTo((mostHot.x * options.perWidth + options.canvasPaddingLeft + options.perWidth / 2 - 10)*devicePixelRatio, options.canvasMarginTop*devicePixelRatio);
+    cxt.lineTo((mostHot.x * options.perWidth + options.canvasPaddingLeft + options.perWidth / 2)*devicePixelRatio, (options.canvasMarginTop + 10)*devicePixelRatio);
+    cxt.lineTo((mostHot.x * options.perWidth + options.canvasPaddingLeft + options.perWidth / 2 + 10)*devicePixelRatio, options.canvasMarginTop*devicePixelRatio);
+    cxt.lineTo((options.innerWidth - 10)*devicePixelRatio, options.canvasMarginTop*devicePixelRatio);
+    cxt.moveTo((mostHot.x * options.perWidth + options.canvasPaddingLeft + options.perWidth / 2)*devicePixelRatio, (options.canvasMarginTop + 10)*devicePixelRatio);
+    cxt.lineTo((mostHot.x * options.perWidth + options.canvasPaddingLeft + options.perWidth / 2)*devicePixelRatio, (options.canvasContainerHeight - options.xAxisBottom - options.canvasMarginBottom)*devicePixelRatio);
     cxt.stroke();
     cxt.closePath();
     cxt.restore();
-    
+
 
     /*
      * 绘制y轴坐标
      * */
     cxt.save();
     cxt.beginPath();
-    cxt.font=((parseInt(this.state.options.yAxisFontSize*devicePixelRatio)).toString()+'px'+' '+this.state.options.fontFamily+' '+this.state.options.fontWeight);
-    // cxt.font = cxt.font.replace(/\d+(\.\d+)?(px|pt|em|%)/i,parseInt(this.state.options.yAxisFontSize*devicePixelRatio).toString()+'px');//替换字体大小
-    cxt.fillStyle = this.state.options.fontColor;
-    cxt.fillText(parseInt(perPartHotScore).toString(), (this.state.options.canvasPaddingLeft + this.state.options.yAxisAdditionalLeft)*devicePixelRatio, (this.state.options.canvasContainerHeight - this.state.options.xAxisBottom - this.state.options.canvasMarginBottom - this.state.options.optionTop - this.state.options.dashedHeight)*devicePixelRatio);
-    cxt.fillText((parseInt(perPartHotScore) * 2).toString(), (this.state.options.canvasPaddingLeft + this.state.options.yAxisAdditionalLeft)*devicePixelRatio, (this.state.options.canvasContainerHeight - this.state.options.xAxisBottom - this.state.options.canvasMarginBottom - this.state.options.optionTop - this.state.options.dashedHeight * 2)*devicePixelRatio);
-    cxt.fillText((parseInt(perPartHotScore) * 3).toString(), (this.state.options.canvasPaddingLeft + this.state.options.yAxisAdditionalLeft)*devicePixelRatio, (this.state.options.canvasContainerHeight - this.state.options.xAxisBottom - this.state.options.canvasMarginBottom - this.state.options.optionTop - this.state.options.dashedHeight * 3)*devicePixelRatio);
-    cxt.fillText((parseInt(perPartHotScore) * 4).toString(), (this.state.options.canvasPaddingLeft + this.state.options.yAxisAdditionalLeft)*devicePixelRatio, (this.state.options.canvasContainerHeight - this.state.options.xAxisBottom - this.state.options.canvasMarginBottom - this.state.options.optionTop - this.state.options.dashedHeight * 4)*devicePixelRatio);
+    cxt.font=((parseInt(options.yAxisFontSize*devicePixelRatio)).toString()+'px'+' '+options.fontFamily+' '+options.fontWeight);
+    // cxt.font = cxt.font.replace(/\d+(\.\d+)?(px|pt|em|%)/i,parseInt(options.yAxisFontSize*devicePixelRatio).toString()+'px');//替换字体大小
+    cxt.fillStyle = options.fontColor;
+    cxt.fillText(parseInt(perPartHotScore).toString(), (options.canvasPaddingLeft + options.yAxisAdditionalLeft)*devicePixelRatio, (options.canvasContainerHeight - options.xAxisBottom - options.canvasMarginBottom - options.optionTop - options.dashedHeight)*devicePixelRatio);
+    cxt.fillText((parseInt(perPartHotScore) * 2).toString(), (options.canvasPaddingLeft + options.yAxisAdditionalLeft)*devicePixelRatio, (options.canvasContainerHeight - options.xAxisBottom - options.canvasMarginBottom - options.optionTop - options.dashedHeight * 2)*devicePixelRatio);
+    cxt.fillText((parseInt(perPartHotScore) * 3).toString(), (options.canvasPaddingLeft + options.yAxisAdditionalLeft)*devicePixelRatio, (options.canvasContainerHeight - options.xAxisBottom - options.canvasMarginBottom - options.optionTop - options.dashedHeight * 3)*devicePixelRatio);
+    cxt.fillText((parseInt(perPartHotScore) * 4).toString(), (options.canvasPaddingLeft + options.yAxisAdditionalLeft)*devicePixelRatio, (options.canvasContainerHeight - options.xAxisBottom - options.canvasMarginBottom - options.optionTop - options.dashedHeight * 4)*devicePixelRatio);
     cxt.closePath();
     cxt.restore();
 
@@ -147,19 +173,19 @@ export default class Rchart extends Component{
      * 绘制页面上的单个坐标点
      * */
     cxt.save();
-    cxt.strokeStyle = this.state.options.lineColor;
+    cxt.strokeStyle = options.lineColor;
     cxt.beginPath();
     cxt.lineJoin = "round";
-    cxt.lineWidth = this.state.options.lineWidth;
-    cxt.translate(this.state.options.lineOffset,this.state.options.lineOffset);
+    cxt.lineWidth = options.lineWidth;
+    cxt.translate(options.lineOffset,options.lineOffset);
     for (let i = 0; i < locationArr.length; i++) {
       if (locationArr[i].y > mostHot.y) {
         mostHot = locationArr[i]
       }
       if (i === 0) {
-        cxt.moveTo((this.state.options.perWidth / 2 + this.state.options.canvasPaddingLeft + i * this.state.options.perWidth)*devicePixelRatio, (this.state.options.canvasContainerHeight - locationArr[i].y - this.state.options.canvasMarginBottom - this.state.options.xAxisBottom)*devicePixelRatio);
+        cxt.moveTo((options.perWidth / 2 + options.canvasPaddingLeft + i * options.perWidth)*devicePixelRatio, (options.canvasContainerHeight - locationArr[i].y - options.canvasMarginBottom - options.xAxisBottom)*devicePixelRatio);
       } else {
-        cxt.lineTo((this.state.options.perWidth / 2 + this.state.options.canvasPaddingLeft + i * this.state.options.perWidth)*devicePixelRatio, (this.state.options.canvasContainerHeight - locationArr[i].y - this.state.options.canvasMarginBottom - this.state.options.xAxisBottom)*devicePixelRatio);
+        cxt.lineTo((options.perWidth / 2 + options.canvasPaddingLeft + i * options.perWidth)*devicePixelRatio, (options.canvasContainerHeight - locationArr[i].y - options.canvasMarginBottom - options.xAxisBottom)*devicePixelRatio);
       }
 
     }
@@ -173,16 +199,16 @@ export default class Rchart extends Component{
     cxt.save();
     cxt.beginPath();
 
-    cxt.font=parseInt(this.state.options.xAxisFontSize*devicePixelRatio)+'px'+' '+this.state.options.fontFamily+' '+this.state.options.fontWeight;
+    cxt.font=parseInt(options.xAxisFontSize*devicePixelRatio)+'px'+' '+options.fontFamily+' '+options.fontWeight;
     cxt.textAlign = 'center';
-    cxt.fillStyle = this.state.options.fontColor;
+    cxt.fillStyle = options.fontColor;
     cxt.lineWidth = 1;
 
-    for (let m = 0; m < this.state.options.hotTypeName.length; m++) {
+    for (let m = 0; m < options.hotTypeName.length; m++) {
       cxt.save();
-      cxt.translate((this.state.options.perWidth / 2 + this.state.options.canvasPaddingLeft + m * this.state.options.perWidth)*devicePixelRatio, (this.state.options.canvasContainerHeight - this.state.options.xAxisBottom)*devicePixelRatio);
-      cxt.rotate(this.state.options.xAxisTxtRotateAngle * Math.PI / 180);
-      cxt.fillText(this.state.options.hotTypeName[m], 0, 0);
+      cxt.translate((options.perWidth / 2 + options.canvasPaddingLeft + m * options.perWidth)*devicePixelRatio, (options.canvasContainerHeight - options.xAxisBottom)*devicePixelRatio);
+      cxt.rotate(options.xAxisTxtRotateAngle * Math.PI / 180);
+      cxt.fillText(options.hotTypeName[m], 0, 0);
       cxt.restore();
     }
 
@@ -194,71 +220,71 @@ export default class Rchart extends Component{
      * */
     cxt.save();
     cxt.beginPath();
-    cxt.strokeStyle = this.state.options.shadowBackgroundColor;
-    cxt.fillStyle = this.state.options.shadowBackgroundColor;
-    cxt.moveTo((this.state.options.perWidth / 2 + this.state.options.canvasPaddingLeft)*devicePixelRatio, (this.state.options.canvasContainerHeight - this.state.options.xAxisBottom - this.state.options.canvasMarginBottom)*devicePixelRatio);
+    cxt.strokeStyle = options.shadowBackgroundColor;
+    cxt.fillStyle = options.shadowBackgroundColor;
+    cxt.moveTo((options.perWidth / 2 + options.canvasPaddingLeft)*devicePixelRatio, (options.canvasContainerHeight - options.xAxisBottom - options.canvasMarginBottom)*devicePixelRatio);
     for (let p = 0; p < locationArr.length; p++) {
-      cxt.lineTo((this.state.options.perWidth / 2 + this.state.options.canvasPaddingLeft + p * this.state.options.perWidth)*devicePixelRatio, (this.state.options.canvasContainerHeight - locationArr[p].y - this.state.options.canvasMarginBottom - this.state.options.xAxisBottom)*devicePixelRatio);
+      cxt.lineTo((options.perWidth / 2 + options.canvasPaddingLeft + p * options.perWidth)*devicePixelRatio, (options.canvasContainerHeight - locationArr[p].y - options.canvasMarginBottom - options.xAxisBottom)*devicePixelRatio);
     }
-    cxt.lineTo((this.state.options.perWidth / 2 + this.state.options.canvasPaddingLeft + (this.state.options.hotTypeName.length-1) * this.state.options.perWidth)*devicePixelRatio, (this.state.options.canvasContainerHeight - this.state.options.xAxisBottom - this.state.options.canvasMarginBottom)*devicePixelRatio);
-    cxt.lineTo((this.state.options.perWidth / 2 + this.state.options.canvasPaddingLeft)*devicePixelRatio, (this.state.options.canvasContainerHeight - this.state.options.xAxisBottom - this.state.options.canvasMarginBottom)*devicePixelRatio);
+    cxt.lineTo((options.perWidth / 2 + options.canvasPaddingLeft + (options.hotTypeName.length-1) * options.perWidth)*devicePixelRatio, (options.canvasContainerHeight - options.xAxisBottom - options.canvasMarginBottom)*devicePixelRatio);
+    cxt.lineTo((options.perWidth / 2 + options.canvasPaddingLeft)*devicePixelRatio, (options.canvasContainerHeight - options.xAxisBottom - options.canvasMarginBottom)*devicePixelRatio);
     cxt.stroke();
     cxt.fill();
     cxt.closePath();
     cxt.restore();
 
-    let toolTip=document.getElementById(this.state.options.tooltipId);
+    let toolTip=document.getElementById(options.tooltipId);
     let toolTipWidth=toolTip.offsetWidth;
     let toolTipHeight=toolTip.offsetHeight;
     let circleBox=document.getElementById('Rcircle');
     let circleBoxHeight=circleBox.offsetHeight;
     let circleBoxWidth=circleBox.offsetWidth;
-    toolTip.style.left=(mostHot.x) * this.state.options.perWidth + this.state.options.canvasPaddingLeft + this.state.options.perWidth/2 - toolTipWidth/2+'px';
-    toolTip.style.top=this.state.options.canvasContainerHeight-this.state.options.xAxisBottom-this.state.options.canvasMarginBottom-this.state.options.realCanvasHeight-toolTipHeight-circleBoxHeight/2+'px';
-    circleBox.style.left=(mostHot.x) * this.state.options.perWidth + this.state.options.canvasPaddingLeft + this.state.options.perWidth/2 - circleBoxWidth/2+'px';
-    circleBox.style.top=this.state.options.canvasContainerHeight-this.state.options.xAxisBottom-this.state.options.canvasMarginBottom-this.state.options.realCanvasHeight-circleBoxHeight/2+'px';
+    toolTip.style.left=(mostHot.x) * options.perWidth + options.canvasPaddingLeft + options.perWidth/2 - toolTipWidth/2+'px';
+    toolTip.style.top=options.canvasContainerHeight-options.xAxisBottom-options.canvasMarginBottom-options.realCanvasHeight-toolTipHeight-circleBoxHeight/2+'px';
+    circleBox.style.left=(mostHot.x) * options.perWidth + options.canvasPaddingLeft + options.perWidth/2 - circleBoxWidth/2+'px';
+    circleBox.style.top=options.canvasContainerHeight-options.xAxisBottom-options.canvasMarginBottom-options.realCanvasHeight-circleBoxHeight/2+'px';
   }
   drawCss(cxt){
     /*
      * css样式
      * */
     let lineObj={
-        width:this.state.options.innerWidth - this.state.options.canvasPaddingLeft * 2 ,
-        height: this.state.options.dashedHeight ,
-        left: this.state.options.canvasPaddingLeft
+        width:options.innerWidth - options.canvasPaddingLeft * 2 ,
+        height: options.dashedHeight ,
+        left: options.canvasPaddingLeft
     }
     this.setState({
       lineObj:lineObj,
       RmyCanvasStyle:{
-        backgroundColor: this.state.options.canvasBackgroundColor,
-        width:this.state.options.innerWidth,
-        height:this.state.options.canvasContainerHeight
+        backgroundColor: options.canvasBackgroundColor,
+        width:options.innerWidth,
+        height:options.canvasContainerHeight
       },
       linexStyle:Object.assign({},lineObj,{
-        bottom: this.state.options.xAxisBottom + this.state.options.canvasMarginBottom
+        bottom: options.xAxisBottom + options.canvasMarginBottom
       }),
       line0Style: Object.assign({},lineObj,{
-          bottom: this.state.options.xAxisBottom + this.state.options.canvasMarginBottom + this.state.options.dashedHeight * 1
+          bottom: options.xAxisBottom + options.canvasMarginBottom + options.dashedHeight * 1
         }),
       line1Style:Object.assign({},lineObj,{
-          bottom: this.state.options.xAxisBottom + this.state.options.canvasMarginBottom + this.state.options.dashedHeight * 2
+          bottom: options.xAxisBottom + options.canvasMarginBottom + options.dashedHeight * 2
       }),
 
       line2Style:Object.assign({},lineObj,{
-        bottom: this.state.options.xAxisBottom + this.state.options.canvasMarginBottom + this.state.options.dashedHeight * 3
+        bottom: options.xAxisBottom + options.canvasMarginBottom + options.dashedHeight * 3
       })
 
     });
-    
+
     let ParentNode=document.getElementById(this.props.parentId);
-    ParentNode.style.height=this.state.options.canvasContainerHeight+'px' ;
+    ParentNode.style.height=options.canvasContainerHeight+'px' ;
     this.drawLine(cxt);
   }
   componentDidUpdate(){
-    RmyCanvas = this.refs.Rcanvas;
-    cxt = RmyCanvas.getContext("2d");
-    cxt.clearRect(0,0,this.state.options.innerWidth*this.state.devicePixelRatio,this.state.options.canvasContainerHeight*this.state.devicePixelRatio)
-    this.drawLine(cxt);
+    // RmyCanvas = this.refs.Rcanvas;
+    // cxt = RmyCanvas.getContext("2d");
+    // cxt.clearRect(0,0,options.innerWidth*devicePixelRatio,options.canvasContainerHeight*devicePixelRatio)
+    // this.drawLine(cxt);
   }
   render(){
     return(

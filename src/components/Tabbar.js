@@ -31,19 +31,19 @@ export default class Tabbar extends Component{
     return(
       <div className="tabBar-container">
           <div className="tab-item">
-            <Link to='play'activeStyle={{'color':'red'}} onClick={()=>this.props.changeTab(1)}>
+            <Link to='play' activeStyle={{'color':'red'}} onClick={()=>this.props.changeTab(1)}>
              <span className="tab-img iconfont icon-yw_tabicon-yw_activity" style={{color:this.state.currentPlayColor}}></span>
             <span className="tab-name">游玩</span>
             </Link>
           </div>
            <div className="tab-item">
-            <Link to='mall'activeStyle={{'color':'red'}} onClick={()=>this.props.changeTab(2)}>
+            <Link to='mall' activeStyle={{'color':'red'}} onClick={()=>this.props.changeTab(2)}>
              <span className="tab-img iconfont icon-yw_tabicon_shop" style={{color:this.state.currentMallColor}}></span>
             <span className="tab-name">商城</span>
             </Link>
           </div>
            <div className="tab-item">
-            <Link to='mine'activeStyle={{'color':'red'}} onClick={()=>this.props.changeTab(3)}>
+            <Link to='mine' activeStyle={{'color':'red'}} onClick={()=>this.props.changeTab(3)}>
              <span className="tab-img iconfont icon-yw_tabicon_mine" style={{color:this.state.currentMineColor}}></span>
             <span className="tab-name">我的</span>
             </Link>
