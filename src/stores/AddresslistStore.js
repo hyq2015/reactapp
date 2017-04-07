@@ -48,6 +48,9 @@ let AddresslistStore = Reflux.createStore({
                 this.trigger(this.data);
             }
         }
+   },
+   onSetDefault:async function(id){
+        console.log(id);
    }
 });
 export default AddresslistStore

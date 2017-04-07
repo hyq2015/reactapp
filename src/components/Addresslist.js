@@ -22,6 +22,7 @@ export default class AddressList extends Component{
         this._deleteDialogShow=this._deleteDialogShow.bind(this);
         this._comfirmDelete=this._comfirmDelete.bind(this);
         this._cancelDelete=this._cancelDelete.bind(this);
+        this._setDefault=this._setDefault.bind(this);
     }
     componentWillUnmount() {
       if (_.isFunction(this.unsubscribe)){
@@ -55,11 +56,14 @@ export default class AddressList extends Component{
             dialogShow:false
         })
     }
+    _setDefault(id){
+        AddresslistActions.setDefault(id);
+    }
     render(){
         return(
             <div id="addresscontainer">
                 {this.state.indexData.addressList && this.state.indexData.addressList.length>0 ? this.state.indexData.addressList.map((item,index)=>
-                    <SingleAddress key={item.id} addressItem={item} del={this._deleteDialogShow}/>
+                    <SingleAddress key={item.id} addressItem={item} del={this._deleteDialogShow} setDefault={this._setDefault}/>
                 ) : <Noaddress/>}
                 
                 <Link to="/address/add" className="addaddress">
@@ -100,7 +104,7 @@ class SingleAddress extends Component{
                 </div>
                 <div className="address-box_text">
                     <div className="address-box_text_desc">
-                        <div className="editMenuleft">
+                        <div className="editMenuleft" onClick={()=>this.props.setDefault(this.props.addressItem.id)}>
                             <span className={defaultClass}></span>
                             <span style={{marginLeft:2}}>设为默认</span>
                         </div>
