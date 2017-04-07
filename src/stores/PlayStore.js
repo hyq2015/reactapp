@@ -6,7 +6,7 @@ import PlayActions from '../actions/PlayActions';
 import AppStore from './AppStore';
 // import ListStore from './ListStore';
 // import Promise from 'bluebird';
-import CONFIG,{XHR} from '../static/js/request'
+import CONFIG,{XHR} from '../static/js/request';
 const options={
   hotTypeName:null,//x轴坐标名字与热度指数一一对应
   originLocationArr: null,//热度指数

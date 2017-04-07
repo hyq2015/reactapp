@@ -5,7 +5,7 @@
 @contentColor:#000;
 @graycolor:#f2f2f2;
 #addresscontainer{
-    min-height: calc(100vh);background-color: @graycolor;
+    min-height: calc(100vh);background-color: @graycolor;padding-top:1px;box-sizing: border-box;padding-bottom: 50px;
     color: @contentColor;
     .addaddress{
         position: fixed;bottom: 0;display: block;left: 0;height: 50px;width: 100%;
@@ -25,12 +25,19 @@
         font-size: 20px;margin-right: 5px;
     }
     .address-panel{
-        margin: 0;padding: 0;background-color: #fff;
+        margin: 10px 0 0 0;padding: 0;background-color: #fff;
+        &:first-child{
+            margin-top: 0;
+        }
         .address-box{
             padding: 15px;
         }
         .address-box__title{
-            font-size: 17px;font-weight: 400;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;word-break: break-all;word-wrap: break-word;margin-bottom: 8px;
+            font-size: 17px;font-weight: 400;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;word-break: break-all;word-wrap: break-word;margin-bottom: 8px;line-height:1.6;
+            span{
+                font-weight: 400;font-size: 17px;
+                font-family: -apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",STHeiti,"Microsoft Yahei",Tahoma,Simsun,sans-serif;
+            }
         }
         .address-box__desc{
             color: @strongColor;font-size: 13px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;
@@ -64,6 +71,32 @@
                 float: right;text-align: right;min-width: 145px;height: 100%;
             }
         }
+    }
+    .noAddress{
+        width: 100%;
+        margin: calc(24.8vh) auto 0;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }
+    .noaddress_img{
+        width: 65px;
+        height: 74px;
+        background: url(../images/address_icon_none.png) center center no-repeat;
+        background-size: cover;
+    }
+    .noInfo{
+        color: @strongColor;
     }
     
 }
