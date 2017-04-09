@@ -7,6 +7,8 @@ import Play from './components/Play';
 import Mall from './components/Mall';
 import Mine from './components/Mine';
 import AddressList from './components/AddressList';
+import Addaddress from './components/Addaddress';
+import Shopcar from './components/Shopcar';
 import './static/styles/reset.css';
 import { Router, Route, IndexRoute, Link ,hashHistory } from 'react-router';
 
@@ -25,5 +27,7 @@ ReactDOM.render((<Router history={hashHistory}>
       </Route>
       <Route path="mine" components={Mine}/>
       <Route path="address/list" components={AddressList}/>
+      <Route path="address/add" components={Addaddress}/>
+      <Route path="shopcar" components={Shopcar}/>
     </Route>
 </Router>), document.getElementById('app'));

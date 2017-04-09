@@ -32,7 +32,9 @@ let PlayStore = Reflux.createStore({
          CHANCE:[]
       },
       nearList:[],
-      options:{}
+      options:{},
+      indexLoading:true,
+      nearbyLoading:true
     };
   },
   listenables: PlayActions,
@@ -65,15 +67,16 @@ let PlayStore = Reflux.createStore({
                 options.originLocationArr=originLocationArr;
                 this.data.options=options;
         }
-      this.data.msg='ok';
+      this.data.getIndex='ok';
     }catch(err){
       if(err=='noRight'){
-        this.data.msg = 'noRight';
+        this.data.getIndex = 'noRight';
       }else{
-        this.data.msg = 'error';
+        this.data.getIndex = 'error';
       }
       this.data.indexData = null;
     }finally{
+      this.data.indexLoading=false;
       this.trigger(this.data);
     }
   },
@@ -81,15 +84,16 @@ let PlayStore = Reflux.createStore({
     try {
       const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.findnearby,{"lat":"104.06487","lng":"30.54742"},'post');
       this.data.nearList=res;
-      this.data.msg='ok';
+      this.data.getNearBy='ok';
     }catch(err){
       if(err=='noRight'){
-        this.data.msg = 'noRight';
+        this.data.getNearBy = 'noRight';
       }else{
-        this.data.msg = 'error';
+        this.data.getNearBy = 'error';
       }
       this.data.nearList = null;
     }finally{
+      this.data.nearbyLoading=false;
       this.trigger(this.data);
     }
   },

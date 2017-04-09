@@ -5,6 +5,7 @@ import MineCard from './MineCard';
 import 'babel-polyfill';
 import MineStore from '../stores/MineStore';
 import MineActions from '../actions/MineActions';
+import AppActions from '../actions/AppActions';
 import '../static/styles/mine.less';
 const playStyle={
     minHeight:'calc(100vh - 50px)',
@@ -20,7 +21,8 @@ export default class Mine extends Component{
                 shoppingCartItemCount:'',
                 cardList:[]
             },
-            user:{}
+            user:{},
+            indexLoading:true
         };
         this._addresslist=this._addresslist.bind(this);
         this._init=this._init.bind(this);
@@ -52,6 +54,11 @@ export default class Mine extends Component{
       
       
     }
+    componentDidUpdate(){
+        if(!this.state.indexLoading){
+            AppActions.loaded();
+        }
+    }
     _init(){
         MineActions.init();
     }
@@ -72,7 +79,7 @@ export default class Mine extends Component{
                     <div className="username">{this.state.user.nickname}</div>
                     <div className="navbar">
                         <nav>
-                            <Link to="/mine">
+                            <Link to="shopcar">
                                 <span className="count">{this.state.indexData.shoppingCartItemCount}</span>
                                 <span className="navname">购物车</span>
                             </Link>

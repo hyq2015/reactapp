@@ -45,8 +45,8 @@ var CONFIG={
         'headers':{
           'Accept': 'application/json',
           'Content-Type': 'application/json'
-        }
-
+        },
+        'credentials':'include'
       };
       option = _.extend(option, {'body':JSON.stringify(body)});
       return fetch(url,option)

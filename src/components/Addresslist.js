@@ -8,6 +8,7 @@ import CS from 'classnames';
 import 'babel-polyfill';
 import AddresslistStore from '../stores/AddresslistStore';
 import AddresslistActions from '../actions/AddresslistActions';
+import AppActions from '../actions/AppActions';
 import '../static/styles/iconfont.css';
 import '../static/styles/addresslist.less';
 
@@ -16,13 +17,19 @@ export default class AddressList extends Component{
     constructor(props){
         super(props);
         this.state={
-            indexData:{}
+            indexData:{},
+            indexLoading:true
         };
         this._fetchData=this._fetchData.bind(this);
         this._deleteDialogShow=this._deleteDialogShow.bind(this);
         this._comfirmDelete=this._comfirmDelete.bind(this);
         this._cancelDelete=this._cancelDelete.bind(this);
         this._setDefault=this._setDefault.bind(this);
+        this.goAdd=this.goAdd.bind(this);
+        this.editAddress=this.editAddress.bind(this);
+    }
+    componentWillMount(){
+        AppActions.disabletab();
     }
     componentWillUnmount() {
       if (_.isFunction(this.unsubscribe)){
@@ -37,6 +44,11 @@ export default class AddressList extends Component{
       }.bind(this));
 
       this._fetchData();
+    }
+    componentDidUpdate(){
+        if(!this.state.indexLoading){
+            AppActions.loaded();
+        }
     }
     _deleteDialogShow(id){
         AddresslistActions.deleteDialogShow(id);
@@ -59,14 +71,20 @@ export default class AddressList extends Component{
     _setDefault(id){
         AddresslistActions.setDefault(id);
     }
+    goAdd(){
+        this.context.router.push('address/add?name=ricky')
+    }
+    editAddress(id){
+        this.context.router.push('address/add?editId='+id)
+    }
     render(){
         return(
             <div id="addresscontainer">
                 {this.state.indexData.addressList && this.state.indexData.addressList.length>0 ? this.state.indexData.addressList.map((item,index)=>
-                    <SingleAddress key={item.id} addressItem={item} del={this._deleteDialogShow} setDefault={this._setDefault}/>
+                    <SingleAddress editAddress={this.editAddress} key={item.id} addressItem={item} del={this._deleteDialogShow} setDefault={this._setDefault}/>
                 ) : <Noaddress/>}
                 
-                <Link to="/address/add" className="addaddress">
+                <Link onClick={this.goAdd} className="addaddress">
                     <span className="icon-llalbumshopselectorcreate iconfont"></span>
                     <span className="addtext">新增地址</span>
                 </Link>
@@ -81,6 +99,9 @@ export default class AddressList extends Component{
             </div>
         )
     }
+}
+AddressList.contextTypes = {  
+    router: React.PropTypes.object
 }
 class SingleAddress extends Component{
     constructor(props){
@@ -109,7 +130,7 @@ class SingleAddress extends Component{
                             <span style={{marginLeft:2}}>设为默认</span>
                         </div>
                         <div className="editMenuright">
-                            <span>
+                            <span onClick={()=>this.props.editAddress(this.props.addressItem.id)}>
                                 <span className="icon-bianji iconfont"></span>
                                 <span style={{marginLeft:2}}>编辑</span>
                             </span>
