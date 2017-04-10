@@ -9,7 +9,8 @@ let MineStore = Reflux.createStore({
       msg:'ok',
       indexData:{
           user:{}
-      }
+      },
+      indexLoading:true
     };
   },
   listenables: MineActions,
@@ -26,6 +27,7 @@ let MineStore = Reflux.createStore({
       }
       this.data.indexData = null;
     }finally{
+      this.data.indexLoading=false;
       this.trigger(this.data);
     }
   },

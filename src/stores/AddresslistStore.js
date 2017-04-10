@@ -20,6 +20,7 @@ let AddresslistStore = Reflux.createStore({
             this.data.indexData=null;
             this.data.msg='error';
         }finally{
+            this.data.indexLoading=false;
             this.trigger(this.data);
         }
    },

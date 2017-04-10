@@ -11,6 +11,7 @@ import Cardstar from './Cardstar';
 import 'babel-polyfill';
 import PlayStore from '../stores/PlayStore';
 import PlayActions from '../actions/PlayActions';
+import AppActions from '../actions/AppActions';
 let request=require('../static/js/request');
 import '../static/styles/swiper-3.4.1.min.css';
 import '../static/styles/play.less';
@@ -30,7 +31,9 @@ export default class Play extends Component{
            indexData:{
                
            },
-           options:null
+           options:null,
+           nearbyLoading:true,
+           indexLoading:true
         }
         this._init=this._init.bind(this);
     }
@@ -43,11 +46,14 @@ export default class Play extends Component{
       }
         
     }
-
+    componentWillMount(){
+         this._init();
+    }
     componentDidMount(){
       this.unsubscribe = PlayStore.listen(function(state) {
         this.setState(state);
       }.bind(this));
+     
 
       this._fetchData();
       this._fetchNearby();
@@ -72,6 +78,9 @@ export default class Play extends Component{
                 },200)
                 
             }
+        }
+        if(!this.state.nearbyLoading && !this.state.indexLoading){
+            AppActions.loaded();
         }
         
     }
