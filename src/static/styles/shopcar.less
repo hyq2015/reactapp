@@ -1,0 +1,333 @@
+@editColor:#7b7b7b;
+@footerColor:#ffffff;
+@grayColor:#D9D9D9;
+@minusColor:#808080;
+@blueColor:#00c8fb;
+@inactiveColor:#f7f7f7;
+@redColor:#fd794a;
+@lineColor:#E5E5E5;
+@fadeColor:#bbbbbb;
+@fontFamily:-apple-system, BlinkMacSystemFont, "PingFang SC","Helvetica Neue",STHeiti,"Microsoft Yahei",Tahoma,Simsun,sans-serif;
+body{
+  font-family: @fontFamily;
+  background-color: #f2f2f2;
+}
+#shopcarContainer{
+  padding-bottom: 50px;
+}
+.weui-media-box__title{
+            line-height: 1.2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            white-space: normal;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+        .editImg{
+            width: calc(27vw);height: calc(27vw);
+        }
+        .weui-check{
+            display: inline-block;
+            vertical-align: middle;
+            font: normal normal normal 14px/1 "weui";
+            font-size: inherit;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;position: absolute;left: 10px;width: 30px;height: 30px;opacity: 0;
+        }
+.weui-panel:before {
+  border-top: none;height: 0;color: #ffffff;
+}
+.titleBar{
+  display: flex;justify-content: space-between;color: #000;align-items: center;
+  .shopName{
+    display: inline-block;max-width: calc(100vw*0.72);overflow: hidden;text-overflow: ellipsis;white-space: nowrap;
+  }
+  .edit{
+    color: @editColor;display: inline-block;width: 50px;text-align: right;padding-right: 15px;margin-right: -15px;font-size: 14px;
+  }
+}
+.weui-cell:first-child:before {
+  display: block;
+}
+.weui-media-box{
+  padding: 0;
+}
+.weui-panel:after {
+  border-bottom: none;
+
+}
+.weui-cell{
+  padding: 15px;
+}
+.footer_page{
+  background-color:@footerColor ;position: fixed;bottom: 0;left: 0;width: 100%;height: 50px;box-sizing: border-box;line-height: 50px;
+  .weui-cell{
+    padding: 0 15px;
+  }
+  .weui-cell:before{
+    left: 0;
+  }
+}
+.footer-panel:before{
+  border-top: 1px solid @lineColor;
+}
+#iscroll_pullUp,#iscroll_pullDown{
+  display: none;
+}
+.weui-media-box_appmsg .weui-media-box__hd {
+  margin-right: .8em;
+  width: 100px;
+  height: 86px;
+  line-height: 60px;
+  text-align: center;
+}
+.weui-media-box__bd{
+  display: flex;flex-direction: column;justify-content: space-around;height:86px;box-sizing: border-box;
+  .weui-media-box__title,.weui-media-box__desc{
+    //max-width: 80%;width: 80%;
+  }
+}
+#check-btn{
+  color: #ffffff;text-align: center;background-color: @redColor;min-width:90px ;font-size: 16px;
+}
+.footer-btn-total{
+  display: flex;flex-direction: row;justify-content: center;
+}
+.footer-total-text{
+  display: flex;flex-direction: column;justify-content: center;margin-right: 20px;text-align: right;
+}
+.totalPay{
+  color: @redColor;height: 20px;font-size: 14px;line-height: 20px
+}
+.text-info{
+  color:@fadeColor;height: 20px;font-size: 12px;line-height: 20px
+}
+.pro-detail{
+  display: flex;justify-content: space-between;flex-direction: row;
+}
+.editMode{
+  display: flex;flex-direction: row;height: 100%;position: absolute;right: 0;top: 0;
+  .editMode-left{
+    //width: 75%;
+    flex:3;box-sizing: border-box;padding: 15px;
+    .flexTop{
+      display: flex;flex-direction: row;height: 40px;
+      .plus,.minus{
+        border-radius: 2px;
+      }
+    }
+    .detail-info{
+      color: #000;font-size: 14px;max-width: 100%;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;margin-top: 20px;display: flex;justify-content: space-between;flex-direction: row;align-items: center;
+    }
+    .more{
+      color: grey;margin-left: 5px;display: inline-block;flex: 1;text-align: center;font-size: 12px;
+    }
+    .size-detail{
+      display: flex;flex: 3;
+    }
+  }
+  .editMode-right{
+    background-color: @redColor;color: #ffffff;width: 25%;display: flex;justify-content: center;align-items: center;padding: 1px 0;box-sizing: border-box;position: relative;
+  }
+  .plus,.minus{
+    //width: 25%;
+    flex:1;
+    text-align: center;height: 100%;line-height: 40px;font-size: 24px;color:@minusColor;
+  }
+}
+.weui-cells_checkbox{
+  position: relative;
+}
+.grayOutLine{
+  outline: 1px solid @grayColor;
+}
+.weui-check__label{
+  align-items: center;
+  .weui-cell__hd{
+    align-items: center;display: flex;height: 100%;justify-content: flex-start;
+  }
+}
+.weui-cell:active,.weui-media-box__bd:active,.weui-media-box:active,.weui-cell__bd:active,.weui-media-box_appmsg:active,.weui-cell weui-check__label:active{
+  background-color: inherit;
+}
+.grayBorder:after{
+  content:' ';
+  height:1px;
+  position: absolute;
+  border-bottom: 0;
+  left: 0;right: 0;bottom: 0;
+  border-top: 1px solid @grayColor;
+}
+#singleShop0:before{
+  display: none;
+}
+.firstLabel{
+  padding: 0 15px;height: 40px;line-height: 40px;
+}
+.weui-cells_checkbox  .firstLabel:before{
+  border-top: none;height: 0;display: none;
+}
+.detailArea{
+  background-color: #ffffff;position: absolute;bottom: 0;left: 0;z-index: 10;width: 100%;padding: 0 15px;box-sizing: border-box;
+  #closeDetail{
+    font-size: 28px;color: @editColor;
+  }
+  #closeDetailFather{
+    display: block;width: 40px;height: 40px;position: absolute;right: 0;top: 0;text-align: center;z-index: 10;
+  }
+  .topArea{
+    display: flex;flex-direction: row;position: relative;
+    img{
+      width: calc(100vw*0.27);
+      height: calc(100vw*0.27);
+      margin-top: -10px;
+    }
+    .rightInfo{
+      width:calc(100vw*0.57);max-width:calc(100vw*0.57);padding-left: 5px;padding-bottom: 9px;box-sizing: border-box;display: flex;flex-direction: column;justify-content: space-between;
+    }
+  }
+  .topArea:after{
+    content:' ';
+    height:1px;
+    position: absolute;
+    left: 0;right: -15px;bottom: 0;
+    border-top: 1px solid @lineColor;
+  }
+  .grayFont{
+    color:@editColor;font-size: 12px;
+  }
+  .blueFont{
+    color: @blueColor;
+  }
+  .titleFont{
+    font-size: 14px;color: #000000;margin:0 0 5px 0;
+  }
+  .middleArea{
+    padding: 10px 0;position: relative;min-height: calc(42vh);
+    .sizeMenu{
+      padding: 3px 15px;border-radius: 5px;text-decoration: none;margin:0 5px 8px 0;font-size: 14px;display: inline-block;
+    }
+    .active{
+      background-color: @redColor;color: #ffffff;
+    }
+    .inactive{
+      background-color: @inactiveColor;color: #000000;
+    }
+  }
+  .bottomArea{
+    padding: 10px 0;position: relative;height: calc(100vh*0.17);box-sizing: border-box;
+    .flexDiv{
+      display: flex;justify-content: space-between
+    }
+    .plusArea{
+      display: flex;justify-content: center;align-items: center;
+    }
+  }
+  .confirmBtn{
+    color: #ffffff;font-size: 16px;text-align: center;position: relative;background-color: @redColor;height: 50px;line-height: 50px;width: calc(100vw);margin-left: -15px;
+
+  }
+
+}
+.littleShade{
+  position: absolute;width: 20%;height: 100%;left: 0;top: 0;z-index: 50;
+}
+#iscroll_wrapper{
+  overflow-y: scroll;
+}
+.weui-media-box__thumb{
+  height: 100%;width: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 2px;
+}
+.editImg{
+  border: 2px solid #efefef;border-radius: 2px;position: relative;top: -10px;
+}
+.weui-dialog{
+  top: 40%;
+}
+.weui-msg__icon-area{
+  margin-bottom: 15px;
+}
+.weui-msg__icon-area>img{
+  max-width:60px;
+}
+.weui-msg{
+  margin-top: 125px;
+}
+.editImg {
+    width: calc(27vw);
+    height: calc(27vw);
+}
+#noproduct{
+  .weui-msg__title{
+    color: #7b7b7b;font-size: 16px;
+  }
+  .goshop{
+    color: @blueColor;padding: 5px 50px;border: 1px solid @blueColor;border-radius: 4px;margin-top: 5px;display: inline-block;font-size: 17px;
+  }
+}
+.topEditBar{
+  position: fixed;right: 15px;top: 45px;z-index: 1000;width: 100px;height: 44px;overflow: hidden;border-radius: 22px;text-align: center;
+  .arrowRight{
+    border-radius: 22px;width: 44px;height: 44px;background-color: rgba(0,0,0,0.3);text-align: center;position: absolute;right: 0;z-index: 11;
+    line-height: 44px;font-size: 16px;color: #ffffff;
+    transform: rotateZ(180deg);
+  }
+  .editMenuBtn{
+    position: absolute;right: -56px;top: 0;z-index: 10;width: 100px;height: 44px;border-radius: 22px;background-color: rgba(0,0,0,.3);overflow: hidden;
+  }
+  .editDetail{
+    text-align: center;color: #ffffff;margin-left: 24px;height: 100%;display: none;float: left;
+  }
+  .delOrder{
+    margin-left: 15px;
+  }
+  .delTxt{
+    font-size: 10px;position: relative;top: -5px;
+  }
+  .icon-Chevron{
+    position: relative;left: 2px;
+  }
+}
+a.weui-media-box:active {
+  background-color: #fff;
+}
+#shopcarEdit{
+  padding: 11px 0;background-color: #fff;position: relative;text-align: center;
+  .all-edit{
+    color: @editColor;
+    position: absolute;right: 15px;
+  }
+}
+#shopcarEdit:after{
+  position: absolute;bottom: 0;left: 0;right: 0;border-bottom: 1px solid @lineColor;
+  content: " ";height: 1px;
+  transform: scaleY(0.5);
+}
+.weui-cells_checkbox .weui-icon-checked:before{
+  font-size: 22px;margin-left:-0.1em;
+}
+.weui-cell:before{
+  border-top:1px solid #dfdfdf;color: #DFDFDF;
+}
+@media screen and (max-width: 320px) {
+  .weui-media-box_appmsg .weui-media-box__hd{
+    width: 80px;height: 69px;
+  }
+  .weui-media-box__bd{
+    height: 69px;
+  }
+
+}
+@media screen and (min-width: 330px) {
+  .weui-media-box__hd{
+    width: 100px;height: 86px;
+  }
+  .weui-media-box__bd{
+    height: 86px;
+  }
+}

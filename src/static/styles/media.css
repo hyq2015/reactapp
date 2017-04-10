@@ -1,0 +1,45 @@
+@media screen and (max-width: 320px) {
+    .pro-detail,.weui-media-box__title{
+        font-size: 14px;
+    }
+    .total-profit{
+        margin: 25px 0;
+    }
+    .pagebody .card-desc{
+        font-size: 12px;
+    }
+    .top-bar{
+        padding: 15px 30px 0 30px;
+    }
+    .weui-media-box__desc{
+        font-size: 10px;
+    }
+    .titleBar .shopName{
+        font-size:14px
+    }
+
+
+}
+@media screen and (min-width: 330px) {
+    .pro-detail,.weui-media-box__title{
+        font-size: 15px;
+    }
+    .weui-media-box__desc{
+        font-size: 14px;
+    }
+    .total-profit{
+        margin: 30px 0;
+    }
+    .pagebody .card-desc{
+        font-size: 14px;
+    }
+    .top-bar{
+        padding: 20px 30px 0 30px;
+    }
+    .weui-media-box__desc{
+        font-size: 12px;
+    }
+    .titleBar .shopName{
+        font-size:15px
+    }
+}

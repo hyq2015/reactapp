@@ -50,6 +50,7 @@ export default class Play extends Component{
          this._init();
     }
     componentDidMount(){
+        document.title='游玩';
       this.unsubscribe = PlayStore.listen(function(state) {
         this.setState(state);
       }.bind(this));

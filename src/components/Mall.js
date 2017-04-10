@@ -12,6 +12,9 @@ export default class extends Component{
     constructor(props){
         super(props)
     }
+    componentDidMount(){
+        document.title='商城';
+    }
 
     render(){
         return(
