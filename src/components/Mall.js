@@ -86,7 +86,13 @@ export default class Mall extends Component{
         MallActions.loadData(obj,this.state.originData);
     }
     onScroll(){
-            
+        if(this.state.originData.last){
+            if(this.state.loadMore){
+                this.setState({
+                    loadMore:false
+                })
+            }
+        }
     }
     onScrollEnd(){
         if(Math.abs(myScroll.y)>=Math.abs(myScroll.maxScrollY)-150){
