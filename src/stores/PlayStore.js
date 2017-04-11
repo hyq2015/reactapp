@@ -14,6 +14,8 @@ const options={
   canvasMarginTop: 30,
   tooltipId:'whiteboard1',
   canvasBackgroundColor:'rgba(255,255,255,0)',
+  'originLocationArr': [],
+  'hotTypeName': [],
   'topBarMarginTop': 45,
   'xAxisFontSize':'12',
   'yAxisFontSize':'9',

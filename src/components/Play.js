@@ -81,7 +81,10 @@ export default class Play extends Component{
             }
         }
         if(!this.state.nearbyLoading && !this.state.indexLoading){
-            AppActions.loaded();
+            setTimeout(function(){
+                AppActions.loaded();
+            },200)
+            
         }
         
     }
@@ -99,7 +102,7 @@ export default class Play extends Component{
             <div id="playContainer" style={playStyle}>
                 <div className="topbg">
                     <Searchbar></Searchbar>
-                    {(this.state.options && this.state.options.hotTypeName) ? 
+                    {(this.state.options && this.state.options.hotTypeName && this.state.options.hotTypeName.length>1) ? 
                         <div id="canvas">
                         <div id="whiteboard1">TOP1</div>
                         <Rchart parentId="canvas" options={this.state.options} />

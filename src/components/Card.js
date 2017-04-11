@@ -13,7 +13,7 @@ export default class Card extends Component{
             <ul className="carditems clearfloat">
                 {this.props.chancelist ? this.props.chancelist.map((cardItem,index)=>
                 <li key={index} className={this.props.class}>
-                    <div className="card-pic" style={{backgroundImage:'url('+(cardItem.imgurl ? cardItem.imgurl : '../static/images/loaderr.png')+')',backgroundSize:'cover'}}></div>
+                    <div className="card-pic" style={{backgroundImage:'url('+(cardItem.imgurl ? cardItem.imgurl : '../static/images/loaderr.png')+')',backgroundSize:'cover',backgroundPosition:'center'}}></div>
                     <p className="cardTitle">{cardItem.title}</p>
                     {cardItem.product.amountTotal ?
                         <div  className="progress">

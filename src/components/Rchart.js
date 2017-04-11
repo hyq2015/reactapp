@@ -27,8 +27,8 @@ let defaultSetting={
   'canvasMarginTop': 40,
   'topBarMarginTop': 55,
   'canvasBackgroundColor': '#00c8fb',//canvas背景色
-  'originLocationArr': [{x:0,y:1500},{x:1,y:5645}],
-  'hotTypeName': ['dfg','df'],
+  'originLocationArr': [{x:0,y:1500},{x:1,y:5645},{x:2,y:1500},{x:3,y:5645},{x:4,y:1500},{x:5,y:5645},{x:6,y:1500},{x:7,y:5645}],
+  'hotTypeName': ['dfg','df','dfg','df','dfg','df','dfg','df'],
   'tooltipId':'whiteboard1',
   'xAxisFontSize':'14',
   'fontFamily':'PingFang SC,Microsoft YaHei,Microsoft JhengHei',

@@ -5,7 +5,10 @@ import CONFIG,{XHR} from '../static/js/request';
 let MallStore = Reflux.createStore({
   init: function () {
     this.data = {
-        indexLoading:true
+        indexLoading:true,
+        originData:{
+          content:[]
+        }
     };
   },
   listenables: MallActions,
@@ -16,13 +19,23 @@ let MallStore = Reflux.createStore({
       AppStore.onMallTab();
   },
   
-  onLoadData:async function(){
+  onLoadData:async function(jsonobj,originData){
     try{
-        const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.currentShopCar,{},'get');
-        this.data.originData=res;
-        ShopcarActions.handleData(res);
+        const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.mallInfo,jsonobj,'post');
+        if(originData.content.length<1){
+          this.data.originData= res;
+        }else{
+          let content=originData.content;
+          this.data.originData=res;
+          this.data.originData.content=content.concat(res.content);
+        }
+        this.data.indexLoading=false;
     }catch(err){
+        this.data.indexLoading=false;
+        this.data.originData=originData;
         alert('请求异常')
+    }finally{
+      this.trigger(this.data);
     }
   }
 })

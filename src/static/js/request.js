@@ -27,9 +27,11 @@ var CONFIG={
   "queryShop":"/api/shop/query",
   "indexData":"/api/app/index/data",
   "findnearby":"/api/shop/findNearbyShop",
-  "userIndexinfo":"/api/user/userIndexInfo"
+  "userIndexinfo":"/api/user/userIndexInfo",
+  "mallInfo":"/api/app/index/mall/query"
   },
   'CurrentVersion':'developversion/',
+  'pageSize':5,
   'http':{
     get:function (url,params) {
       let hasKey=false;

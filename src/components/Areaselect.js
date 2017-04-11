@@ -36,6 +36,12 @@ export default class AreaPicker extends Component{
             realTown:AreaJson.province_city_town[this.props.currentActive].sub[this.props.currentActiveCity].sub ? AreaJson.province_city_town[this.props.currentActive].sub[this.props.currentActiveCity].sub[this.props.currentActiveTown].name : ''
         })
     }
+    componentWillUnmount(){
+        document.body.removeEventListener('touchmove',function (e) {
+            //否则ios在弹出选择器之后还可以滚动屏幕
+            e.preventDefault();
+        },true);
+    }
     setSelectedName(){
         this.setState({
             realProvince:AreaJson.province_city_town[this.state.currentActive].name,
@@ -402,5 +408,5 @@ var moveVolume3 = 0;
 var ShowHeight = 36;
 document.body.addEventListener('touchmove',function (e) {
     //否则ios在弹出选择器之后还可以滚动屏幕
-    e.preventDefault();
-});
+    // e.preventDefault();
+},true);

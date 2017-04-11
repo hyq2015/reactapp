@@ -11,7 +11,7 @@ let BowerWebpackPlugin = require('bower-webpack-plugin');
 let config = Object.assign({}, baseConfig, {
   entry: {
     app:[
-      'webpack-dev-server/client?http://localhost:' + defaultSettings.port,
+      'webpack-dev-server/client?http://192.168.31.204:' + defaultSettings.port,
       'webpack/hot/only-dev-server',
       './src/index'
     ],

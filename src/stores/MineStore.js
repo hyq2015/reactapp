@@ -22,8 +22,10 @@ let MineStore = Reflux.createStore({
     }catch(err){
       if(err=='noRight'){
         this.data.msg = 'noRight';
+        alert('没有权限');
       }else{
         this.data.msg = 'error';
+        alert('请求异常');
       }
       this.data.indexData = null;
     }finally{
