@@ -23,7 +23,7 @@ export default class Mall extends Component{
     constructor(props){
         super(props);
         this.state={
-            loadMore:false,
+            loadMore:true,
             indexLoading:true,
             itemsChanged:true,
             typeGood:true,
@@ -97,12 +97,7 @@ export default class Mall extends Component{
     onScrollEnd(){
         if(Math.abs(myScroll.y)>=Math.abs(myScroll.maxScrollY)-150){
                 if(!this.state.originData.last){
-                    if(!this.state.loadMore){
-                        this.setState({
-                            loadMore:true
-                        });
-                        this._fetchaData({'size':CONFIG.pageSize,'fromId':this.state.originData.content[this.state.originData.content.length-1].id})
-                    }
+                    this._fetchaData({'size':CONFIG.pageSize,'fromId':this.state.originData.content[this.state.originData.content.length-1].id})
                 }else{
                     if(this.state.loadMore){
                         this.setState({
