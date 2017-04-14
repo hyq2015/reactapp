@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
 import '../static/styles/orderlist.less';
-import Iscroll from 'iscroll/build/iscroll-probe';
 import Topnavbar from './Topnavbar';
 import Loader from './Loader';
 import NoDataPage from './NoData';
@@ -11,6 +10,8 @@ import MyorderStore from '../stores/MyorderStore';
 import MyorderActions from '../actions/MyorderActions';
 import AppActions from '../actions/AppActions';
 var myScroll=null;
+var scrollerHeight=0;
+const windowHeight=window.innerHeight;
 const initOrigindata={
     content:[],
     last:false
@@ -55,18 +56,13 @@ export default class Myorder extends Component{
             this.setState(state);
         }.bind(this));
         this._loadData({'size':CONFIG.pageSize},this.state.originData);
-        document.getElementById('OrderscrollWrapper').addEventListener('touchmove',function(e){e.preventDefault()});
-        myScroll =new Iscroll('#OrderscrollWrapper',{
-            preventDefault: false,
-            mouseWheel:false,
-            probeType:2,
-            zoom:false,
-            bounce:false,
-            scrollbars:false,
-            useTransform:true
-        });
-        myScroll.on('scroll',this.onScroll);
-        myScroll.on('scrollEnd',this.onScrollEnd);
+        document.getElementById('OrderscrollWrapper').addEventListener('touchmove',this.onScroll);
+        document.getElementById('OrderscrollWrapper').addEventListener('touchend',this.onScrollEnd);
+    }
+     _refreshScroll(){
+         if(this.refs.scroller){
+            scrollerHeight=this.refs.scroller.offsetHeight;
+         }
         
     }
     onScroll(){
@@ -79,20 +75,23 @@ export default class Myorder extends Component{
         }
     }
     onScrollEnd(){
-        if(Math.abs(myScroll.y)>=Math.abs(myScroll.maxScrollY)-150){
-            if(!this.state.originData.last && !this.state.loading){
-                this.setState({
-                    loading:true
-                })
-                this._loadData({'size':CONFIG.pageSize,'fromId':this.state.originData.content[this.state.originData.content.length-1].id},this.state.originData)
-            }else{
-                if(this.state.loadMore){
+        if(this.refs.scroller){
+            if(document.body.scrollTop>scrollerHeight-windowHeight-150){
+                if(!this.state.originData.last && !this.state.loading){
                     this.setState({
-                        loadMore:false
+                        loading:true
                     })
+                    this._loadData({'size':CONFIG.pageSize,'fromId':this.state.originData.content[this.state.originData.content.length-1].id})
+                }else{
+                    if(this.state.loadMore){
+                        this.setState({
+                            loadMore:false
+                        })
+                    }
                 }
             }
         }
+        
     }
     deleteOrder(orderid){
         MyorderActions.deleteOrder(orderid,this.state.originData)
@@ -106,7 +105,7 @@ export default class Myorder extends Component{
             AppActions.loaded();
            
         }
-        myScroll.refresh();
+        this._refreshScroll();
         if(this.state.originData.last){
             if(this.state.loadMore){
                 this.setState({
@@ -126,13 +125,11 @@ export default class Myorder extends Component{
         if (_.isFunction(this.unsubscribe)){
             this.unsubscribe();
         };
-        document.body.removeEventListener('touchmove',function(e){e.preventDefault()});
     }
     _loadData(obj,origindata){
         MyorderActions.loadData(obj,origindata);
     }
     _changeNav(item,index){
-        console.log(index===0)
         let navs=this.state.navbars;
         for(let [index1,item1] of navs.entries()){
             if(index1!==index){
@@ -143,6 +140,7 @@ export default class Myorder extends Component{
         }
         this.setState({
             navbars:navs,
+            loading:true,
             nodata:false,
             loadMore:true,
             originData:initOrigindata
@@ -195,12 +193,12 @@ export default class Myorder extends Component{
                 <Topnavbar navs={this.state.navbars} changeNav={this._changeNav}/>
                 <div style={{height:47}}></div>
                 {this.state.nodata ? NoDataPage(this.state.activenav,'order') : 
-                    <div id="OrderscrollWrapper" style={{height:'calc(100vh - 58px)'}}>
+                    <div id="OrderscrollWrapper" ref="scroller" style={{height:'calc(100vh - 58px)'}}>
                     <div>
                         {this.state.originData.content.map((item,index)=>
                             <SingleOrderCard orderdetail={this.orderDetail} deleteOrder={this.deleteOrder} checkCode={this.checkCode} checkLogistic={this.checkLogistic} key={item.id} order={item}/>
                         )}
-                        <Loader loadMore={this.state.loadMore} canload={this.state.canload}/>
+                        <Loader loading={this.state.loading} loadMore={this.state.loadMore} canload={this.state.canload}/>
                     </div>
                 </div>
                 }

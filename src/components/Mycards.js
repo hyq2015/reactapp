@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
 import '../static/styles/mycard.less';
-import Iscroll from 'iscroll/build/iscroll-probe';
 import Topnavbar from './Topnavbar';
 import Loader from './Loader';
 import NoDataPage from './NoData';
@@ -10,7 +9,8 @@ import 'babel-polyfill';
 import MycardStore from '../stores/MycardStore';
 import MycardActions from '../actions/MycardActions';
 import AppActions from '../actions/AppActions';
-var myScroll=null;
+var scrollerHeight=0;
+const windowHeight=window.innerHeight;
 const initOrigindata={
     content:[],
     last:false
@@ -51,18 +51,9 @@ export default class Mycard extends Component{
             this.setState(state);
         }.bind(this));
         this._loadData({'size':CONFIG.pageSize,used:false},this.state.originData);
-        document.getElementById('CardscrollWrapper').addEventListener('touchmove',function(e){e.preventDefault()});
-        myScroll =new Iscroll('#CardscrollWrapper',{
-            preventDefault: false,
-            mouseWheel:false,
-            probeType:2,
-            zoom:false,
-            bounce:false,
-            scrollbars:false,
-            useTransform:true
-        });
-        myScroll.on('scroll',this.onScroll);
-        myScroll.on('scrollEnd',this.onScrollEnd);
+        document.getElementById('CardscrollWrapper').addEventListener('touchmove',this.onScroll);
+        document.getElementById('CardscrollWrapper').addEventListener('touchend',this.onScrollEnd);
+        
         
     }
     onScroll(){
@@ -75,20 +66,23 @@ export default class Mycard extends Component{
         }
     }
     onScrollEnd(){
-        if(Math.abs(myScroll.y)>=Math.abs(myScroll.maxScrollY)-150){
-            if(!this.state.originData.last && !this.state.loading){
-                this.setState({
-                    loading:true
-                })
-                this._loadData({'size':CONFIG.pageSize,'fromId':this.state.originData.content[this.state.originData.content.length-1].id},this.state.originData)
-            }else{
-                if(this.state.loadMore){
+        if(this.refs.scroller){
+            if(document.body.scrollTop>scrollerHeight-windowHeight-150){
+                if(!this.state.originData.last && !this.state.loading){
                     this.setState({
-                        loadMore:false
+                        loading:true
                     })
+                    this._loadData({'size':CONFIG.pageSize,'fromId':this.state.originData.content[this.state.originData.content.length-1].id},this.state.originData)
+                }else{
+                    if(this.state.loadMore){
+                        this.setState({
+                            loadMore:false
+                        })
+                    }
                 }
             }
         }
+    
     }
     deleteOrder(orderid){
         MycardActions.deleteOrder(orderid,this.state.originData)
@@ -99,7 +93,7 @@ export default class Mycard extends Component{
             AppActions.loaded();
            
         }
-        myScroll.refresh();
+        this._refreshScroll();
         if(this.state.originData.last){
             if(this.state.loadMore){
                 this.setState({
@@ -119,7 +113,12 @@ export default class Mycard extends Component{
         if (_.isFunction(this.unsubscribe)){
             this.unsubscribe();
         };
-        document.body.removeEventListener('touchmove',function(e){e.preventDefault()});
+    }
+     _refreshScroll(){
+         if(this.refs.scroller){
+            scrollerHeight=this.refs.scroller.offsetHeight;
+            console.log(scrollerHeight)
+         }
     }
     _loadData(obj,origindata){
         MycardActions.loadData(obj,origindata);
@@ -138,6 +137,7 @@ export default class Mycard extends Component{
             navbars:navs,
             nodata:false,
             loadMore:true,
+            loading:true,
             originData:initOrigindata
         });
         if(this.state.activenav!==index){
@@ -171,12 +171,12 @@ export default class Mycard extends Component{
                 <Topnavbar navs={this.state.navbars} changeNav={this._changeNav}/>
                 <div style={{height:47}}></div>
                 {this.state.nodata ? NoDataPage(this.state.activenav,'card') : 
-                    <div id="CardscrollWrapper" style={{height:'calc(100vh - 60px)'}}>
+                    <div id="CardscrollWrapper" ref="scroller" style={{minHeight:'calc(100vh - 60px)'}}>
                     <div>
                         {this.state.originData.content.map((item,index)=>
                             <MineCard style={{marginBottom:10}} card={item} key={item.id}/>
                         )}
-                        <Loader loadMore={this.state.loadMore} canload={this.state.canload}/>
+                        <Loader loading={this.state.loading} loadMore={this.state.loadMore} canload={this.state.canload}/>
                     </div>
                 </div>
                 }

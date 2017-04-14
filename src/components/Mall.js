@@ -5,7 +5,6 @@ import CONFIG from '../static/js/request';
 import Mediacard from './Mediacard';
 import MallSearchbar from './MallSearchbar';
 import Loader from './Loader';
-import Iscroll from 'iscroll/build/iscroll-probe';
 import 'babel-polyfill';
 import MallStore from '../stores/MallStore';
 import MallActions from '../actions/MallActions';
@@ -14,11 +13,13 @@ import { ListView } from 'antd-mobile';
 import '../static/styles/mall.less';
 const playStyle={
     minHeight:'calc(100vh - 49px)',
-    height:'calc(100vh - 49px)'
+    paddingBottom:50
 }
 var myScroll=null;
 var initState=true;
 var bottomState=false;
+var scrollerHeight=0;
+const windowHeight=window.innerHeight;
 export default class Mall extends Component{
     constructor(props){
         super(props);
@@ -47,7 +48,6 @@ export default class Mall extends Component{
             this.unsubscribe();
         };
         myScroll=null;
-        document.body.removeEventListener('touchmove',function(e){e.preventDefault()});
     }
     componentDidMount(){
         this.unsubscribe = MallStore.listen(function(state) {
@@ -55,28 +55,21 @@ export default class Mall extends Component{
         }.bind(this));
         document.title='商城';
         this._fetchaData({'size':CONFIG.pageSize});
-        document.getElementById('mallContainer').addEventListener('touchmove',function(e){e.preventDefault()});
-        myScroll =new Iscroll('#mallContainer',{
-            preventDefault: false,
-            probeType:2,
-            zoom:false,
-            bounce:false,
-            scrollbars:false,
-            useTransform:true,
-            deceleration:0.0006
-        });
-        myScroll.on('scroll',this.onScroll);
-        myScroll.on('scrollEnd',this.onScrollEnd);
+        document.getElementById('mallContainer').addEventListener('touchmove',this.onScroll);
+        document.getElementById('mallContainer').addEventListener('touchend',this.onScrollEnd);
         
     }
     
     componentDidUpdate(){
         if(!this.state.indexLoading){
             AppActions.loaded();
-           
         }
-        myScroll.refresh();
+        this._refreshScroll();
 
+    }
+    _refreshScroll(){
+        scrollerHeight=this.refs.scroller.offsetHeight;
+        console.log(scrollerHeight)
     }
     switchSearchType(){
         this.setState({
@@ -86,7 +79,7 @@ export default class Mall extends Component{
     _fetchaData(obj){
         MallActions.loadData(obj,this.state.originData);
     }
-    onScroll(){
+    onScroll(e){
         if(this.state.originData.last){
             if(this.state.loadMore){
                 this.setState({
@@ -95,8 +88,8 @@ export default class Mall extends Component{
             }
         }
     }
-    onScrollEnd(){
-        if(Math.abs(myScroll.y)>=Math.abs(myScroll.maxScrollY)-150){
+    onScrollEnd(e){
+        if(document.body.scrollTop>scrollerHeight-windowHeight-150){
             if(!this.state.originData.last && !this.state.loading){
                 this.setState({
                     loading:true
@@ -115,7 +108,7 @@ export default class Mall extends Component{
         
     render(){
         return(
-            <div id="mallContainer" style={playStyle}>
+            <div id="mallContainer" style={playStyle} ref="scroller">
                 <div>
                     <MallSearchbar type={this.state.typeGood} switchSearchType={this.switchSearchType}/>
                     {this.state.originData.content.length>0 ? 
@@ -123,7 +116,7 @@ export default class Mall extends Component{
                             <Mediacard key={index} imgurl={item.imgurl} proTitle={item.name} desc={item.intro} price={item.price}/>
                         )
                     :''}
-                    <Loader loadMore={this.state.loadMore} canload={this.state.canload}/>
+                    <Loader loading={this.state.loading} loadMore={this.state.loadMore} canload={this.state.canload}/>
                 </div>
             </div>
         )
