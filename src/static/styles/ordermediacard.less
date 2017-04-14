@@ -1,0 +1,101 @@
+@lineColor:#E5E5E5;
+@bluecolor:#00c8fb;
+@strongColor:#7b7b7b;
+@fadeColor:#bbbbbb;
+@contentColor:#000;
+@graycolor:#f2f2f2;
+@redcolor:#ff7e4f;
+.orderdetail-mediapanel{
+    padding:15px;
+    position: relative;
+    &:after{
+            content: " ";
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            height: 1px;
+            border-top: 1px solid #E5E5E5;
+            color: #E5E5E5;
+            -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+            -webkit-transform: scaleY(0.5);
+            transform: scaleY(0.5);
+            left: 15px;
+        }
+    .checkCode{
+        text-align: right;
+        a{
+            border-radius: 2px;
+            border: 1px solid @redcolor;
+            color: @redcolor;
+            padding: 5px 10px;
+            font-size: 14px;
+        }
+    }
+        
+    .orderdetail-container{
+        position: relative;display: flex;
+        .detailLeft{
+            -webkit-box-flex: 3;
+            -webkit-flex: 3;
+            flex: 3;
+            height: 86px;
+        }
+        .detailName{
+            white-space: normal;
+            overflow: visible;
+            padding-right: 5px;
+            font-size: 14px;
+            line-height: 1.28em;
+            font-weight: 400;
+            width: auto;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-wrap: normal;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+        .detailScale{
+            padding-right: 15px;
+            font-size: 14px;
+            margin-top: 10px;
+            color: @strongColor;
+            line-height: 1.2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+        .detail-right{
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            text-align: right;
+            .currentPrice{
+                color: #000;
+                font-size: 14px;
+                margin-top: 0;
+                line-height: 1.28em;
+            }
+            .currentCount{
+                margin-top: 10px;
+                color: #000;
+                font-size: 14px;
+                margin-top: 5px;
+                line-height: 1.1em;
+            }
+        }
+    }
+    .orderdetail-mediapanel__img{
+        margin-right: .8em;
+        width: 100px;
+        height: 86px;
+        text-align: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        border-radius: 2px;
+    }
+}
