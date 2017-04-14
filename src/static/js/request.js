@@ -28,10 +28,12 @@ var CONFIG={
   "indexData":"/api/app/index/data",
   "findnearby":"/api/shop/findNearbyShop",
   "userIndexinfo":"/api/user/userIndexInfo",
-  "mallInfo":"/api/app/index/mall/query"
+  "mallInfo":"/api/app/index/mall/query",
+  "allorder":"/api/order/query",
+  "allcard":"/api/card/query"
   },
   'CurrentVersion':'developversion/',
-  'pageSize':5,
+  'pageSize':10,
   'http':{
     get:function (url,params) {
       let hasKey=false;

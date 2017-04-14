@@ -58,6 +58,7 @@ export default class Play extends Component{
 
       this._fetchData();
       this._fetchNearby();
+     
     }
     componentDidUpdate(){
         if(_.has(this.state.indexData,'RANK')){

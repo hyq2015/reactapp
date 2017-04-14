@@ -28,46 +28,71 @@ class AppComponent extends Component {
         this.checkRoute(this.props.location.pathname);
         // browserHistory.getCurrentLocation().pathname
   }
-  
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      window.scrollTo(0, 0)
+    }
+  }
   checkRoute(name){
     switch(name){
             case '/play':
-            this.setState({
-              activebar:1,
-              tabshow:true
-            });
-            break;
+              this.setState({
+                activebar:1,
+                tabshow:true
+              });
+              break;
             case '/mall':
-            this.setState({
-              activebar:2,
-              tabshow:true
-            });
-            break;
+              this.setState({
+                activebar:2,
+                tabshow:true
+              });
+              break;
             case '/mine':
-            this.setState({
-              activebar:3,
-              tabshow:true
-            });
-            break;
+              this.setState({
+                activebar:3,
+                tabshow:true
+              });
+              break;
             case '/address/list':
-            this.setState({
-              tabshow:false
-            })
-            break;
+              this.setState({
+                tabshow:false
+              })
+              break;
             case '/address/add':
-            this.setState({
-              tabshow:false,
-              loading:false,
-              pagebottom:0
-            });
-            break;
+              this.setState({
+                tabshow:false,
+                loading:false,
+                pagebottom:0
+              });
+              break;
             case '/shopcar':
-            this.setState({
-              tabshow:false,
-              loading:true,
-              pagebottom:0
-            })
-            break;
+              this.setState({
+                tabshow:false,
+                loading:true,
+                pagebottom:0
+              })
+              break;
+            case '/orders':
+              this.setState({
+                tabshow:false,
+                loading:true,
+                pagebottom:0
+              })
+              break;
+            case '/cards':
+              this.setState({
+                tabshow:false,
+                loading:true,
+                pagebottom:0
+              })
+              break;
+            case '/order/detail':
+              this.setState({
+                tabshow:false,
+                loading:true,
+                pagebottom:0
+              })
+              break;
         }
   }
   changeTab(index){

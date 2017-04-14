@@ -9,6 +9,10 @@ import Mine from './components/Mine';
 import AddressList from './components/AddressList';
 import Addaddress from './components/Addaddress';
 import Shopcar from './components/Shopcar';
+import Myorders from './components/Myorders';
+import Mycard from './components/Mycards';
+import Orderdetail from './components/Orderdetail';
+
 import './static/styles/reset.css';
 import { Router, Route, IndexRoute, Link ,hashHistory } from 'react-router';
 
@@ -29,5 +33,9 @@ ReactDOM.render((<Router history={hashHistory}>
       <Route path="address/list" components={AddressList}/>
       <Route path="address/add" components={Addaddress}/>
       <Route path="shopcar" components={Shopcar}/>
+      <Route path="orders" components={Myorders}/>
+      <Route path="cards" components={Mycard}/>
+      <Route path="order/detail" components={Orderdetail}/>
+      
     </Route>
 </Router>), document.getElementById('app'));

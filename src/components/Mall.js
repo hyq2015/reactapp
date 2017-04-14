@@ -28,6 +28,7 @@ export default class Mall extends Component{
             itemsChanged:true,
             typeGood:true,
             canload:true,
+            loading:false,
             originData:{
                 content:[],
                 last:false
@@ -45,7 +46,6 @@ export default class Mall extends Component{
         if (_.isFunction(this.unsubscribe)){
             this.unsubscribe();
         };
-        console.log(111111111)
         myScroll=null;
         document.body.removeEventListener('touchmove',function(e){e.preventDefault()});
     }
@@ -62,7 +62,8 @@ export default class Mall extends Component{
             zoom:false,
             bounce:false,
             scrollbars:false,
-            useTransform:true
+            useTransform:true,
+            deceleration:0.0006
         });
         myScroll.on('scroll',this.onScroll);
         myScroll.on('scrollEnd',this.onScrollEnd);
@@ -96,16 +97,19 @@ export default class Mall extends Component{
     }
     onScrollEnd(){
         if(Math.abs(myScroll.y)>=Math.abs(myScroll.maxScrollY)-150){
-                if(!this.state.originData.last){
-                    this._fetchaData({'size':CONFIG.pageSize,'fromId':this.state.originData.content[this.state.originData.content.length-1].id})
-                }else{
-                    if(this.state.loadMore){
-                        this.setState({
-                            loadMore:false
-                        })
-                    }
+            if(!this.state.originData.last && !this.state.loading){
+                this.setState({
+                    loading:true
+                })
+                this._fetchaData({'size':CONFIG.pageSize,'fromId':this.state.originData.content[this.state.originData.content.length-1].id})
+            }else{
+                if(this.state.loadMore){
+                    this.setState({
+                        loadMore:false
+                    })
                 }
             }
+        }
     }
 
         

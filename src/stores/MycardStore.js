@@ -1,27 +1,29 @@
 import Reflux from 'reflux';
-import MallActions from '../actions/MallActions';
+import MycardActions from '../actions/MycardActions';
 import AppStore from './AppStore';
+import _ from 'lodash';
 import CONFIG,{XHR} from '../static/js/request';
-let MallStore = Reflux.createStore({
+let MycardStore = Reflux.createStore({
   init: function () {
     this.data = {
         indexLoading:true,
-        originData:{
-          content:[]
-        }
+        navbars:[
+                {'name':'未使用','active':true},
+                {'name':'已使用','active':false},
+                {'name':'已过期','active':false}
+            ],
+        originData:{},
+        nodata:false
     };
   },
-  listenables: MallActions,
+  listenables: MycardActions,
   getInitialState() {
     return this.data
-  },
-  onInit:function(){
-      AppStore.onMallTab();
   },
   
   onLoadData:async function(jsonobj,originData){
     try{
-        const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.mallInfo,jsonobj,'post');
+        const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.allcard,jsonobj,'post');
         if(originData.content.length<1){
           this.data.originData= res;
         }else{
@@ -35,9 +37,15 @@ let MallStore = Reflux.createStore({
         this.data.originData=originData;
         alert('请求异常')
     }finally{
-      this.data.loading=false;
-      this.trigger(this.data);
+        if(this.data.originData.content.length<1){
+            this.data.nodata=true;
+        }else{
+            this.data.nodata=false;
+        }
+        this.data.loading=false;
+        this.trigger(this.data);
     }
-  }
+  },
+  
 })
-export default MallStore
+export default MycardStore

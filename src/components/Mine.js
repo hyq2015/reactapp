@@ -86,13 +86,13 @@ export default class Mine extends Component{
                             </Link>
                         </nav>
                         <nav className="centerbar">
-                            <Link to="/mine">
+                            <Link to="orders">
                                 <span className="count">{this.state.indexData.orderCount}</span>
                                 <span className="navname">订单</span>
                             </Link>
                         </nav>
                         <nav>
-                            <Link to="/mine">
+                            <Link to="cards">
                                 <span className="count">{this.state.indexData.cardCount}</span>
                                 <span className="navname">卡券</span>
                             </Link>

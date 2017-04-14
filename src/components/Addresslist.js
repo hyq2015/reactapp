@@ -25,8 +25,8 @@ export default class AddressList extends Component{
         this._comfirmDelete=this._comfirmDelete.bind(this);
         this._cancelDelete=this._cancelDelete.bind(this);
         this._setDefault=this._setDefault.bind(this);
-        this.goAdd=this.goAdd.bind(this);
-        this.editAddress=this.editAddress.bind(this);
+        this._goAdd=this._goAdd.bind(this);
+        this._editAddress=this._editAddress.bind(this);
     }
     componentWillMount(){
         AppActions.disabletab();
@@ -71,20 +71,20 @@ export default class AddressList extends Component{
     _setDefault(id){
         AddresslistActions.setDefault(id);
     }
-    goAdd(){
+    _goAdd(){
         this.context.router.push('address/add?name=ricky')
     }
-    editAddress(id){
-        this.context.router.push('address/add?editId='+id)
+    _editAddress(id){
+         this.context.router.push('address/add?editId='+id)
     }
     render(){
         return(
             <div id="addresscontainer">
                 {this.state.indexData.addressList && this.state.indexData.addressList.length>0 ? this.state.indexData.addressList.map((item,index)=>
-                    <SingleAddress editAddress={this.editAddress} key={item.id} addressItem={item} del={this._deleteDialogShow} setDefault={this._setDefault}/>
+                    <SingleAddress _editAddress={this._editAddress} key={item.id} addressItem={item} del={this._deleteDialogShow} setDefault={this._setDefault}/>
                 ) : <Noaddress/>}
                 
-                <Link onClick={this.goAdd} className="addaddress">
+                <Link onClick={this._goAdd} className="addaddress">
                     <span className="icon-llalbumshopselectorcreate iconfont"></span>
                     <span className="addtext">新增地址</span>
                 </Link>
@@ -130,7 +130,7 @@ class SingleAddress extends Component{
                             <span style={{marginLeft:2}}>设为默认</span>
                         </div>
                         <div className="editMenuright">
-                            <span onClick={()=>this.props.editAddress(this.props.addressItem.id)}>
+                            <span onClick={()=>this.props._editAddress(this.props.addressItem.id)}>
                                 <span className="icon-bianji iconfont"></span>
                                 <span style={{marginLeft:2}}>编辑</span>
                             </span>

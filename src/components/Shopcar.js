@@ -8,6 +8,7 @@ import '../static/styles/weui.css';
 import '../static/styles/shopcar.less';
 import '../static/styles/media.css';
 import 'babel-polyfill';
+import {Link} from 'react-router';
 import ShopcarStore from '../stores/ShopcarStore';
 import ShopcarActions from '../actions/ShopcarActions';
 import AppActions from '../actions/AppActions';
@@ -247,13 +248,13 @@ export default class Shopcar extends Component{
         return(
             <div id="shopcarContainer" className="page">
                 {this.state.shoplist.length<1 ? 
-                    <div className="page msg_warn js_show" id="noproduct">
+                    <div className="page msg_warn js_show" id="noproduct" style={{overflow:'hidden'}}>
                         <div className="weui-msg">
                             <div className="weui-msg__icon-area"><img src="../static/images/order_icon_order_none@2x.png" alt=""/></div>
                             <div className="weui-msg__text-area">
                                 <h2 className="weui-msg__title">购物车空空如也</h2>
                             </div>
-                            <a className="goshop">逛一逛</a>
+                            <Link to="mall" className="goshop">逛一逛</Link>
                         </div>
                     </div> :
                     <div>

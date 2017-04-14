@@ -21,7 +21,7 @@ export default class MineCard extends Component{
                 </div>
                 <div className="minecard-content">
                     <div className="iconcircle">
-                        <span className="iconfont icon-youhuiquan"></span>
+                        <span className="iconfont icon-youhuiquan" style={{color:'#fff'}}></span>
                     </div>
                     <div className="carddetail">
                         <div className="detail-content">
