@@ -25,6 +25,14 @@ let OrderdetailStore = Reflux.createStore({
         this.data.originData={};
         alert('请求异常')
     }finally{
+        let needAddress=false;
+        for(let item of this.data.originData.items){
+            if(item.needAddress){
+                needAddress=true;
+                break;
+            }
+        }
+        this.data.needAddress=needAddress;
         this.trigger(this.data);
     }
   }
