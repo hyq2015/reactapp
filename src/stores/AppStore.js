@@ -1,4 +1,5 @@
 import Reflux from 'reflux';
+import CONFIG,{XHR} from '../static/js/request';
 import AppActions from '../actions/AppActions';
 let AppStore = Reflux.createStore({
   init: function () {
@@ -9,6 +10,18 @@ let AppStore = Reflux.createStore({
   listenables: AppActions,
   getInitialState() {
     return this.data
+  },
+  onLoadUser:async function(){
+    try{
+        const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.userlogin,{},'get');
+        if(res.openid){
+            this.data.user=res;
+        }
+    }catch(err){
+        this.data.user=null;
+    }finally{
+        this.trigger(this.data);
+    }
   },
   onLoaded:function(){
     this.data.loading=false;

@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {render} from 'react-dom';
+import _ from 'lodash';
 const PUBLIC=require('../static/js/public.js') ;
 import FooterBtns from './Footer';
 import Dialog from './Dialog';
@@ -40,6 +40,7 @@ export default class Shopcar extends Component{
         this.confirmDetail=this.confirmDetail.bind(this);
         this.showDetail=this.showDetail.bind(this);
         this.submitCase=this.submitCase.bind(this);
+        
     }
     componentWillMount(){
         this._init();
@@ -52,11 +53,13 @@ export default class Shopcar extends Component{
     }
     componentDidMount(){
         this.unsubscribe = ShopcarStore.listen(function(state) {
-        this.setState(state);
-      }.bind(this));
+            this.setState(state);
+        }.bind(this));
         this._fetchData();
         document.title="购物车";
+        
     }
+    
     componentDidUpdate(){
         if(!this.state.indexLoading){
             AppActions.loaded();
@@ -82,18 +85,27 @@ export default class Shopcar extends Component{
         })
     }
     submitCase(){
-        let shoplist=this.state.shoplist; 
-        let canSubmit=false;
-        for(let item of shoplist){
-            for(let single of item.products)
-            if(single.amount!==0 && single.checked){
-                canSubmit=true;
-                break;
+        if(this.state.editAll){
+            console.log('删除')
+        }else{
+            let shoplist=this.state.shoplist; 
+            let canSubmit=false;
+            let productIds='';
+            for(let item of shoplist){
+                for(let single of item.products){
+                    if(single.amount!==0 && single.checked){
+                        productIds+=single.id+':';
+                        canSubmit=true;
+                    }
+                }
+            }
+            if(!canSubmit){
+                alert('您还没有选择商品')
+            }else{
+                this.context.router.push('order/confirmorder?orders='+productIds)
             }
         }
-        if(!canSubmit){
-            alert('您还没有选择商品')
-        }
+        
     }
     confirmDetail(scale){
         let shoplist=this.state.shoplist;
@@ -360,4 +372,7 @@ export default class Shopcar extends Component{
             
         )
     }
+}
+Shopcar.contextTypes = {  
+    router: React.PropTypes.object
 }

@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import {render} from 'react-dom';
 import { Link} from 'react-router';
 import CONFIG from '../static/js/request';
 import Mediacard from './Mediacard';
@@ -9,6 +8,7 @@ import 'babel-polyfill';
 import MallStore from '../stores/MallStore';
 import MallActions from '../actions/MallActions';
 import AppActions from '../actions/AppActions';
+import AppStore from '../stores/AppStore';
 import { ListView } from 'antd-mobile';
 import '../static/styles/mall.less';
 const playStyle={
@@ -57,6 +57,7 @@ export default class Mall extends Component{
         this._fetchaData({'size':CONFIG.pageSize});
         document.getElementById('mallContainer').addEventListener('touchmove',this.onScroll);
         document.getElementById('mallContainer').addEventListener('touchend',this.onScrollEnd);
+        console.log(AppStore)
         
     }
     
@@ -69,7 +70,6 @@ export default class Mall extends Component{
     }
     _refreshScroll(){
         scrollerHeight=this.refs.scroller.offsetHeight;
-        console.log(scrollerHeight)
     }
     switchSearchType(){
         this.setState({
@@ -110,7 +110,7 @@ export default class Mall extends Component{
         return(
             <div id="mallContainer" style={playStyle} ref="scroller">
                 <div>
-                    <MallSearchbar type={this.state.typeGood} switchSearchType={this.switchSearchType}/>
+                    <MallSearchbar canInput={false} type={this.state.typeGood} switchSearchType={this.switchSearchType}/>
                     {this.state.originData.content.length>0 ? 
                         this.state.originData.content.map((item,index)=>
                             <Mediacard key={index} imgurl={item.imgurl} proTitle={item.name} desc={item.intro} price={item.price}/>

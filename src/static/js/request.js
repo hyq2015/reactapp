@@ -30,7 +30,9 @@ var CONFIG={
   "userIndexinfo":"/api/user/userIndexInfo",
   "mallInfo":"/api/app/index/mall/query",
   "allorder":"/api/order/query",
-  "allcard":"/api/card/query"
+  "allcard":"/api/card/query",
+  "hotsearch":"/api/app/index/config",
+  "userlogin":"/api/wechat/user"
   },
   'CurrentVersion':'developversion/',
   'pageSize':10,

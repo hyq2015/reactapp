@@ -23,6 +23,7 @@ export default class Orderdetail extends Component{
         };
         this._loadData=this._loadData.bind(this);
         this._setTitle=this._setTitle.bind(this);
+        this.changeAddress=this.changeAddress.bind(this);
     }
     componentWillMount(){
         AppActions.disabletab();
@@ -40,6 +41,9 @@ export default class Orderdetail extends Component{
             AppActions.loaded();
         }
         this._setTitle();
+        
+    }
+    changeAddress(){
         
     }
     _setTitle(){
@@ -79,15 +83,16 @@ export default class Orderdetail extends Component{
             <div id="OrderDetailContainer">
                 {this.state.originData.logisticsCompany ? 
                     <div className="ponumber">
-                        <span>配送方式：</span>
+                        <span>配送方式:</span>
                         <span>{this.state.originData.logisticsCompany}</span>
-                        <span style={{marginLeft:10}}>快递单号：</span>
+                        <span style={{marginLeft:10}}>快递单号:</span>
                         <span style={{wordBreak: 'break-all'}}>{this.state.originData.logisticsCode}</span>
                     </div>
                     : (!this.state.needAddress ? <Userphone phone={this.state.originData.customerMobile}/> : '')
                 }
                 {this.state.needAddress ? 
                     <UserInfo 
+                    changeAddress={this.changeAddress}
                     address={this.state.originData.receiverAddressDto.province+this.state.originData.receiverAddressDto.city+this.state.originData.receiverAddressDto.area+this.state.originData.receiverAddressDto.receiverAddress} 
                     name={this.state.originData.receiverAddressDto.receiverName} 
                     phone={this.state.originData.receiverAddressDto.receiverPhone}
@@ -95,7 +100,7 @@ export default class Orderdetail extends Component{
                 : ''
                 }
                 
-                <OrderdetailCard order={this.state.originData}/>
+                <OrderdetailCard order={this.state.originData} orderItem={this.state.originData.items}/>
                 <Ordercode ordercode={this.state.originData.code} submittime={this.state.originData.creation} paytime={this.state.originData.paidTime}/>
             </div>
         )

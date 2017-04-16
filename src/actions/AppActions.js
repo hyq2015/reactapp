@@ -8,7 +8,8 @@ let AppActions = Reflux.createActions({
   'mallTab':{},
   'playTab':{},
   'loaded':{},
-  'disableLoading':{}
+  'disableLoading':{},
+  'loadUser':{async:true}
 });
 
 export default AppActions

@@ -61,7 +61,7 @@ export default class AreaPicker extends Component{
                     
                     <div style={{width: '33%',height: 260,position: 'relative',overflow: 'hidden'}} id="container">
                         <div style={{width: '100%',height: '100%',position: 'relative',overflowX: 'hidden',boxSizing: 'border-box'}} id="Ricky1">
-                            <ul style={{width: '100%',paddingLeft:0,height: 36,lineHeight: '36px', transform: 'perspective(1000px) rotateY(0deg) rotateX(0deg)', transition: '150ms ease-out'}} id="list">
+                            <ul style={{width: '100%',paddingLeft:0,height: 36,lineHeight: '36px', transform: 'perspective(1000px) rotateY(0deg) rotateX(0deg)', transition: 'transform 50ms ease-out'}} id="list">
                                 {AreaJson.province_city_town.map((item,index)=>
                                      <li key={index} className={(index<this.state.currentActive-2 || index>this.state.currentActive+3) ? 'visible litag province' : 'litag province'}
                                         style={{transform:'translateZ(100px) rotateX('+(-(index)*20)+'deg)'}}>{item.name}</li>
@@ -72,7 +72,7 @@ export default class AreaPicker extends Component{
 
                     <div style={{width: '33%',height: 260,position: 'relative',overflow: 'hidden'}} id="container2">
                         <div style={{width: '100%',height: '100%',position: 'relative',overflowX: 'hidden',boxSizing: 'border-box'}}>
-                            <ul style={{width: '100%',paddingLeft:0,height: 36,lineHeight: '36px', transform: 'perspective(1000px) rotateY(0deg) rotateX(0deg)', transition: '150ms ease-out'}} id="list2">
+                            <ul style={{width: '100%',paddingLeft:0,height: 36,lineHeight: '36px', transform: 'perspective(1000px) rotateY(0deg) rotateX(0deg)', transition: 'transform 50ms ease-out'}} id="list2">
                                 {AreaJson.province_city_town[this.state.currentActive].sub.map((item,index)=>
                                      <li key={index} className={(index<this.state.currentActiveCity-2 || index>this.state.currentActiveCity+3) ? 'visible litag province' : 'litag province'}
                                         style={{transform:'translateZ(100px) rotateX('+(-(index)*20)+'deg)'}}>{item.name}</li>
@@ -83,7 +83,7 @@ export default class AreaPicker extends Component{
 
                     <div style={{width: '33%',height: 260,position: 'relative',overflow: 'hidden'}} id="container3">
                         <div style={{width: '100%',height: '100%',position: 'relative',overflowX: 'hidden',boxSizing: 'border-box'}}>
-                            <ul style={{width: '100%',paddingLeft:0,height: 36,lineHeight: '36px', transform: 'perspective(1000px) rotateY(0deg) rotateX(0deg)', transition: '150ms ease-out'}} id="list3">
+                            <ul style={{width: '100%',paddingLeft:0,height: 36,lineHeight: '36px', transform: 'perspective(1000px) rotateY(0deg) rotateX(0deg)', transition: 'transform 50ms ease-out'}} id="list3">
                                 {AreaJson.province_city_town[this.state.currentActive].sub[this.state.currentActiveCity].sub ? AreaJson.province_city_town[this.state.currentActive].sub[this.state.currentActiveCity].sub.map((item,index)=>
                                      <li key={index} className={(index<this.state.currentActiveTown-2 || index>this.state.currentActiveTown+3) ? 'visible litag province' : 'litag province'}
                                         style={{transform:'translateZ(100px) rotateX('+(-(index)*20)+'deg)'}}>{item.name}</li>
@@ -206,6 +206,11 @@ export default class AreaPicker extends Component{
                 if (moveVolume <= -10) {
                     moveVolume = -10;
                 }
+                console.log(moveVolume)
+                document.getElementById('list').style.transform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume) + 'deg)';
+                document.getElementById('list').style.webkitTransform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume) + 'deg)';
+                document.getElementById('list').style.backfaceVisibility='hidden';
+                document.getElementById('list').style.willChange='transform';
 
                 /*控制显示那些item*/
                 var leftVolume = moveVolume % 20;
@@ -225,10 +230,7 @@ export default class AreaPicker extends Component{
                     })
                 }
                 thatObj.initCity();
-                document.getElementById('list').style.transform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume) + 'deg)';
-                document.getElementById('list').style.webkitTransform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume) + 'deg)';
-                document.getElementById('list').style.backfaceVisibility='hidden';
-                document.getElementById('list').style.willChange='transform';
+                
                 originTop = endY;
             }else if(chooseWhat=='city'){
                 changeY = originTop2 - endY;

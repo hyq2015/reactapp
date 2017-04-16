@@ -40,11 +40,11 @@ export default class FooterBtns extends Component{
                                                 :''
                                             }
                                             
-                                            <div id="check-btn">
+                                            <div id="check-btn" onClick={this.props.submitCase}>
                                                 {this.props.editAllmode ? 
                                                     <span>删除</span> : 
                                                     <span>
-                                                        <span onClick={this.props.submitCase}>结算</span>(<span>{this.props.totalCount}</span>)
+                                                        <span>结算</span>(<span>{this.props.totalCount}</span>)
                                                     </span>
                                                 }
 

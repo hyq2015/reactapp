@@ -2,6 +2,7 @@
 import '../static/styles/Main.less';
 
 import React,{Component} from 'react';
+
 import Tabbar from './Tabbar';
 import PageLoader from './PageLoader';
 import 'babel-polyfill';
@@ -25,7 +26,10 @@ class AppComponent extends Component {
     }
   }
   componentDidMount(){
+    console.log('组件加载完毕');
         this.checkRoute(this.props.location.pathname);
+        AppActions.loadUser();
+        
         // browserHistory.getCurrentLocation().pathname
   }
   componentDidUpdate(prevProps) {
@@ -87,6 +91,20 @@ class AppComponent extends Component {
               })
               break;
             case '/order/detail':
+              this.setState({
+                tabshow:false,
+                loading:true,
+                pagebottom:0
+              })
+              break;
+            case '/search':
+              this.setState({
+                tabshow:false,
+                loading:false,
+                pagebottom:0
+              })
+              break;
+            case '/order/confirmorder':
               this.setState({
                 tabshow:false,
                 loading:true,

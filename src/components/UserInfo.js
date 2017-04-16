@@ -8,7 +8,7 @@ export default class UserInfo extends Component{
     }
     render(){
         return(
-            <div className="user-singleAddress">
+            <div onClick={this.props.changeAddress} className={this.props.canchange ? "user-singleAddress changeAddress" : "user-singleAddress"}>
                 <div style={{position:'relative'}}>
                     <h4 className="user__title">
                         <span>{this.props.name}</span>

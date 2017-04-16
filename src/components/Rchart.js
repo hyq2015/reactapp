@@ -72,7 +72,7 @@ export default class Rchart extends Component{
     })
   }
   componentDidUpdate(){
-    console.log('updated')
+    // console.log('updated')
   }
   componentDidMount(){
     let that=this;
@@ -96,7 +96,7 @@ export default class Rchart extends Component{
     if(this.state.drawed){
       return
     }
-    console.log(options);
+    // console.log(options);
     this.setState({
       drawed:true
     });
@@ -112,7 +112,7 @@ export default class Rchart extends Component{
       }
 
     }
-    console.log(cxt)
+    // console.log(cxt)
 
     /*
      * y轴坐标转换成最大的整数

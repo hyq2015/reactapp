@@ -12,6 +12,8 @@ import Shopcar from './components/Shopcar';
 import Myorders from './components/Myorders';
 import Mycard from './components/Mycards';
 import Orderdetail from './components/Orderdetail';
+import ConfirmOrder from './ordercomponent/ConfirmOrder';
+import Searchpage from './components/Searchpage';
 
 import './static/styles/reset.css';
 import { Router, Route, IndexRoute, Link ,hashHistory } from 'react-router';
@@ -36,6 +38,8 @@ ReactDOM.render((<Router history={hashHistory}>
       <Route path="orders" components={Myorders}/>
       <Route path="cards" components={Mycard}/>
       <Route path="order/detail" components={Orderdetail}/>
+      <Route path="order/confirmorder" components={ConfirmOrder}/>
+      <Route path="search" components={Searchpage}/>
       
     </Route>
 </Router>), document.getElementById('app'));

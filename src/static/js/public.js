@@ -1,3 +1,4 @@
+import CONFIG,{XHR} from './request';
 //转换时间函数
 Date.prototype.format = function (format) {
     var o = {
@@ -100,5 +101,20 @@ module.exports={
             return finalCharge
         }
 
+    },
+    /*
+        收货地址
+    */
+    getCurrentUserAddress:async function(){
+        let useraddress=[];
+        try{
+            const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.checkUserAddress,{},'get');
+            useraddress=res;
+        }catch(err){
+            console.log('请求用户收货地址异常');
+        }finally{
+            return useraddress
+        }
     }
+    
 }

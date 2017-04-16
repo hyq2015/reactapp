@@ -27,9 +27,11 @@ export default class AddressList extends Component{
         this._setDefault=this._setDefault.bind(this);
         this._goAdd=this._goAdd.bind(this);
         this._editAddress=this._editAddress.bind(this);
+        this.chooseAddress=this.chooseAddress.bind(this);
     }
     componentWillMount(){
         AppActions.disabletab();
+        document.title='收货地址';
     }
     componentWillUnmount() {
       if (_.isFunction(this.unsubscribe)){
@@ -77,11 +79,16 @@ export default class AddressList extends Component{
     _editAddress(id){
          this.context.router.push('address/add?editId='+id)
     }
+    chooseAddress(id){
+        if(this.props.location.query.chooseAdd){
+            this.context.router.push('order/confirmorder?orders='+this.props.location.query.orders+'&addressid='+id)
+        }
+    }
     render(){
         return(
             <div id="addresscontainer">
                 {this.state.indexData.addressList && this.state.indexData.addressList.length>0 ? this.state.indexData.addressList.map((item,index)=>
-                    <SingleAddress _editAddress={this._editAddress} key={item.id} addressItem={item} del={this._deleteDialogShow} setDefault={this._setDefault}/>
+                    <SingleAddress chooseAddress={this.chooseAddress} _editAddress={this._editAddress} key={item.id} addressItem={item} del={this._deleteDialogShow} setDefault={this._setDefault}/>
                 ) : <Noaddress/>}
                 
                 <Link onClick={this._goAdd} className="addaddress">
@@ -116,7 +123,7 @@ class SingleAddress extends Component{
         );
         return(
             <div className="address-panel">
-                <div className="address-box">
+                <div className="address-box" onClick={()=>this.props.chooseAddress(this.props.addressItem.id)}>
                     <h4 className="address-box__title">
                         <span>{this.props.addressItem.receiverName}</span>
                         <span style={{marginLeft:10}}>{PUBLIC.HandlePhone(this.props.addressItem.receiverPhone)}</span>
