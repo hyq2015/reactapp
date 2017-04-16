@@ -1,0 +1,81 @@
+import Reflux from 'reflux';
+const PUBLIC=require('../static/js/public.js') ;
+import ConfirmorderActions from '../actions/ConfirmorderActions';
+import CONFIG,{XHR} from '../static/js/request';
+let ConfirmorderStore = Reflux.createStore({
+    init: function () {
+    this.data = {
+        indexLoading:true,
+        currentAddress:{},
+        hasAddress:false
+    };
+  },
+  listenables: ConfirmorderActions,
+  getInitialState() {
+    return this.data
+  },
+  onCheckAddress:async function(para){
+      let useraddress=[];
+        try{
+            const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.checkUserAddress,{},'get');
+            let defaultAddress='';
+            let hasAddress=false;
+            if(res.length>0){
+                hasAddress=true;
+                if(res.length==1){
+                    defaultAddress=res[0]
+                }else{
+                    if(para!='none'){
+                        defaultAddress=_.filter(res,function(item){
+                            return item.id==para
+                        })
+                    }else{
+                        defaultAddress=_.filter(res,function(item){
+                            return item.defaultFlag==true
+                        })
+                    }
+                     
+                }
+                
+            }
+            if(defaultAddress){
+                window.sessionStorage.userDefaultAddress=JSON.stringify(defaultAddress);
+            }
+            this.data.hasAddress=hasAddress;
+            this.data.addressLoaded=true;
+            this.data.currentAddress=defaultAddress[0];
+            
+        }catch(err){
+            alert('请求异常');
+            this.data.addressLoaded=false;
+        }finally{
+            this.trigger(this.data);
+        }
+     
+  },
+  onLoadData:async function(arr){
+      try{
+            const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.buildOrder,arr,'post');
+            this.data.orders=res;
+            let needAddress=false;
+            for(let item of this.data.orders){
+                let productCount=0;
+                for(let single of item.selectItems){
+                    productCount+=single.amount;
+                    if(single.product.needAddress){
+                        needAddress=true;
+                    }
+                }
+                item.productCount=productCount;
+            }
+            this.data.needAddress=needAddress;
+        }catch(err){
+            alert('请求异常');
+            this.data.orders=[];
+        }finally{
+            this.data.indexLoading=false;
+            this.trigger(this.data);
+        }
+  }
+})
+export default ConfirmorderStore

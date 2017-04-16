@@ -1,0 +1,62 @@
+@fontColor:#888;
+#recentSearch{
+    padding:20px 12px 0;
+    
+    .searchTitle{
+        color: @fontColor;
+        font-size: 16px;
+        text-align: left;
+        position: relative;
+    }
+    .commonsearch{
+        position:relative;
+        
+    }
+    .splitline{
+        width: 100%;height: 1px;margin-top:20px;
+        position: relative;
+        &:after{
+            content:" ";
+            height: 1px;
+            position: absolute;bottom: 0;right: -12px;left: 0;
+            border-bottom: 1px solid #e4e4e4;
+            transform: scaleY(0.5);
+        }
+
+    }
+    .recommendLists{
+        overflow: hidden;
+        .recommendItem {
+            min-height: 28px;
+            height: 28px;
+            color: @fontColor;
+            font-size: 12px;
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 6px;
+            margin: 10px 0 0 10px;
+            line-height: 28px;
+            text-align: center;
+            padding: 0 5px;
+            float: left;
+            &:nth-child(1) {
+                margin-left: 0;
+            }
+        }
+        li{
+            list-style: none;
+        }
+        
+    }
+    .clearContainer{
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+        .colorBlue{
+            color: #00c8fb;
+            font-size: 16px;
+            position: relative;
+            top: 2px;
+        }
+}
