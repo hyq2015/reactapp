@@ -6,16 +6,35 @@
 @graycolor:#f2f2f2;
 .minecard-single{
     background-color: #fff;width:100%;overflow:hidden;margin-bottom:10px;
+    .normalBlack{
+        color: @contentColor;
+    }
+    .normalBlue{
+        color: @bluecolor;
+    }
+    .normalgray{
+        color: @fadeColor;
+    }
+    .normalBluebg{
+        background-color: @bluecolor;
+    }
+    .normalgraybg{
+        background-color: @fadeColor;
+    }
+    .normalstrong{
+        color: @strongColor;
+    }
     .minecard-top{
         height:42px;padding:0 12px;box-sizing: border-box;line-height: 42px;display:flex;flex-direction:row;
         .text-overflow{
-            flex:1;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;color: @contentColor;padding-right:4px;
+            flex:1;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;padding-right:4px;
             font-size: 15px;
         }
         .text-intro{
-            width: 50px;color: @bluecolor;text-align: center;
+            width: 50px;text-align: center;
             font-size: 14px;
         }
+        
     }
     .dot-line{
         width: 100%;position:relative;height:10px;
@@ -33,18 +52,30 @@
         align-items: center;
         padding:16px 12px;display:flex;
         .iconcircle{
-            background-color: rgb(0,200,251);width: 50px;height: 50px;border-radius: 25px;text-align: center;line-height: 46px;font-size: 26px;
+            width: 50px;height: 50px;border-radius: 25px;text-align: center;line-height: 46px;font-size: 26px;
         }
+        
         .carddetail{
-            display: flex;flex: 1;color: @strongColor;align-items:center;height:50px;
+            display: flex;flex: 1;align-items:center;height:50px;
             .detail-content{
                 display:flex;flex:1;font-size: 14px;height: 100%;flex-direction: column;justify-content: space-around;padding-left: 10px;box-sizing: border-box;
+                >div{
+                    width:100%;
+                    line-height: 1.2;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    white-space: normal;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+
+                }
             }
             .currentnumber{
-                font-size: 26px;color: @bluecolor;
+                font-size: 26px;height: 30px;line-height: 30px;
             }
             .currentnumber-text{
-                font-size: 10px;color: @fadeColor;margin-top: 2px;
+                font-size: 10px;color: @fadeColor;
             }
         }
 

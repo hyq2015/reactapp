@@ -15,6 +15,7 @@ const initOrigindata={
     content:[],
     last:false
 };
+let currentQueryPath=CONFIG.alphaPath.allcard;
 export default class Mycard extends Component{
     constructor(props){
         super(props);
@@ -41,6 +42,7 @@ export default class Mycard extends Component{
         this.onScrollEnd=this.onScrollEnd.bind(this);
         this.checkCode=this.checkCode.bind(this);
         this.deleteOrder=this.deleteOrder.bind(this);
+        this.goDetail=this.goDetail.bind(this);
     }
     componentWillMount(){
         AppActions.disabletab();
@@ -50,7 +52,7 @@ export default class Mycard extends Component{
         this.unsubscribe = MycardStore.listen(function(state) {
             this.setState(state);
         }.bind(this));
-        this._loadData({'size':CONFIG.pageSize,used:false},this.state.originData);
+        this._loadData({'size':CONFIG.pageSize,used:false},this.state.originData,CONFIG.alphaPath.allcard);
         document.getElementById('CardscrollWrapper').addEventListener('touchmove',this.onScroll);
         document.getElementById('CardscrollWrapper').addEventListener('touchend',this.onScrollEnd);
         
@@ -72,7 +74,7 @@ export default class Mycard extends Component{
                     this.setState({
                         loading:true
                     })
-                    this._loadData({'size':CONFIG.pageSize,'fromId':this.state.originData.content[this.state.originData.content.length-1].id},this.state.originData)
+                    this._loadData({'size':CONFIG.pageSize,'fromId':this.state.originData.content[this.state.originData.content.length-1].id},this.state.originData,currentQueryPath)
                 }else{
                     if(this.state.loadMore){
                         this.setState({
@@ -117,14 +119,12 @@ export default class Mycard extends Component{
      _refreshScroll(){
          if(this.refs.scroller){
             scrollerHeight=this.refs.scroller.offsetHeight;
-            console.log(scrollerHeight)
          }
     }
-    _loadData(obj,origindata){
-        MycardActions.loadData(obj,origindata);
+    _loadData(obj,origindata,path){
+        MycardActions.loadData(obj,origindata,path);
     }
     _changeNav(item,index){
-        console.log(index===0)
         let navs=this.state.navbars;
         for(let [index1,item1] of navs.entries()){
             if(index1!==index){
@@ -143,13 +143,16 @@ export default class Mycard extends Component{
         if(this.state.activenav!==index){
             switch(index){
                 case 0:
-                    this._loadData({'size':CONFIG.pageSize,used:false},initOrigindata);
+                    currentQueryPath=CONFIG.alphaPath.allcard;
+                    this._loadData({'size':CONFIG.pageSize,used:false},initOrigindata,currentQueryPath);
                     break;
                 case 1:
-                    this._loadData({'size':CONFIG.pageSize,used:true},initOrigindata);
+                    currentQueryPath=CONFIG.alphaPath.usedCardquery;
+                    this._loadData({'size':CONFIG.pageSize,used:true},initOrigindata,currentQueryPath);
                     break;
                 case 2:
-                    this._loadData({'size':CONFIG.pageSize,isExpire:true},initOrigindata);
+                    currentQueryPath=CONFIG.alphaPath.allcard;
+                    this._loadData({'size':CONFIG.pageSize,isExpire:true},initOrigindata,currentQueryPath);
                     break;
                 
             }
@@ -165,6 +168,11 @@ export default class Mycard extends Component{
             alert('不能跳转到卡券详情')
         }
     }
+    goDetail(id){
+        if(this.state.activenav===0){
+            this.context.router.push('card/detail?id='+id)
+        }
+    }
     render(){
         return(
             <div id="Cardcontainer">
@@ -174,7 +182,7 @@ export default class Mycard extends Component{
                     <div id="CardscrollWrapper" ref="scroller" style={{minHeight:'calc(100vh - 60px)'}}>
                     <div>
                         {this.state.originData.content.map((item,index)=>
-                            <MineCard style={{marginBottom:10}} card={item} key={item.id}/>
+                            <MineCard activenav={this.state.activenav} goDetail={this.goDetail} style={{marginBottom:10}} card={item} key={item.id}/>
                         )}
                         <Loader loading={this.state.loading} loadMore={this.state.loadMore} canload={this.state.canload}/>
                     </div>
@@ -183,4 +191,7 @@ export default class Mycard extends Component{
             </div>
         )
     }
+}
+Mycard.contextTypes = {  
+    router: React.PropTypes.object
 }

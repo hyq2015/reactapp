@@ -32,7 +32,10 @@ var CONFIG={
   "allorder":"/api/order/query",
   "allcard":"/api/card/query",
   "hotsearch":"/api/app/index/config",
-  "userlogin":"/api/wechat/user"
+  "userlogin":"/api/wechat/user",
+  "cardDetail":"/api/card/detail",
+  "usedCardquery":"/api/card/useLogQuery",
+  "reviseCardCount":"/api/card/cardUseSign"
   },
   'CurrentVersion':'developversion/',
   'pageSize':10,

@@ -26,6 +26,7 @@ export default class Mine extends Component{
         };
         this._addresslist=this._addresslist.bind(this);
         this._init=this._init.bind(this);
+        this.goDetail=this.goDetail.bind(this);
     }
     componentWillUnmount() {
       if (_.isFunction(this.unsubscribe)){
@@ -69,6 +70,9 @@ export default class Mine extends Component{
     _addresslist(){
         MineActions.goAddresslist();
     }
+    goDetail(id){
+        this.context.router.push('card/detail?id='+id)
+    }
     render(){
         return(
             <div id="mineContainer" style={playStyle}>
@@ -105,7 +109,7 @@ export default class Mine extends Component{
                     </section>
                     <section className="pagebd-content">
                         {this.state.indexData.cardList.map((item,index)=>
-                            <MineCard style={{marginBottom:10}} card={item} key={item.id}/>
+                            <MineCard goDetail={this.goDetail} activenav={0} style={{marginBottom:10}} card={item} key={item.id}/>
                         )}
                         
                     </section>
@@ -113,4 +117,7 @@ export default class Mine extends Component{
             </div>
         )
     }
+}
+Mine.contextTypes = {  
+    router: React.PropTypes.object
 }

@@ -21,9 +21,9 @@ let MycardStore = Reflux.createStore({
     return this.data
   },
   
-  onLoadData:async function(jsonobj,originData){
+  onLoadData:async function(jsonobj,originData,path){
     try{
-        const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.allcard,jsonobj,'post');
+        const res=await XHR(CONFIG.baseUrl+path,jsonobj,'post');
         if(originData.content.length<1){
           this.data.originData= res;
         }else{

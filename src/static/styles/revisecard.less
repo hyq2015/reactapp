@@ -1,0 +1,76 @@
+@lineColor:#E5E5E5;
+@bluecolor:#00c8fb;
+@strongColor:#7b7b7b;
+@fadeColor:#bbbbbb;
+@contentColor:#000;
+@graycolor:#f2f2f2;
+#revisecardContainer{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100vh);
+    z-index: 10;
+    background-color: @graycolor;
+    .bluefont{
+        color: @bluecolor;
+    }
+    .goback{
+        height: 47px;line-height: 47px;font-size: 16px;
+        background-color: #fff;padding: 0 12px;
+    }
+    .inputAmount{
+        padding:15px 12px;
+        .haspadding{
+            padding:10px 12px;
+        }
+        .txtinfo{
+            background-color: #fafafa;font-size: 14px;
+        }
+        .blurinput{
+            height: 60px;line-height: 1;color: @strongColor;font-size: 40px;position: relative;
+            display: flex;
+            align-items: flex-end;
+            &:after{
+                position: absolute;
+                content:" ";
+                bottom: 0;left: 0;right: 0;
+                border-bottom: 1px solid @lineColor;
+            }
+        }
+        .finish-btn{
+            width: 100%;
+            font-size: 16px;
+            border: none;
+            height: 50px;
+            text-align: center;
+            border-radius: 4px;
+            line-height: 50px;
+            color: #fff;
+            background: @bluecolor;
+            margin: 10px auto 0 auto;
+        }
+        .fade-cursor{
+            height: 40px;width: 2px;background-color: @strongColor;
+            position: relative;left: 2px;bottom: 2px;
+            animation: blur linear 1.2s infinite;
+        }
+    }
+    @keyframes blur{
+        0%{
+            opacity: 1;
+        }
+        25%{
+            opacity: 0;
+        }
+        50%{
+            opacity: 0;
+        }
+        75%{
+            opacity: 0;
+        }
+        100%{
+            opacity: 1;
+        }
+    }
+}

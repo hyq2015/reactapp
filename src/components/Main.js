@@ -111,6 +111,14 @@ class AppComponent extends Component {
                 pagebottom:0
               })
               break;
+            case '/card/detail':
+              this.setState({
+                tabshow:false,
+                loading:true,
+                pagebottom:0
+              })
+              break;
+              
         }
   }
   changeTab(index){
