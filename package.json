@@ -69,6 +69,8 @@
     "open": "0.0.5",
     "ora": "^1.2.0",
     "phantomjs-prebuilt": "^2.0.0",
+    "qrcode": "^0.8.1",
+    "qrcode.react": "^0.6.1",
     "react-addons-test-utils": "^15.0.0",
     "react-hot-loader": "^1.2.9",
     "react-router": "^2.8.1",
