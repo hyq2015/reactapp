@@ -26,15 +26,18 @@ class AppComponent extends Component {
     }
   }
   componentDidMount(){
-    console.log('组件加载完毕');
-        this.checkRoute(this.props.location.pathname);
-        AppActions.loadUser();
+      console.log('组件加载完毕');
+      this.checkRoute(this.props.location.pathname);
+      AppActions.loadUser();
+      // window.addEventListener('hashchange', function(){
+      //   console.log(location.hash)
+      // }, false) 
         
         // browserHistory.getCurrentLocation().pathname
   }
   componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) {
-      window.scrollTo(0, 0)
+        window.scrollTo(0, 0)
     }
   }
   checkRoute(name){
@@ -112,6 +115,13 @@ class AppComponent extends Component {
               })
               break;
             case '/card/detail':
+              this.setState({
+                tabshow:false,
+                loading:true,
+                pagebottom:0
+              })
+              break;
+            case '/card/success':
               this.setState({
                 tabshow:false,
                 loading:true,

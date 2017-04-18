@@ -35,7 +35,9 @@ var CONFIG={
   "userlogin":"/api/wechat/user",
   "cardDetail":"/api/card/detail",
   "usedCardquery":"/api/card/useLogQuery",
-  "reviseCardCount":"/api/card/cardUseSign"
+  "reviseCardCount":"/api/card/cardUseSign",
+  "checkIfCardUsed":"/api/card/useVerifyQuery",
+  "cardUseSuccess":"/api/card/cardUseLog"
   },
   'CurrentVersion':'developversion/',
   'pageSize':10,

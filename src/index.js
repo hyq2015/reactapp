@@ -13,11 +13,12 @@ import Myorders from './components/Myorders';
 import Mycard from './components/Mycards';
 import Orderdetail from './components/Orderdetail';
 import Carddetail from './components/Carddetail';
-// import ConfirmOrder from './ordercomponent/ConfirmOrder';
-// import Searchpage from './components/Searchpage';
+import ConfirmOrder from './ordercomponent/ConfirmOrder';
+import Searchpage from './components/Searchpage';
+import CarduseSuccess from './components/CarduseSuccess';
 
 import './static/styles/reset.css';
-import { Router, Route, IndexRoute, Link ,hashHistory } from 'react-router';
+import { Router, Route, IndexRoute, Link ,hashHistory,browserHistory } from 'react-router';
 
 
 if ('addEventListener' in document) {
@@ -29,9 +30,7 @@ if ('addEventListener' in document) {
 ReactDOM.render((<Router history={hashHistory}>
     <Route path="/" component={App}>
       <Route path="play" components={Play} />
-      <Route path="mall" components={Mall}>
-        <Route path="users/:userId" component={App} />
-      </Route>
+      <Route path="mall" components={Mall}/>
       <Route path="mine" components={Mine}/>
       <Route path="address/list" components={AddressList}/>
       <Route path="address/add" components={Addaddress}/>
@@ -40,8 +39,9 @@ ReactDOM.render((<Router history={hashHistory}>
       <Route path="cards" components={Mycard}/>
       <Route path="order/detail" components={Orderdetail}/>
       <Route path="card/detail" components={Carddetail}/>
-      {/*<Route path="order/confirmorder" components={ConfirmOrder}/>*/}
-      {/*<Route path="search" components={Searchpage}/>*/}
+      <Route path="card/success" components={CarduseSuccess}/>
+      <Route path="order/confirmorder" components={ConfirmOrder}/>
+      <Route path="search" components={Searchpage}/>
       
     </Route>
 </Router>), document.getElementById('app'));

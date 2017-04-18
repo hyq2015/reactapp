@@ -74,7 +74,12 @@ export default class AddressList extends Component{
         AddresslistActions.setDefault(id);
     }
     _goAdd(){
-        this.context.router.push('address/add?name=ricky')
+        if(this.props.location.query.chooseAdd && this.props.location.query.orders){
+            this.context.router.push('address/add?chooseAdd='+this.props.location.query.chooseAdd+'&orders='+this.props.location.query.orders)
+        }else{
+            this.context.router.push('address/add')
+        }
+        
     }
     _editAddress(id){
          this.context.router.push('address/add?editId='+id)

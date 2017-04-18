@@ -1,5 +1,4 @@
 import React,{Component} from 'react';
-import {render} from 'react-dom';
 const PUBLIC=require('../static/js/public.js') ;
 export default class FooterBtns extends Component{
     constructor(props){
@@ -20,13 +19,17 @@ export default class FooterBtns extends Component{
                     <div className="weui-panel__bd">
                         <div className="weui-cells_checkbox " style={{marginTop: 0}}>
                             <label className="weui-cell weui-check__label" style={{paddingRight: 0}}>
-                                <div className="weui-cell__hd">
-                                    <input type="checkbox" id="chooseAllitem" className="weui-check" defaultChecked={this.props.chooseAll} onChange={(e)=>this.props.ifChooseAll(e)}/>
-                                    <i className="weui-icon-checked" style={{marginTop: -2}}></i>
-                                </div>
+                                {this.props.countShow ? 
+                                    <div className="weui-cell__hd">
+                                        <input type="checkbox" id="chooseAllitem" className="weui-check" defaultChecked={this.props.chooseAll} onChange={(e)=>this.props.ifChooseAll(e)}/>
+                                        <i className="weui-icon-checked" style={{marginTop: -2}}></i>
+                                    </div>
+                                    :''
+                                }
+                                
                                 <div className="weui-cell__bd">
                                     <a href="javascript:void(0);" className="titleBar">
-                                        <span className="shopName">全选</span>
+                                        {this.props.countShow ? <span className="shopName">全选</span> : <span className="shopName"></span>}
                                         <div className="footer-btn-total">
                                             {!this.props.editAllmode ? 
                                                 <div className="footer-total-text">
@@ -44,7 +47,9 @@ export default class FooterBtns extends Component{
                                                 {this.props.editAllmode ? 
                                                     <span>删除</span> : 
                                                     <span>
-                                                        <span>结算</span>(<span>{this.props.totalCount}</span>)
+                                                        <span>{this.props.submitName}</span>
+                                                        {this.props.countShow ? <span>({this.props.totalCount})</span> : ''}
+                                                        
                                                     </span>
                                                 }
 

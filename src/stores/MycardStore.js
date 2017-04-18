@@ -7,13 +7,9 @@ let MycardStore = Reflux.createStore({
   init: function () {
     this.data = {
         indexLoading:true,
-        navbars:[
-                {'name':'未使用','active':true},
-                {'name':'已使用','active':false},
-                {'name':'已过期','active':false}
-            ],
         originData:{},
-        nodata:false
+        nodata:false,
+        loading:false
     };
   },
   listenables: MycardActions,

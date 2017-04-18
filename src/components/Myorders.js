@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import '../static/styles/orderlist.less';
+import _ from 'lodash';
 import Topnavbar from './Topnavbar';
 import Loader from './Loader';
 import NoDataPage from './NoData';
@@ -16,6 +17,13 @@ const initOrigindata={
     content:[],
     last:false
 };
+const initialNavbars=[
+    {'name':'全部','active':true},
+    {'name':'待付款','active':false},
+    {'name':'已付款','active':false},
+    {'name':'已完成','active':false},
+    {'name':'退款/售后','active':false}
+]
 export default class Myorder extends Component{
     constructor(props){
         super(props);
@@ -101,9 +109,9 @@ export default class Myorder extends Component{
         this.context.router.push('order/detail?id='+id)
     }
     componentDidUpdate(){
+        
         if(!this.state.indexLoading){
             AppActions.loaded();
-           
         }
         this._refreshScroll();
         if(this.state.originData.last){
@@ -119,34 +127,8 @@ export default class Myorder extends Component{
                 })
             }
         }
-    
-    }
-    componentWillUnmount(){
-        if (_.isFunction(this.unsubscribe)){
-            this.unsubscribe();
-        };
-    }
-    _loadData(obj,origindata){
-        MyorderActions.loadData(obj,origindata);
-    }
-    _changeNav(item,index){
-        let navs=this.state.navbars;
-        for(let [index1,item1] of navs.entries()){
-            if(index1!==index){
-                item1.active=false;
-            }else{
-                item1.active=true;
-            }
-        }
-        this.setState({
-            navbars:navs,
-            loading:true,
-            nodata:false,
-            loadMore:true,
-            originData:initOrigindata
-        });
-        if(this.state.activenav!==index){
-            switch(index){
+        if(this.state.loading){
+            switch(this.state.activenav){
                 case 0:
                     this._loadData({'size':CONFIG.pageSize},initOrigindata);
                     break;
@@ -163,21 +145,46 @@ export default class Myorder extends Component{
                     this._loadData({'size':CONFIG.pageSize,'status':'CLOSED'},initOrigindata);
                     break;
             }
+        }
+    
+    }
+    componentWillUnmount(){
+        if (_.isFunction(this.unsubscribe)){
+            this.unsubscribe();
+        };
+    }
+    _loadData(obj,origindata){
+        MyorderActions.loadData(obj,origindata);
+    }
+    _changeNav(item,index){
+        let navs=_.clone(this.state.navbars);
+        for(let [index1,item1] of navs.entries()){
+            if(index1!==index){
+                item1.active=false;
+            }else{
+                item1.active=true;
+            }
+        }
+        if(this.state.activenav!==index){
             this.setState({
+                navbars:navs,
+                loading:true,
+                nodata:false,
+                loadMore:true,
+                originData:initOrigindata,
                 activenav:index
-            })
+            });
+            
         }
     }
-    checkCode(e){
+    checkCode(e,id,status){
         if(e.stopPropagation){
             e.stopPropagation();
         }else{
             e.cancelBubble=true;
         }
-        if(e.target.getAttribute('data-detail')=='yes'){
-            alert('即将跳转到卡券详情')
-        }else{
-            alert('不能跳转到卡券详情')
+        if(status.toUpperCase()=='TO_USE'){
+            this.context.router.push('card/detail?id='+id)
         }
     }
     checkLogistic(e,id){

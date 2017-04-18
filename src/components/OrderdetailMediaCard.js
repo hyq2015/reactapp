@@ -29,7 +29,7 @@ export default class OrderdetailMediaCard extends Component{
                 </div>
                 {(this.props.productType.toUpperCase()=='CARD' && this.props.cardStatus) ? 
                     <div className="checkCode">
-                        <a href="">查看券码</a>
+                        <a href="javascript:;" onClick={()=>this.props.cardDetail(this.props.orderitem.cardId,this.props.orderitem.status)} className={(this.props.cardStatus.toUpperCase()=='TO_USE') ? "active" : "inactive"}>查看券码</a>
                     </div>
                 :''
                 }

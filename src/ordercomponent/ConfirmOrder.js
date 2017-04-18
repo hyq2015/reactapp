@@ -1,7 +1,9 @@
 import React,{Component} from 'react';
 import UserInfo from '../components/UserInfo';
 import OrderdetailCard from '../components/OrderdetailCard';
+import PUBLIC from '../static/js/public';
 import Dialog from '../components/Dialog';
+import {FooterBtns} from '../components/CommonComponent';
 import 'babel-polyfill';
 import ConfirmorderStore from '../stores/ConfirmorderStore';
 import ConfirmorderActions from '../actions/ConfirmorderActions';
@@ -15,12 +17,14 @@ export default class ConfirmOrder extends Component{
             hasAddress:false,
             orders:[],
             needSetAddress:false,
-            addressLoaded:false
+            addressLoaded:false,
+            allNeedPay:''
         };
         this._loadData=this._loadData.bind(this);
         this.changeAddress=this.changeAddress.bind(this);
         this.cancelEvent=this.cancelEvent.bind(this);
         this.confirmEvent=this.confirmEvent.bind(this);
+        this.submitCase=this.submitCase.bind(this);
     }
     componentWillMount(){
         document.title='确认订单';
@@ -44,7 +48,6 @@ export default class ConfirmOrder extends Component{
     componentDidUpdate(){
         if(!this.state.indexLoading && this.state.addressLoaded){
             AppActions.loaded();
-            
         }
     }
     componentWillUnmount() {
@@ -54,7 +57,7 @@ export default class ConfirmOrder extends Component{
         
     }
     confirmEvent(){
-
+        this.context.router.push('address/add?backorder=1')
     }
     cancelEvent(){
         window.history.go(-1);
@@ -80,10 +83,12 @@ export default class ConfirmOrder extends Component{
     changeAddress(){
         this.context.router.push('address/list?chooseAdd=1&orders='+this.props.location.query.orders);
     }
-    
+    submitCase(){
+        console.log('支付')
+    }
     render(){
         return(
-            <div id="ConfirmOrderContainer">
+            <div id="ConfirmOrderContainer" style={{paddingBottom:50}}>
                 
                 {this.state.hasAddress ? 
                     <UserInfo changeAddress={this.changeAddress} canchange={true} 
@@ -97,7 +102,7 @@ export default class ConfirmOrder extends Component{
                         <OrderdetailCard key={`${"father"+item.id}`} order={item} orderItem={item.selectItems}/>
                     )
                 }
-                
+                {FooterBtns(PUBLIC.transformCharge(this.state.allNeedPay),'无优惠折扣','去支付',this.submitCase)}
             </div>
         )
     }

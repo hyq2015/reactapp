@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import '../static/styles/mycard.less';
 import Topnavbar from './Topnavbar';
 import Loader from './Loader';
+import _ from 'lodash';
 import NoDataPage from './NoData';
 import MineCard from './MineCard';
 import CONFIG from '../static/js/request';
@@ -45,10 +46,11 @@ export default class Mycard extends Component{
         this.goDetail=this.goDetail.bind(this);
     }
     componentWillMount(){
+        document.title='我的卡券';
         AppActions.disabletab();
     }
     componentDidMount(){
-        document.title='我的卡券';
+        
         this.unsubscribe = MycardStore.listen(function(state) {
             this.setState(state);
         }.bind(this));
@@ -109,6 +111,23 @@ export default class Mycard extends Component{
                 })
             }
         }
+        if(this.state.loading){
+            switch(this.state.activenav){
+                case 0:
+                    currentQueryPath=CONFIG.alphaPath.allcard;
+                    this._loadData({'size':CONFIG.pageSize,used:false},initOrigindata,currentQueryPath);
+                    break;
+                case 1:
+                    currentQueryPath=CONFIG.alphaPath.usedCardquery;
+                    this._loadData({'size':CONFIG.pageSize,used:true},initOrigindata,currentQueryPath);
+                    break;
+                case 2:
+                    currentQueryPath=CONFIG.alphaPath.allcard;
+                    this._loadData({'size':CONFIG.pageSize,isExpire:true},initOrigindata,currentQueryPath);
+                    break;
+                
+            }
+        }
     
     }
     componentWillUnmount(){
@@ -125,7 +144,7 @@ export default class Mycard extends Component{
         MycardActions.loadData(obj,origindata,path);
     }
     _changeNav(item,index){
-        let navs=this.state.navbars;
+        let navs=_.clone(this.state.navbars);
         for(let [index1,item1] of navs.entries()){
             if(index1!==index){
                 item1.active=false;
@@ -133,32 +152,16 @@ export default class Mycard extends Component{
                 item1.active=true;
             }
         }
-        this.setState({
-            navbars:navs,
-            nodata:false,
-            loadMore:true,
-            loading:true,
-            originData:initOrigindata
-        });
+        
         if(this.state.activenav!==index){
-            switch(index){
-                case 0:
-                    currentQueryPath=CONFIG.alphaPath.allcard;
-                    this._loadData({'size':CONFIG.pageSize,used:false},initOrigindata,currentQueryPath);
-                    break;
-                case 1:
-                    currentQueryPath=CONFIG.alphaPath.usedCardquery;
-                    this._loadData({'size':CONFIG.pageSize,used:true},initOrigindata,currentQueryPath);
-                    break;
-                case 2:
-                    currentQueryPath=CONFIG.alphaPath.allcard;
-                    this._loadData({'size':CONFIG.pageSize,isExpire:true},initOrigindata,currentQueryPath);
-                    break;
-                
-            }
             this.setState({
+                navbars:navs,
+                nodata:false,
+                loadMore:true,
+                loading:true,
+                originData:initOrigindata,
                 activenav:index
-            })
+            });
         }
     }
     checkCode(e){

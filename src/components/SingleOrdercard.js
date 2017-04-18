@@ -28,7 +28,7 @@ export default class SingleOrderCard extends Component{
                             </div>
                             {this.props.order.status.toUpperCase()!=='TO_PAY' ? 
                                 <div style={{marginTop:8}}>
-                                    {item.productType.toUpperCase()==='CARD' ? <a onClick={(e)=>this.props.checkCode(e)} className={(item.status && item.status.toUpperCase()==='TO_USE') ? 'checkcode active' : 'checkcode inactive'} data-detail={(item.status && item.status.toUpperCase()==="TO_USE") ? "yes" : "no"}>查看券码</a> : ''}
+                                    {item.productType.toUpperCase()==='CARD' ? <a onClick={(e)=>this.props.checkCode(e,item.cardId,item.status)} className={(item.status && item.status.toUpperCase()==='TO_USE') ? 'checkcode active' : 'checkcode inactive'}>查看券码</a> : ''}
                                     {(item.productType.toUpperCase()==='GOODS' && item.status && item.status.toUpperCase()!=='TO_RECEIVE') ? <span className="black-font">{item.statusDesc}</span> : ''}
                                     {(item.productType.toUpperCase()==='GOODS' && item.status && item.status.toUpperCase()==='TO_RECEIVE') ? <span onClick={(e)=>this.props.checkLogistic(e,this.props.order.id)} className="checkcode active">查看物流</span> : ''}
                                 </div>

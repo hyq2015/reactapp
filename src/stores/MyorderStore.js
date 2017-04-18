@@ -7,13 +7,6 @@ let MyorderStore = Reflux.createStore({
   init: function () {
     this.data = {
         indexLoading:true,
-        navbars:[
-                {'name':'全部','active':true},
-                {'name':'待付款','active':false},
-                {'name':'已付款','active':false},
-                {'name':'已完成','active':false},
-                {'name':'退款/售后','active':false}
-            ],
         originData:{},
         nodata:false
     };

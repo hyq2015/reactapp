@@ -7,7 +7,8 @@ let ConfirmorderStore = Reflux.createStore({
     this.data = {
         indexLoading:true,
         currentAddress:{},
-        hasAddress:false
+        hasAddress:false,
+        allNeedPay:''
     };
   },
   listenables: ConfirmorderActions,
@@ -34,6 +35,7 @@ let ConfirmorderStore = Reflux.createStore({
                             return item.defaultFlag==true
                         })
                     }
+                    defaultAddress=defaultAddress[0]
                      
                 }
                 
@@ -41,9 +43,10 @@ let ConfirmorderStore = Reflux.createStore({
             if(defaultAddress){
                 window.sessionStorage.userDefaultAddress=JSON.stringify(defaultAddress);
             }
+            console.log(defaultAddress)
             this.data.hasAddress=hasAddress;
             this.data.addressLoaded=true;
-            this.data.currentAddress=defaultAddress[0];
+            this.data.currentAddress=defaultAddress;
             
         }catch(err){
             alert('请求异常');
@@ -58,8 +61,10 @@ let ConfirmorderStore = Reflux.createStore({
             const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.buildOrder,arr,'post');
             this.data.orders=res;
             let needAddress=false;
+            let allNeedPay=0;
             for(let item of this.data.orders){
                 let productCount=0;
+                allNeedPay+=item.totalPrice;
                 for(let single of item.selectItems){
                     productCount+=single.amount;
                     if(single.product.needAddress){
@@ -69,6 +74,7 @@ let ConfirmorderStore = Reflux.createStore({
                 item.productCount=productCount;
             }
             this.data.needAddress=needAddress;
+            this.data.allNeedPay=allNeedPay;
         }catch(err){
             alert('请求异常');
             this.data.orders=[];

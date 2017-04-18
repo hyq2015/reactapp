@@ -9,6 +9,8 @@ import 'babel-polyfill';
 import CarddetailStore from '../stores/CarddetailStore';
 import CarddetailActions from '../actions/CarddetailActions';
 import AppActions from '../actions/AppActions';
+let qrcodeimgHost='';
+let timer=null;
 export default class Carddetail extends Component{
     constructor(props){
         super(props);
@@ -24,22 +26,36 @@ export default class Carddetail extends Component{
         this._loadData=this._loadData.bind(this);
         this.hideReviser=this.hideReviser.bind(this);
         this.updateUseCount=this.updateUseCount.bind(this);
+        this._checkIfcardUsed=this._checkIfcardUsed.bind(this);
     }
     componentWillMount(){
         document.title="卡券详情";
         AppActions.disabletab();
     }
     componentDidMount(){
+        if(window.location.host.indexOf('192.168.31.204')!=-1){
+            qrcodeimgHost='http://dev.genwoshua.com/alpha/webapp/developversion/cardconfirm/confirm.html'
+        }else{
+            qrcodeimgHost='http://app.genwoshua.com/alpha/webapp/build/html/cardconfirm/confirm.html'
+        }
         this.unsubscribe = CarddetailStore.listen(function(state) {
             this.setState(state);
             if(state.originData.cardDetail && state.originData.secritCode && state.originData.cardDetail.useCount && state.originData.cardDetail.id){
                 this.setState({
-                    qrcodeimg:'http://dev.genwoshua.com/alpha/webapp/developversion/cardconfirm/confirm.html?pd='+state.originData.secritCode+'&id='+state.originData.cardDetail.id+'&count='+state.originData.cardDetail.useCount
+                    qrcodeimg:qrcodeimgHost+'?pd='+state.originData.secritCode+'&id='+state.originData.cardDetail.id+'&count='+state.originData.cardDetail.useCount
                 })
+            }
+            if(state.cardOverview.isVerify){
+                clearInterval(timer);
+                this.context.router.replace('card/success?id='+state.cardOverview.cardUseLogId)
+            }
+            if(state.cardOverview.checkCodeIsExpire || state.cardOverview.ttl<=60){
+                this._loadData(this.props.location.query.id)
             }
         }.bind(this));
         this._loadData(this.props.location.query.id);
-        console.log(window.location.href)
+        timer=setInterval(()=>this._checkIfcardUsed(),5000)
+        
     }
     componentDidUpdate(){
         if(!this.state.indexLoading){
@@ -52,6 +68,12 @@ export default class Carddetail extends Component{
         if (_.isFunction(this.unsubscribe)){
             this.unsubscribe();
         };
+        clearInterval(timer);
+    }
+    _checkIfcardUsed(){
+        if(this.state.originData.secritCode){
+            CarddetailActions.checkCardUsed(this.state.originData.secritCode,this.state)
+        }
     }
     _loadData(id){
         CarddetailActions.loadData(id);
@@ -62,10 +84,13 @@ export default class Carddetail extends Component{
         })
     }
     updateUseCount(count){
-        this.setState({
-            showLoading:true
-        });
-        CarddetailActions.updateCount(this.state.originData.cardDetail.id,count,this.state.originData)
+        if(count && count>0){
+            this.setState({
+                showLoading:true
+            });
+            CarddetailActions.updateCount(this.state.originData.cardDetail.id,count,this.state.originData)
+        }
+        
     }
     render(){
         return(
@@ -99,7 +124,7 @@ export default class Carddetail extends Component{
                 <div className="expire-container">
                     <p className="fade-color">
                         <span>有效期: </span>
-                        <span>{this.state.originData.cardDetail ? this.state.originData.cardDetail.expiryDate : ''}</span>
+                        <span>{this.state.originData.cardDetail ? (this.state.originData.cardDetail.expiryDate ? this.state.originData.cardDetail.expiryDate : '永久') : ''}</span>
                     </p>
                     <p className="fade-color">
                         <span>当前剩余: </span>

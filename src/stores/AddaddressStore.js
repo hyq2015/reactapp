@@ -24,7 +24,8 @@ let AddaddressStore = Reflux.createStore({
         receiverName:'',
         receiverPhone:'',
         town:''
-      }
+      },
+      newAddressid:''
     };
   },
   listenables: AddaddressActions,
@@ -49,6 +50,7 @@ let AddaddressStore = Reflux.createStore({
     try{
         const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.saveAddress,addressObj,'post');
         this.data.saveAddressSuccess=true;
+        this.data.newAddressid=res.id;
     }catch(err){
         this.data.saveAddressSuccess=false;
         alert('保存地址失败')

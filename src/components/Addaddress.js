@@ -58,7 +58,8 @@ export default class Addaddress extends Component{
                 receiverName:'',
                 receiverPhone:'',
                 town:''
-            }
+            },
+            newAddressid:''
         };
         this.handleChange=this.handleChange.bind(this);
         this.handleName=this.handleName.bind(this);
@@ -91,11 +92,7 @@ export default class Addaddress extends Component{
       
       this.unsubscribe = AddaddressStore.listen(function(state) {
         this.setState(state);
-        if(this.state.saveAddressSuccess){
-            console.log('保存成功')
-        }
       }.bind(this));
-      console.log(this.props.location);
       if(this.props.location.query.editId){
           this._fetchData(this.props.location.query.editId);
       }
@@ -104,7 +101,17 @@ export default class Addaddress extends Component{
         let thisObj=this;
         if(this.state.saveAddressSuccess){
             setTimeout(function(){
-                thisObj.context.router.push('address/list')
+                if(thisObj.props.location.query.backorder && thisObj.props.location.query.backorder==1 && thisObj.state.newAddressid){
+                    thisObj.context.router.push('order/confirmorder?addressid='+thisObj.state.newAddressid)
+                }else{
+                    if(thisObj.props.location.query.chooseAdd && thisObj.props.location.query.orders){
+                        thisObj.context.router.push('address/list?chooseAdd='+thisObj.props.location.query.chooseAdd+'&orders='+thisObj.props.location.query.orders)
+                    }else{
+                        thisObj.context.router.push('address/list')
+                    }
+                    
+                }
+                
             },500)
         }
     }

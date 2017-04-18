@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import {FinishBtn} from './CommonComponent';
 import _ from 'lodash';
 import KeyBoard from './KeyBoard';
 import '../static/styles/revisecard.less';
@@ -51,10 +52,9 @@ export default class ReviseCardCount extends Component{
                             )}
                             <div className="fade-cursor"></div>
                         </div>
-                        <p style={{fontSize:14,color:'#7b7b7b',marginTop:10}}>请输入使用数量,本次最多可使用<span>4</span>张</p>
+                        <p style={{fontSize:14,color:'#7b7b7b',marginTop:10}}>请输入使用数量,本次最多可使用<span>{this.props.maxCount}</span>张</p>
                     </div>
-                    <button className="finish-btn" onClick={()=>this.props.updateUseCount(this.state.numberArr.join(''))}>完成</button>
-                    
+                    {FinishBtn('完成',{},()=>this.props.updateUseCount(this.state.numberArr.join('')))}
                 </div>
                 <KeyBoard tapNumber={this.tapNumber}/>
             </div>

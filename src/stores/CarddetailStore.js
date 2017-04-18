@@ -10,7 +10,9 @@ let CarddetailStore = Reflux.createStore({
         originData:{
             scaleDto:{}
         },
-        reviseCard:false
+        reviseCard:false,
+        cardUsed:false,
+        cardOverview:{}
     };
   },
   listenables: CarddetailActions,
@@ -47,6 +49,17 @@ let CarddetailStore = Reflux.createStore({
     }finally{
         this.data.showLoading=false;
         this.trigger(this.data);
+    }
+  },
+  onCheckCardUsed:async function(code,originState){
+    let data=originState; 
+    try{
+        const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.checkIfCardUsed,{'code':code},'get');
+        data.cardOverview=res;
+    }catch(err){
+        alert('请求异常')
+    }finally{
+        this.trigger(data);
     }
   }
 })

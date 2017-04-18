@@ -360,7 +360,16 @@ export default class Shopcar extends Component{
                         )
                     }
                 </div>
-                <FooterBtns submitCase={this.submitCase} ifChooseAll={this.ifChooseAll} chooseAll={this.state.ChooseAll} editAllmode={this.state.editAll} totalCount={this.state.footerCount} totalPay={this.state.footerPay}/>
+                <FooterBtns 
+                    submitCase={this.submitCase} 
+                    ifChooseAll={this.ifChooseAll} 
+                    chooseAll={this.state.ChooseAll} 
+                    editAllmode={this.state.editAll} 
+                    totalCount={this.state.footerCount} 
+                    totalPay={this.state.footerPay}
+                    submitName="结算"
+                    countShow={true}
+                />
                 {this.state.dialogShow ? 
                     <Dialog cancelEvent={this.hideDialog} confirmEvent={this.confirmDialog} title="确认删除已选商品吗?"/> : ''
                 }

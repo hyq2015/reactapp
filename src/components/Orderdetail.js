@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import '../static/styles/orderdetail.less';
+import PUBLIC from '../static/js/public';
 import UserInfo from './UserInfo';
+import {FooterBtns} from '../components/CommonComponent';
 import OrderdetailCard from './OrderdetailCard';
 import Ordercode from './Ordercode';
 import Userphone from './Userphone';
@@ -18,12 +20,15 @@ export default class Orderdetail extends Component{
             originData:{
                 receiverAddressDto:{},
                 shop:{},
-                items:[]
+                items:[],
+                status:''
             }
         };
         this._loadData=this._loadData.bind(this);
         this._setTitle=this._setTitle.bind(this);
         this.changeAddress=this.changeAddress.bind(this);
+        this.submitCase=this.submitCase.bind(this);
+        this.cardDetail=this.cardDetail.bind(this);
     }
     componentWillMount(){
         AppActions.disabletab();
@@ -78,9 +83,17 @@ export default class Orderdetail extends Component{
     _loadData(id){
         OrderdetailActions.loadData(id);
     }
+    submitCase(){
+        console.log('支付')
+    }
+    cardDetail(id,status){
+        if(status.toUpperCase()=='TO_USE'){
+            this.context.router.push('card/detail?id='+id)
+        }
+    }
     render(){
         return(
-            <div id="OrderDetailContainer">
+            <div id="OrderDetailContainer" style={{paddingBottom:this.state.originData.status.toUpperCase()=='TO_PAY' ? 50 : 0}}>
                 {this.state.originData.logisticsCompany ? 
                     <div className="ponumber">
                         <span>配送方式:</span>
@@ -100,9 +113,17 @@ export default class Orderdetail extends Component{
                 : ''
                 }
                 
-                <OrderdetailCard order={this.state.originData} orderItem={this.state.originData.items}/>
+                <OrderdetailCard 
+                    order={this.state.originData} 
+                    orderItem={this.state.originData.items}
+                    cardDetail={this.cardDetail}
+                />
                 <Ordercode ordercode={this.state.originData.code} submittime={this.state.originData.creation} paytime={this.state.originData.paidTime}/>
+                {this.state.originData.status.toUpperCase()=='TO_PAY' ? FooterBtns(PUBLIC.transformCharge(this.state.originData.totalPrice),'无优惠折扣','去支付',this.submitCase) : ''}
             </div>
         )
     }
+}
+Orderdetail.contextTypes = {  
+    router: React.PropTypes.object
 }

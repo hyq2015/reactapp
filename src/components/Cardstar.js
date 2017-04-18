@@ -15,7 +15,7 @@ export default class Cardstar extends Component{
     render(){
         return(
             <ul className="carditems clearfloat">
-                {this.props.nearlist ? this.props.nearlist.map((cardItem,index)=>
+                {this.props.nearlist ? this.props.nearlist.content.map((cardItem,index)=>
                 <li key={index} className={this.props.class}>
                     <div className="card-pic" style={{backgroundImage:'url('+(cardItem.imgurl ? cardItem.imgurl : '/static/images/loaderr.png')+')',backgroundSize:'cover',backgroundPosition:'center'}}></div>
                     <p className="cardTitle">{cardItem.name}</p>
