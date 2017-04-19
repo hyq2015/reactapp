@@ -111,23 +111,7 @@ export default class Mycard extends Component{
                 })
             }
         }
-        if(this.state.loading){
-            switch(this.state.activenav){
-                case 0:
-                    currentQueryPath=CONFIG.alphaPath.allcard;
-                    this._loadData({'size':CONFIG.pageSize,used:false},initOrigindata,currentQueryPath);
-                    break;
-                case 1:
-                    currentQueryPath=CONFIG.alphaPath.usedCardquery;
-                    this._loadData({'size':CONFIG.pageSize,used:true},initOrigindata,currentQueryPath);
-                    break;
-                case 2:
-                    currentQueryPath=CONFIG.alphaPath.allcard;
-                    this._loadData({'size':CONFIG.pageSize,isExpire:true},initOrigindata,currentQueryPath);
-                    break;
-                
-            }
-        }
+        
     
     }
     componentWillUnmount(){
@@ -162,6 +146,22 @@ export default class Mycard extends Component{
                 originData:initOrigindata,
                 activenav:index
             });
+
+            switch(index){
+                case 0:
+                    currentQueryPath=CONFIG.alphaPath.allcard;
+                    this._loadData({'size':CONFIG.pageSize,used:false},initOrigindata,currentQueryPath);
+                    break;
+                case 1:
+                    currentQueryPath=CONFIG.alphaPath.usedCardquery;
+                    this._loadData({'size':CONFIG.pageSize,used:true},initOrigindata,currentQueryPath);
+                    break;
+                case 2:
+                    currentQueryPath=CONFIG.alphaPath.allcard;
+                    this._loadData({'size':CONFIG.pageSize,isExpire:true},initOrigindata,currentQueryPath);
+                    break;
+                
+            }
         }
     }
     checkCode(e){

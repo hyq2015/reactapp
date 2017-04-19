@@ -19,13 +19,12 @@ let MyorderStore = Reflux.createStore({
   },
   
   onLoadData:async function(jsonobj,originData){
-    let originData1=_.clone(originData);
     try{
         const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.allorder,jsonobj,'post');
-        if(originData1.content.length<1){
+        if(originData.content.length<1){
           this.data.originData= res;
         }else{
-          let content=originData1.content;
+          let content=originData.content;
           this.data.originData=res;
           this.data.originData.content=content.concat(res.content);
         }
@@ -35,8 +34,7 @@ let MyorderStore = Reflux.createStore({
         this.data.originData=originData;
         alert('请求异常la')
     }finally{
-        console.log(this.data.originData)
-        if(this.data.originData.last){
+        if(this.data.originData.last && this.data.originData.content.length<1){
             this.data.nodata=true;
         }else{
             this.data.nodata=false;

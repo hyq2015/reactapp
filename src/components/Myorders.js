@@ -90,11 +90,12 @@ export default class Myorder extends Component{
     onScrollEnd(){
         if(this.refs.scroller){
             if(document.body.scrollTop>scrollerHeight-windowHeight-150){
+
                 if(!this.state.originData.last && !this.state.loading){
                     this.setState({
                         loading:true
                     })
-                    this._loadData({'size':CONFIG.pageSize,'fromId':this.state.originData.content[this.state.originData.content.length-1].id})
+                    this._loadData({'size':CONFIG.pageSize,'fromId':this.state.originData.content[this.state.originData.content.length-1].id},this.state.originData)
                 }else{
                     if(this.state.loadMore){
                         this.setState({
@@ -138,25 +139,7 @@ export default class Myorder extends Component{
                 })
             }
         }
-        if(this.state.loading){
-            switch(this.state.activenav){
-                case 0:
-                    this._loadData({'size':CONFIG.pageSize},initOrigindata);
-                    break;
-                case 1:
-                    this._loadData({'size':CONFIG.pageSize,'status':'TO_PAY'},initOrigindata);
-                    break;
-                case 2:
-                    this._loadData({'size':CONFIG.pageSize,'status':'PAID'},initOrigindata);
-                    break;
-                case 3:
-                    this._loadData({'size':CONFIG.pageSize,'status':'SUCCESS'},initOrigindata);
-                    break;
-                case 4:
-                    this._loadData({'size':CONFIG.pageSize,'status':'CLOSED'},initOrigindata);
-                    break;
-            }
-        }
+        
     
     }
     componentWillUnmount(){
@@ -185,6 +168,23 @@ export default class Myorder extends Component{
                 originData:initOrigindata,
                 activenav:index
             });
+            switch(index){
+                case 0:
+                    this._loadData({'size':CONFIG.pageSize},initOrigindata);
+                    break;
+                case 1:
+                    this._loadData({'size':CONFIG.pageSize,'status':'TO_PAY'},initOrigindata);
+                    break;
+                case 2:
+                    this._loadData({'size':CONFIG.pageSize,'status':'PAID'},initOrigindata);
+                    break;
+                case 3:
+                    this._loadData({'size':CONFIG.pageSize,'status':'SUCCESS'},initOrigindata);
+                    break;
+                case 4:
+                    this._loadData({'size':CONFIG.pageSize,'status':'CLOSED'},initOrigindata);
+                    break;
+            }
             
         }
     }
@@ -212,7 +212,7 @@ export default class Myorder extends Component{
                 <Topnavbar navs={this.state.navbars} changeNav={this._changeNav}/>
                 <div style={{height:47}}></div>
                 {this.state.nodata ? NoDataPage(this.state.activenav,'order') : 
-                    <div id="OrderscrollWrapper" ref="scroller" style={{height:'calc(100vh - 58px)'}}>
+                    <div id="OrderscrollWrapper" ref="scroller">
                     <div>
                         {this.state.originData.content.map((item,index)=>
                             <SingleOrderCard orderdetail={this.orderDetail} deleteOrder={this.deleteOrder} checkCode={this.checkCode} checkLogistic={this.checkLogistic} key={item.id} order={item}/>
