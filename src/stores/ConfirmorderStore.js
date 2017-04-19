@@ -82,6 +82,19 @@ let ConfirmorderStore = Reflux.createStore({
             this.data.indexLoading=false;
             this.trigger(this.data);
         }
+  },
+  onCreateOrder:async function(data){
+        try{
+            const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.confirmOrder,data,'post');
+            this.data.orderCreated=true;
+            this.data.orderPayId=res[0].id;
+        }catch(err){
+            alert('请求异常');
+            this.data.orderCreated=false;
+        }finally{
+            this.data.loadingToastShow=false;
+            this.trigger(this.data);
+        }
   }
 })
 export default ConfirmorderStore

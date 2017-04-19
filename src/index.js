@@ -14,8 +14,10 @@ import Mycard from './components/Mycards';
 import Orderdetail from './components/Orderdetail';
 import Carddetail from './components/Carddetail';
 import ConfirmOrder from './ordercomponent/ConfirmOrder';
+import OrderPay from './ordercomponent/OrderPay';
 import Searchpage from './components/Searchpage';
 import CarduseSuccess from './components/CarduseSuccess';
+import Logistic from './components/Logistic';
 
 import './static/styles/reset.css';
 import { Router, Route, IndexRoute, Link ,hashHistory,browserHistory } from 'react-router';
@@ -41,7 +43,9 @@ ReactDOM.render((<Router history={hashHistory}>
       <Route path="card/detail" components={Carddetail}/>
       <Route path="card/success" components={CarduseSuccess}/>
       <Route path="order/confirmorder" components={ConfirmOrder}/>
+      <Route path="order/pay" components={OrderPay}/>
       <Route path="search" components={Searchpage}/>
+      <Route path="logistic" components={Logistic}/>
       
     </Route>
 </Router>), document.getElementById('app'));

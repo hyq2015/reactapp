@@ -7,7 +7,8 @@ const FinishBtn_defaultStyle={
         height: 50,display: 'inline-block',width: '100%',boxSizing: 'border-box',
         backgroundColor: blueColor,color: '#fff',textAlign: 'center',
         borderRadius: 4,fontSize: 16,
-        marginTop: 40,border: 'none'
+        marginTop: 40,border: 'none',
+        lineHeight:'50px'
     }
 export const FinishBtn=(txt,styleoption,callbackFunc)=>{
     let newStyle=Object.assign({},FinishBtn_defaultStyle,styleoption)
@@ -18,6 +19,27 @@ export const FinishBtn=(txt,styleoption,callbackFunc)=>{
         </div>
     )
 }
+
+//atagBtn
+
+export const aTagBtn=(txt,styleoption,type)=>{
+    let newStyle=Object.assign({},FinishBtn_defaultStyle,styleoption)
+    if(type=='phone'){
+        return(
+            <div style={{padding:'0 12px',textAlign:'center'}}>
+                <a href={`tel://${txt}`} style={newStyle}>联系电话&nbsp;{txt}</a>
+            </div>
+        )
+    }else if(type=='online'){
+        return(
+            <div style={{padding:'0 12px',textAlign:'center'}}>
+                <a href='https://static.meiqia.com/dist/standalone.html?eid=49692' style={newStyle}>{txt}</a>
+            </div>
+        )
+    }
+    
+}
+
 
 //SuccessTag
 const SuccessTag_styleObj={
@@ -58,3 +80,19 @@ export const FooterBtns=(totalpay,saleinfo,submitTxt,callbackFunc)=>{
         
     )
 }
+
+//logisticFootPrint
+export const logisticFootPrint=(stationArr)=>{
+    let logistArr=[];
+    for(let [index,station] of stationArr.entries()){
+        logistArr.push(
+            <div key={index} className={station.current ? "singlelogistic logisticCircle-active" : "singlelogistic logisticCircle-inactive"} style={{color:station.current ? '#00c8fb' : '#bbbbbb'}}>
+                {'['+station.firstname+'] 快件离开 ['+station.lastname+'] 已发往 ['+station.destination+'] '}
+                <br/>{station.date}
+            </div>
+        )
+    }
+    
+    return logistArr
+}
+

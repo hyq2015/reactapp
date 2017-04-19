@@ -42,92 +42,141 @@ class AppComponent extends Component {
   }
   checkRoute(name){
     switch(name){
-            case '/play':
-              this.setState({
-                activebar:1,
-                tabshow:true
-              });
-              break;
-            case '/mall':
-              this.setState({
-                activebar:2,
-                tabshow:true
-              });
-              break;
-            case '/mine':
-              this.setState({
-                activebar:3,
-                tabshow:true
-              });
-              break;
-            case '/address/list':
-              this.setState({
-                tabshow:false
-              })
-              break;
-            case '/address/add':
-              this.setState({
-                tabshow:false,
-                loading:false,
-                pagebottom:0
-              });
-              break;
-            case '/shopcar':
-              this.setState({
-                tabshow:false,
-                loading:true,
-                pagebottom:0
-              })
-              break;
-            case '/orders':
-              this.setState({
-                tabshow:false,
-                loading:true,
-                pagebottom:0
-              })
-              break;
-            case '/cards':
-              this.setState({
-                tabshow:false,
-                loading:true,
-                pagebottom:0
-              })
-              break;
-            case '/order/detail':
-              this.setState({
-                tabshow:false,
-                loading:true,
-                pagebottom:0
-              })
-              break;
-            case '/search':
-              this.setState({
-                tabshow:false,
-                loading:false,
-                pagebottom:0
-              })
-              break;
-            case '/order/confirmorder':
-              this.setState({
-                tabshow:false,
-                loading:true,
-                pagebottom:0
-              })
-              break;
-            case '/card/detail':
-              this.setState({
-                tabshow:false,
-                loading:true,
-                pagebottom:0
-              })
-              break;
-            case '/card/success':
-              this.setState({
-                tabshow:false,
-                loading:true,
-                pagebottom:0
-              })
-              break;
+            case '/play':{
+                this.setState({
+                  activebar:1,
+                  tabshow:true
+                });
+                break;
+            }
+            case '/mall':{
+                this.setState({
+                  activebar:2,
+                  tabshow:true
+                });
+                break;
+            }
+              
+            case '/mine':{
+                this.setState({
+                  activebar:3,
+                  tabshow:true
+                });
+                break;
+            }
+              
+            case '/address/list':{
+                this.setState({
+                  tabshow:false
+                })
+                break;
+            }
+              
+            case '/address/add':{
+                this.setState({
+                  tabshow:false,
+                  loading:false,
+                  pagebottom:0
+                });
+                break;
+            }
+              
+            case '/shopcar':{
+                this.setState({
+                  tabshow:false,
+                  loading:true,
+                  pagebottom:0
+                })
+                break;
+            }
+              
+            case '/orders':{
+                this.setState({
+                  tabshow:false,
+                  loading:true,
+                  pagebottom:0
+                })
+                break;
+            }
+              
+            case '/cards':{
+                this.setState({
+                  tabshow:false,
+                  loading:true,
+                  pagebottom:0
+                })
+                break;
+            }
+              
+            case '/order/detail':{
+                this.setState({
+                  tabshow:false,
+                  loading:true,
+                  pagebottom:0
+                })
+                break;
+            }
+              
+            case '/search':{
+                this.setState({
+                  tabshow:false,
+                  loading:false,
+                  pagebottom:0
+                })
+                break;
+            }
+              
+            case '/order/confirmorder':{
+                this.setState({
+                  tabshow:false,
+                  loading:true,
+                  pagebottom:0
+                })
+                break;
+            }
+              
+            case '/card/detail':{
+                this.setState({
+                  tabshow:false,
+                  loading:true,
+                  pagebottom:0
+                })
+                break;
+            }
+              
+            case '/card/success':{
+                this.setState({
+                  tabshow:false,
+                  loading:true,
+                  pagebottom:0
+                })
+                break;
+            }
+            case '/logistic':{
+                this.setState({
+                  tabshow:false,
+                  loading:true,
+                  pagebottom:0
+                })
+                break;
+            }
+            case '/order/pay':{
+                this.setState({
+                  tabshow:false,
+                  loading:false,
+                  pagebottom:0
+                })
+                break;
+            }
+            
+            default:{
+                this.setState({
+                  activebar:1,
+                  tabshow:true
+                });
+                break;
+            }
+              
               
         }
   }

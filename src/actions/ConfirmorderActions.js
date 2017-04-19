@@ -1,7 +1,8 @@
 import Reflux from 'reflux';
 let ConfirmorderActions = Reflux.createActions({
-    'loadData':{async:true},
-    'checkAddress':{async:true}
+    'loadData':{asyncResult:true},
+    'checkAddress':{asyncResult:true},
+    'createOrder':{asyncResult:true}
 
 });
 

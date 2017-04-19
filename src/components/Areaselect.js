@@ -3,6 +3,8 @@ import {render} from 'react-dom';
 import AreaJson from '../static/js/province_city_town.json';
 import '../static/styles/areapicker.less';
 import CS from 'classnames';
+const minMoveVolume=36;
+const extraMoveVolume=10;
 export default class AreaPicker extends Component{
     constructor(props){
         super(props);
@@ -61,10 +63,10 @@ export default class AreaPicker extends Component{
                     
                     <div style={{width: '33%',height: 260,position: 'relative',overflow: 'hidden'}} id="container">
                         <div style={{width: '100%',height: '100%',position: 'relative',overflowX: 'hidden',boxSizing: 'border-box'}} id="Ricky1">
-                            <ul style={{width: '100%',paddingLeft:0,height: 36,lineHeight: '36px', transform: 'perspective(1000px) rotateY(0deg) rotateX(0deg)', transition: 'transform 50ms ease-out'}} id="list">
+                            <ul style={{width: '100%',paddingLeft:0}} id="list">
                                 {AreaJson.province_city_town.map((item,index)=>
-                                     <li key={index} className={(index<this.state.currentActive-2 || index>this.state.currentActive+3) ? 'visible litag province' : 'litag province'}
-                                        style={{transform:'translateZ(100px) rotateX('+(-(index)*20)+'deg)'}}>{item.name}</li>
+                                     <li style={{height:36}} key={index} className={(index<this.state.currentActive-2 || index>this.state.currentActive+3) ? 'visible litag province' : 'litag province'}
+                                        >{item.name}</li>
                                 )}
                             </ul>
                         </div>
@@ -72,10 +74,10 @@ export default class AreaPicker extends Component{
 
                     <div style={{width: '33%',height: 260,position: 'relative',overflow: 'hidden'}} id="container2">
                         <div style={{width: '100%',height: '100%',position: 'relative',overflowX: 'hidden',boxSizing: 'border-box'}}>
-                            <ul style={{width: '100%',paddingLeft:0,height: 36,lineHeight: '36px', transform: 'perspective(1000px) rotateY(0deg) rotateX(0deg)', transition: 'transform 50ms ease-out'}} id="list2">
+                            <ul style={{width: '100%',paddingLeft:0,lineHeight: '36px'}} id="list2">
                                 {AreaJson.province_city_town[this.state.currentActive].sub.map((item,index)=>
-                                     <li key={index} className={(index<this.state.currentActiveCity-2 || index>this.state.currentActiveCity+3) ? 'visible litag province' : 'litag province'}
-                                        style={{transform:'translateZ(100px) rotateX('+(-(index)*20)+'deg)'}}>{item.name}</li>
+                                     <li style={{height:36}} key={index} className={(index<this.state.currentActiveCity-2 || index>this.state.currentActiveCity+3) ? 'visible litag province' : 'litag province'}
+                                        >{item.name}</li>
                                 )}
                             </ul>
                         </div>
@@ -83,10 +85,10 @@ export default class AreaPicker extends Component{
 
                     <div style={{width: '33%',height: 260,position: 'relative',overflow: 'hidden'}} id="container3">
                         <div style={{width: '100%',height: '100%',position: 'relative',overflowX: 'hidden',boxSizing: 'border-box'}}>
-                            <ul style={{width: '100%',paddingLeft:0,height: 36,lineHeight: '36px', transform: 'perspective(1000px) rotateY(0deg) rotateX(0deg)', transition: 'transform 50ms ease-out'}} id="list3">
+                            <ul style={{width: '100%',paddingLeft:0,lineHeight: '36px'}} id="list3">
                                 {AreaJson.province_city_town[this.state.currentActive].sub[this.state.currentActiveCity].sub ? AreaJson.province_city_town[this.state.currentActive].sub[this.state.currentActiveCity].sub.map((item,index)=>
-                                     <li key={index} className={(index<this.state.currentActiveTown-2 || index>this.state.currentActiveTown+3) ? 'visible litag province' : 'litag province'}
-                                        style={{transform:'translateZ(100px) rotateX('+(-(index)*20)+'deg)'}}>{item.name}</li>
+                                     <li style={{height:36}} key={index} className={(index<this.state.currentActiveTown-2 || index>this.state.currentActiveTown+3) ? 'visible litag province' : 'litag province'}
+                                        >{item.name}</li>
                                 ) : ''}
                             </ul>
                         </div>
@@ -107,11 +109,11 @@ export default class AreaPicker extends Component{
         moveVolume2 = 0;
         originTop3 = 0;
         moveVolume3 = 0;
-        document.getElementById('list2').style.transform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume2) + 'deg)';
-        document.getElementById('list2').style.webkitTransform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume2) + 'deg)';
+        document.getElementById('list2').style.transform='translateY(' + (-moveVolume2) + 'px)';
+        document.getElementById('list2').style.webkitTransform='translateY(' + (-moveVolume2) + 'px)';
         
-        document.getElementById('list3').style.transform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume3) + 'deg)';
-        document.getElementById('list3').style.webkitTransform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume3) + 'deg)';
+        document.getElementById('list3').style.transform='translateY(' + (-moveVolume3) + 'px)';
+        document.getElementById('list3').style.webkitTransform='translateY(' + (-moveVolume3) + 'px)';
     }
     initTown(){
          this.setState({
@@ -119,39 +121,33 @@ export default class AreaPicker extends Component{
         })
         originTop3 = 0;
         moveVolume3 = 0;
-        document.getElementById('list3').style.transform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume3) + 'deg)';
-        document.getElementById('list3').style.webkitTransform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume3) + 'deg)';
+        document.getElementById('list3').style.transform='translateY(' + (-moveVolume3) + 'px)';
+        document.getElementById('list3').style.webkitTransform='translateY(' + (-moveVolume3) + 'px)';
     }
     initUi(){
         document.getElementById('confirmArea').style.height='36px';
         if (userAgent.indexOf('ANDROID') > 0) {
-            document.getElementById('list').style.height=ShowHeight+'px';
             document.getElementById('list').style.width=windowWidth*0.33+'px';
             document.getElementById('list').style.transformOrigin='center center 0';
             document.getElementById('list').style.webkitTransformOrigin='center center 0';
 
-            document.getElementById('list2').style.height=ShowHeight+'px';
             document.getElementById('list2').style.width=windowWidth*0.33+'px';
             document.getElementById('list2').style.transformOrigin='center center 0';
             document.getElementById('list2').style.webkitTransformOrigin='center center 0';
             
-            document.getElementById('list3').style.height=ShowHeight+'px';
             document.getElementById('list3').style.width=windowWidth*0.33+'px';
             document.getElementById('list3').style.transformOrigin='center center 0';
             document.getElementById('list3').style.webkitTransformOrigin='center center 0';
 
         } else if (userAgent.indexOf('IPHONE')) {
-            document.getElementById('list').style.height=ShowHeight+'px';
             document.getElementById('list').style.width=windowWidth*0.33+'px';
             document.getElementById('list').style.transformOrigin='center center 100px';
             document.getElementById('list').style.webkitTransformOrigin='center center 100px';
 
-            document.getElementById('list2').style.height=ShowHeight+'px';
             document.getElementById('list2').style.width=windowWidth*0.33+'px';
             document.getElementById('list2').style.transformOrigin='center center 100px';
             document.getElementById('list2').style.webkitTransformOrigin='center center 100px';
 
-            document.getElementById('list3').style.height=ShowHeight+'px';
             document.getElementById('list3').style.width=windowWidth*0.33+'px';
             document.getElementById('list3').style.transformOrigin='center center 100px';
             document.getElementById('list3').style.webkitTransformOrigin='center center 100px';
@@ -162,10 +158,9 @@ export default class AreaPicker extends Component{
             item.style.maxWidth=windowWidth * 0.33 + 'px';
         }
         if(this.props.currentActive==8){
-            moveVolume=160;
-            document.getElementById('list').style.transform='perspective(1000px) rotateY(0deg) rotateX(160deg)';
-            document.getElementById('list').style.transwebkitTransform='perspective(1000px) rotateY(0deg) rotateX(160deg)';
-            document.getElementById('list').style.webkitTransformStyle='preserve-3d';
+            moveVolume=minMoveVolume*8;
+            document.getElementById('list').style.transform='translateY('+(-moveVolume)+'px)';
+            document.getElementById('list').style.webkitTransform='translateY('+(-moveVolume)+'px)';
         }
         
     }
@@ -199,23 +194,22 @@ export default class AreaPicker extends Component{
             if(chooseWhat=='province'){
                 changeY = originTop - endY;
                 para = AreaJson.province_city_town.length - 1;
-                moveVolume += (360 * changeY) / (200 * Math.PI);
-                if (moveVolume >= para * 20 + 10) {
-                    moveVolume = para * 20 + 10;
+                moveVolume += changeY;
+                if (moveVolume >= para * minMoveVolume + extraMoveVolume) {
+                    moveVolume = para * minMoveVolume + extraMoveVolume;
                 }
-                if (moveVolume <= -10) {
-                    moveVolume = -10;
+                if (moveVolume <= -extraMoveVolume) {
+                    moveVolume = -extraMoveVolume;
                 }
-                console.log(moveVolume)
-                document.getElementById('list').style.transform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume) + 'deg)';
-                document.getElementById('list').style.webkitTransform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume) + 'deg)';
+                document.getElementById('list').style.transform='translateY(' + (-moveVolume) + 'px)';
+                document.getElementById('list').style.webkitTransform='translateY(' + (-moveVolume) + 'px)';
                 document.getElementById('list').style.backfaceVisibility='hidden';
                 document.getElementById('list').style.willChange='transform';
 
                 /*控制显示那些item*/
-                var leftVolume = moveVolume % 20;
-                var intPart = Math.floor(moveVolume / 20);
-                if (leftVolume > 10) {
+                var leftVolume = moveVolume % minMoveVolume;
+                var intPart = Math.floor(moveVolume / minMoveVolume);
+                if (leftVolume > extraMoveVolume) {
                     thatObj.setState({
                         currentActive:intPart + 1
                     });
@@ -235,18 +229,18 @@ export default class AreaPicker extends Component{
             }else if(chooseWhat=='city'){
                 changeY = originTop2 - endY;
                 para = AreaJson.province_city_town[thatObj.state.currentActive].sub.length - 1;
-                moveVolume2 += (360 * changeY) / (200 * Math.PI);
-                if (moveVolume2 >= para * 20 + 10) {
-                    moveVolume2 = para * 20 + 10;
+                moveVolume2 += changeY;
+                if (moveVolume2 >= para * minMoveVolume + extraMoveVolume) {
+                    moveVolume2 = para * minMoveVolume + extraMoveVolume;
                 }
-                if (moveVolume2 <= -10) {
-                    moveVolume2 = -10;
+                if (moveVolume2 <= -extraMoveVolume) {
+                    moveVolume2 = -extraMoveVolume;
                 }
 
                 /*控制显示那些item*/
-                var leftVolume = moveVolume2 % 20;
-                var intPart = Math.floor(moveVolume2 / 20);
-                if (leftVolume > 10) {
+                var leftVolume = moveVolume2 % minMoveVolume;
+                var intPart = Math.floor(moveVolume2 / minMoveVolume);
+                if (leftVolume > extraMoveVolume) {
                     thatObj.setState({
                         currentActiveCity:intPart + 1
                     })
@@ -260,8 +254,8 @@ export default class AreaPicker extends Component{
                     })
                 }
                 thatObj.initTown();
-                document.getElementById('list2').style.transform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume2) + 'deg)';
-                document.getElementById('list2').style.webkitTransform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume2) + 'deg)';
+                document.getElementById('list2').style.transform='translateY(' + (-moveVolume2) + 'px)';
+                document.getElementById('list2').style.webkitTransform='translateY(' + (-moveVolume2) + 'px)';
                 document.getElementById('list2').style.backfaceVisibility='hidden';
                 document.getElementById('list2').style.willChange='transform';
                 originTop2 = endY;
@@ -273,18 +267,18 @@ export default class AreaPicker extends Component{
                 }else{
                     para=0;
                 }
-                moveVolume3 += (360 * changeY) / (200 * Math.PI);
-                if (moveVolume3 >= para * 20 + 10) {
-                    moveVolume3 = para * 20 + 10;
+                moveVolume3 += changeY;
+                if (moveVolume3 >= para * minMoveVolume + extraMoveVolume) {
+                    moveVolume3 = para * minMoveVolume + extraMoveVolume;
                 }
-                if (moveVolume3 <= -10) {
-                    moveVolume3 = -10;
+                if (moveVolume3 <= -extraMoveVolume) {
+                    moveVolume3 = -extraMoveVolume;
                 }
 
                 /*控制显示那些item*/
-                var leftVolume = moveVolume3 % 20;
-                var intPart = Math.floor(moveVolume3 / 20);
-                if (leftVolume > 10) {
+                var leftVolume = moveVolume3 % minMoveVolume;
+                var intPart = Math.floor(moveVolume3 / minMoveVolume);
+                if (leftVolume > extraMoveVolume) {
                     thatObj.setState({
                         currentActiveTown:intPart + 1
                     })
@@ -298,8 +292,8 @@ export default class AreaPicker extends Component{
                     })
                 }
                
-                document.getElementById('list3').style.transform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume3) + 'deg)';
-                document.getElementById('list3').style.webkitTransform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume3) + 'deg)';
+                document.getElementById('list3').style.transform='translateY(' + (-moveVolume3) + 'px)';
+                document.getElementById('list3').style.webkitTransform='translateY(' + (-moveVolume3) + 'px)';
                 document.getElementById('list3').style.backfaceVisibility='hidden';
                 document.getElementById('list3').style.willChange='transform';
                 originTop3 = endY;
@@ -310,55 +304,55 @@ export default class AreaPicker extends Component{
             var para;
             if(chooseWhat=='province'){
                 para = AreaJson.province_city_town.length - 1;
-                if (moveVolume >= para * 20) {
-                    moveVolume = para * 20;
+                if (moveVolume >= para * minMoveVolume) {
+                    moveVolume = para * minMoveVolume;
                 }
                 if (moveVolume <= 0) {
                     moveVolume = 0;
                 }
-                var leftVolume = moveVolume % 20;
-                var intPart = Math.floor(moveVolume / 20);
-                if (leftVolume > 10) {
-                    moveVolume = (intPart + 1) * 20;
+                var leftVolume = moveVolume % minMoveVolume;
+                var intPart = Math.floor(moveVolume / minMoveVolume);
+                if (leftVolume > extraMoveVolume) {
+                    moveVolume = (intPart + 1) * minMoveVolume;
                     thatObj.setState({
                         currentActive:intPart+1
                     })
                 } else {
-                    moveVolume = 20 * intPart;
+                    moveVolume = minMoveVolume * intPart;
                     thatObj.setState({
                         currentActive:intPart
                     })
                 }
                 thatObj.initCity();
-                document.getElementById('list').style.transform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume) + 'deg)';
-                document.getElementById('list').style.webkitTransform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume) + 'deg)';
+                document.getElementById('list').style.transform='translateY(' + (-moveVolume) + 'px)';
+                document.getElementById('list').style.webkitTransform='translateY(' + (-moveVolume) + 'px)';
                 document.getElementById('list').style.backfaceVisibility='hidden';
                 document.getElementById('list').style.willChange='transform';
                 originTop = 0;
             }else if(chooseWhat=='city'){
                 para = AreaJson.province_city_town[thatObj.state.currentActive].sub.length - 1;
-                if (moveVolume2 >= para * 20) {
-                    moveVolume2 = para * 20;
+                if (moveVolume2 >= para * minMoveVolume) {
+                    moveVolume2 = para * minMoveVolume;
                 }
                 if (moveVolume2 <= 0) {
                     moveVolume2 = 0;
                 }
-                var leftVolume = moveVolume2 % 20;
-                var intPart = Math.floor(moveVolume2 / 20);
-                if (leftVolume > 10) {
-                    moveVolume2 = (intPart + 1) * 20;
+                var leftVolume = moveVolume2 % minMoveVolume;
+                var intPart = Math.floor(moveVolume2 / minMoveVolume);
+                if (leftVolume > extraMoveVolume) {
+                    moveVolume2 = (intPart + 1) * minMoveVolume;
                     thatObj.setState({
                         currentActiveCity:intPart+1
                     })
                 } else {
-                    moveVolume2 = 20 * intPart;
+                    moveVolume2 = minMoveVolume * intPart;
                     thatObj.setState({
                         currentActiveCity:intPart
                     })
                 }
                  thatObj.initTown();
-                document.getElementById('list2').style.transform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume2) + 'deg)';
-                document.getElementById('list2').style.webkitTransform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume2) + 'deg)';
+                document.getElementById('list2').style.transform='translateY(' + (-moveVolume2) + 'px)';
+                document.getElementById('list2').style.webkitTransform='translateY(' + (-moveVolume2) + 'px)';
                 document.getElementById('list2').style.backfaceVisibility='hidden';
                 document.getElementById('list2').style.willChange='transform';
                 originTop2 = 0;
@@ -369,27 +363,27 @@ export default class AreaPicker extends Component{
                 }else{
                     para=0;
                 }
-                if (moveVolume3 >= para * 20) {
-                    moveVolume3 = para * 20;
+                if (moveVolume3 >= para * minMoveVolume) {
+                    moveVolume3 = para * minMoveVolume;
                 }
                 if (moveVolume3 <= 0) {
                     moveVolume3 = 0;
                 }
-                var leftVolume = moveVolume3 % 20;
-                var intPart = Math.floor(moveVolume3 / 20);
-                if (leftVolume > 10) {
-                    moveVolume3 = (intPart + 1) * 20;
+                var leftVolume = moveVolume3 % minMoveVolume;
+                var intPart = Math.floor(moveVolume3 / minMoveVolume);
+                if (leftVolume > extraMoveVolume) {
+                    moveVolume3 = (intPart + 1) * minMoveVolume;
                     thatObj.setState({
                         currentActiveTown:intPart+1
                     })
                 } else {
-                    moveVolume3 = 20 * intPart;
+                    moveVolume3 = minMoveVolume * intPart;
                     thatObj.setState({
                         currentActiveTown:intPart
                     })
                 }
-                document.getElementById('list3').style.transform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume3) + 'deg)';
-                document.getElementById('list3').style.webkitTransform='perspective(1000px) rotateY(0deg) rotateX(' + (moveVolume3) + 'deg)';
+                document.getElementById('list3').style.transform='translateY(' + (-moveVolume3) + 'px)';
+                document.getElementById('list3').style.webkitTransform='translateY(' + (-moveVolume3) + 'px)';
                 document.getElementById('list3').style.backfaceVisibility='hidden';
                 document.getElementById('list3').style.willChange='transform';
                 originTop3 = 0;

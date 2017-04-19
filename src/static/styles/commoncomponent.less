@@ -68,3 +68,35 @@
         }
     }
 }
+.singlelogistic{
+    padding:10px 0 10px 30px;
+    font-size: 13px;line-height: 1.4;
+    position: relative;
+    word-break: break-all;
+    white-space: normal;
+    &:after{
+        content:" ";
+        position: absolute;bottom: 0;right: 0;left: 30px;
+        border-bottom: 1px solid @lineColor;
+        transform: scaleY(.5);
+    }
+    &:nth-last-child(1):after{
+        border-bottom:none;
+    }
+    
+    
+}
+.logisticCircle-active:before{
+    content:" ";
+    position: absolute;top: 15px;right: 0;left: 8px;
+    height: 8px;width: 8px;border-radius: 4px;
+    background-color: #00c8fb;
+    z-index: 10
+}
+.logisticCircle-inactive:before{
+    content:" ";
+    position: absolute;top: 15px;right: 0;left: 8px;
+    height: 8px;width: 8px;border-radius: 4px;
+    background-color: #bbbbbb;
+    z-index: 10
+}

@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import '../static/styles/orderdetail.less';
 import PUBLIC from '../static/js/public';
+import ShopNavigator from './ShopNavigator';
 import UserInfo from './UserInfo';
 import {FooterBtns} from '../components/CommonComponent';
 import OrderdetailCard from './OrderdetailCard';
@@ -22,13 +23,18 @@ export default class Orderdetail extends Component{
                 shop:{},
                 items:[],
                 status:''
-            }
+            },
+            shopnavShow:false,
+            shopPhone:''
         };
         this._loadData=this._loadData.bind(this);
         this._setTitle=this._setTitle.bind(this);
         this.changeAddress=this.changeAddress.bind(this);
         this.submitCase=this.submitCase.bind(this);
         this.cardDetail=this.cardDetail.bind(this);
+        this.contactShop=this.contactShop.bind(this);
+        this.hideFade=this.hideFade.bind(this);
+        this.navToMap=this.navToMap.bind(this);
     }
     componentWillMount(){
         AppActions.disabletab();
@@ -91,6 +97,19 @@ export default class Orderdetail extends Component{
             this.context.router.push('card/detail?id='+id)
         }
     }
+    contactShop(){
+        this.setState({
+            shopnavShow:true,
+        })
+    }
+    hideFade(){
+         this.setState({
+            shopnavShow:false
+        })
+    }
+    navToMap(){
+        console.log(this.state.originData.shop.lat,this.state.originData.shop.lng)
+    }
     render(){
         return(
             <div id="OrderDetailContainer" style={{paddingBottom:this.state.originData.status.toUpperCase()=='TO_PAY' ? 50 : 0}}>
@@ -117,9 +136,18 @@ export default class Orderdetail extends Component{
                     order={this.state.originData} 
                     orderItem={this.state.originData.items}
                     cardDetail={this.cardDetail}
+                    contactShop={this.contactShop}
                 />
                 <Ordercode ordercode={this.state.originData.code} submittime={this.state.originData.creation} paytime={this.state.originData.paidTime}/>
                 {this.state.originData.status.toUpperCase()=='TO_PAY' ? FooterBtns(PUBLIC.transformCharge(this.state.originData.totalPrice),'无优惠折扣','去支付',this.submitCase) : ''}
+                {this.state.shopnavShow ? 
+                    <ShopNavigator 
+                        hideFade={this.hideFade} 
+                        shopname={this.state.originData.shop ? this.state.originData.shop.name : ''}
+                        address={this.state.originData.shop ? this.state.originData.shop.address : ''}
+                        navToMap={this.navToMap}
+                        shopPhone={this.state.originData.shop ? this.state.originData.shop.contactPhone : ''}
+                        /> : ''}
             </div>
         )
     }

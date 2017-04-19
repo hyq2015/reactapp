@@ -2,9 +2,11 @@ import React,{Component} from 'react';
 import '../static/styles/orderlist.less';
 import _ from 'lodash';
 import Topnavbar from './Topnavbar';
+import Dialog from './Dialog';
 import Loader from './Loader';
 import NoDataPage from './NoData';
 import SingleOrderCard from './SingleOrdercard';
+import Logistic from './Logistic';
 import CONFIG from '../static/js/request';
 import 'babel-polyfill';
 import MyorderStore from '../stores/MyorderStore';
@@ -44,7 +46,9 @@ export default class Myorder extends Component{
                 content:[],
                 last:false
             },
-            activenav:0
+            activenav:0,
+            dialogshow:false,
+            deleteOrderId:null
         };
         this._changeNav=this._changeNav.bind(this);
         this._loadData=this._loadData.bind(this);
@@ -54,6 +58,7 @@ export default class Myorder extends Component{
         this.deleteOrder=this.deleteOrder.bind(this);
         this.orderDetail=this.orderDetail.bind(this);
         this.checkLogistic=this.checkLogistic.bind(this);
+        this.confirmEvent=this.confirmEvent.bind(this);
     }
     componentWillMount(){
         AppActions.disabletab();
@@ -102,8 +107,14 @@ export default class Myorder extends Component{
         
     }
     deleteOrder(orderid){
-        MyorderActions.deleteOrder(orderid,this.state.originData)
+        this.setState({
+            dialogshow:true,
+            deleteOrderId:orderid
+        })
 
+    }
+    confirmEvent(){
+        MyorderActions.deleteOrder(this.state.deleteOrderId,this.state.originData)
     }
     orderDetail(id){
         this.context.router.push('order/detail?id='+id)
@@ -193,6 +204,7 @@ export default class Myorder extends Component{
         }else{
             e.cancelBubble=true;
         }
+        this.context.router.push('logistic?id='+id);
     }
     render(){
         return(
@@ -209,6 +221,7 @@ export default class Myorder extends Component{
                     </div>
                 </div>
                 }
+                {this.state.dialogshow ? <Dialog title="确认删除此订单吗" cancelEvent={()=>{this.setState({dialogshow:false})}} confirmEvent={this.confirmEvent}/> : ''}
             </div>
         )
     }
