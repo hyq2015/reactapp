@@ -29,7 +29,7 @@ module.exports = {
     noInfo: false,
     proxy: {
         '/alpha/api/': {
-            target: 'http://dev.genwoshua.com',
+            target: 'http://42.159.244.26',
             changeOrigin: true,
             pathRewrite: {'^/alpha/api/' : '/alpha/api/'},
           }

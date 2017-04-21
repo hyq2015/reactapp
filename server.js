@@ -17,7 +17,7 @@ const compiler = webpack(config);
 
 
 new WebpackDevServer(compiler, config.devServer)
-.listen(config.port, '192.168.31.204', (err) => {
+.listen(config.port, '127.0.0.1', (err) => {
   if (err) {
     console.log(err);
   }

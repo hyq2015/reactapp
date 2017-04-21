@@ -9,7 +9,8 @@
 const path = require('path');
 const srcPath = path.join(__dirname, '/../src');
 console.log(path.join(__dirname, '/../src'))
-const dfltPort = 8000;
+// const dfltPort = 8000;
+const dfltPort = 80;
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
 let extractLESS = new ExtractTextPlugin('/src/styles/[name].less');
 
