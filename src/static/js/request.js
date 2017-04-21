@@ -37,7 +37,8 @@ var CONFIG={
   "usedCardquery":"/api/card/useLogQuery",
   "reviseCardCount":"/api/card/cardUseSign",
   "checkIfCardUsed":"/api/card/useVerifyQuery",
-  "cardUseSuccess":"/api/card/cardUseLog"
+  "cardUseSuccess":"/api/card/cardUseLog",
+  "afterSale":"/api/afterSale/mobileQuery"
   },
   'CurrentVersion':'developversion/',
   'pageSize':10,

@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import '../static/styles/iconfont.css';
 import '../static/styles/carddetail.less';
 import PUBLIC from '../static/js/public';
+import _ from 'lodash';
 import LoadingToast from './Loading';
 import QRCode from 'qrcode.react';
 import ReviseCardCount from './ReviseCardCount';

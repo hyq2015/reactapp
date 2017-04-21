@@ -1,12 +1,13 @@
 import Reflux from 'reflux';
 import MineActions from '../actions/MineActions';
 import AppStore from './AppStore';
+import PUBLIC from '../static/js/public';
 // import Promise from 'bluebird';
 import CONFIG,{XHR} from '../static/js/request';
 let MineStore = Reflux.createStore({
   init: function () {
     this.data = {
-      msg:'ok',
+      loginmsg:'ok',
       indexData:{
           user:{}
       },
@@ -18,19 +19,23 @@ let MineStore = Reflux.createStore({
     try {
       const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.userIndexinfo,{},'get');
       this.data.indexData=res;
-      this.data.msg='ok';
+      this.data.loginmsg='ok';
     }catch(err){
       if(err=='noRight'){
-        this.data.msg = 'noRight';
-        alert('没有权限');
+        this.data.loginmsg = 'noRight';
       }else{
-        this.data.msg = 'error';
+        this.data.loginmsg = 'error';
         alert('请求异常');
       }
       this.data.indexData = null;
     }finally{
       this.data.indexLoading=false;
-      this.trigger(this.data);
+      if(this.data.loginmsg=='noRight'){
+        PUBLIC.RedirectToGen();
+      }else{
+        this.trigger(this.data);
+      }
+      
     }
   },
   onGoAddresslist:function(){

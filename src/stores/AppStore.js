@@ -20,7 +20,7 @@ let AppStore = Reflux.createStore({
     }catch(err){
         this.data.user=null;
     }finally{
-        this.trigger(this.data);
+        this.trigger({user:this.data.user});
     }
   },
   onLoaded:function(){

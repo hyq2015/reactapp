@@ -12,7 +12,11 @@ export default class OrderdetailCard extends Component{
             <div className="userinfo-panel">
                 <div className="userinfo__hd">
                     <div className="titleFont">{this.props.order.shop.name}</div>
-                    <div className="bluefont" onClick={()=>this.props.contactShop(this.props.order)}>联系商家</div>
+                    {this.props.contactShopShow ? 
+                        <div className="bluefont" onClick={()=>this.props.contactShop(this.props.order)}>联系商家</div>
+                        : ''
+                    }
+                    
                 </div>
                 {this.props.orderItem.map((item,index)=>
                     <OrderdetailMediaCard 

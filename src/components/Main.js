@@ -1,13 +1,13 @@
 
 import '../static/styles/Main.less';
 
-import React,{Component} from 'react';
-
+import React,{Component,PropTypes } from 'react';
 import Tabbar from './Tabbar';
+import PUBLIC from '../static/js/public';
 import PageLoader from './PageLoader';
 import 'babel-polyfill';
 import Reflux from 'reflux';
-import reactMixin from 'react-mixin';
+var reactMixin = require('react-mixin');
 import 'babel-polyfill';
 import AppActions from '../actions/AppActions';
 import AppStore from '../stores/AppStore';
@@ -24,21 +24,47 @@ class AppComponent extends Component {
       loading:true,
       pagebottom:50
     }
+    this.checkUserLogined=this.checkUserLogined.bind(this);
+    this.checkRoute=this.checkRoute.bind(this);
+  }
+  componentWillMount(){
+      // this.context.router.setRouteLeaveHook(this.props.route.childRoutes[0], (nextLocation)=>{
+      //     console.log(nextLocation);
+      //     if(nextLocation.pathname=='mine'){
+      //       if(!window.sessionStorage.user){
+      //         PUBLIC.getUserFromServer();
+      //       }
+      //     }
+      //     //  return true
+      // })
   }
   componentDidMount(){
-      console.log('组件加载完毕');
       this.checkRoute(this.props.location.pathname);
-      AppActions.loadUser();
-      // window.addEventListener('hashchange', function(){
-      //   console.log(location.hash)
-      // }, false) 
+      // this.checkUserLogined();
+      
+      // AppActions.loadUser(this.props.route);
+      // window.addEventListener('hashchange', this.checkUserLogined) 
+    // const { route } = this.props;
+    // const { router } = this.context;
+    
         
         // browserHistory.getCurrentLocation().pathname
   }
+  checkUserLogined(){
+    let AppPathName=this.props.location.pathname;
+      if(AppPathName!='/play' && AppPathName!='/mall'){
+        if(!window.sessionStorage.user){
+          PUBLIC.getUserFromServer();
+        }
+      }
+  }
+
   componentDidUpdate(prevProps) {
+    
     if (this.props.location !== prevProps.location) {
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
     }
+
   }
   checkRoute(name){
     switch(name){
@@ -168,6 +194,25 @@ class AppComponent extends Component {
                 })
                 break;
             }
+            case '/order/paysuccess':{
+                this.setState({
+                  tabshow:false,
+                  loading:true,
+                  pagebottom:0
+                })
+                break;
+            }
+
+            case '/refund/detail':{
+              console.log(22222222)
+                this.setState({
+                  tabshow:false,
+                  loading:false,
+                  pagebottom:0
+                })
+                break;
+            }
+            
             
             default:{
                 this.setState({
@@ -186,6 +231,8 @@ class AppComponent extends Component {
       tabshow:true,
     })
   }
+  
+
   render() {
     return (
       <div className="index" id="index-container">
@@ -197,8 +244,9 @@ class AppComponent extends Component {
   }
 }
 
-AppComponent.defaultProps = {
+AppComponent.contextTypes = {  
+    router: PropTypes.object.isRequired
 };
-
 reactMixin.onClass(AppComponent, Reflux.connect(AppStore));
 export default AppComponent;
+

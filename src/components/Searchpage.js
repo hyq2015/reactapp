@@ -3,6 +3,7 @@ import '../static/styles/searchopage.less';
 import CONFIG from '../static/js/request';
 import MallSearchbar from './MallSearchbar';
 import RecentSearch from './RecentSearch';
+import _ from 'lodash';
 import 'babel-polyfill';
 import SearchpageActions from '../actions/SearchpageActions';
 import SearchpageStore from '../stores/SearchpageStore';

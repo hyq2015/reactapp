@@ -1,9 +1,10 @@
 import React,{Component} from 'react';
 import '../static/styles/orderdetail.less';
 import PUBLIC from '../static/js/public';
+import _ from 'lodash';
 import ShopNavigator from './ShopNavigator';
 import UserInfo from './UserInfo';
-import {FooterBtns} from '../components/CommonComponent';
+import {FooterBtns,TopErrortoast} from '../components/CommonComponent';
 import OrderdetailCard from './OrderdetailCard';
 import Ordercode from './Ordercode';
 import Userphone from './Userphone';
@@ -90,7 +91,7 @@ export default class Orderdetail extends Component{
         OrderdetailActions.loadData(id);
     }
     submitCase(){
-        console.log('支付')
+        this.context.router.push('order/pay?id='+this.state.originData.id)
     }
     cardDetail(id,status){
         if(status.toUpperCase()=='TO_USE'){
@@ -113,6 +114,7 @@ export default class Orderdetail extends Component{
     render(){
         return(
             <div id="OrderDetailContainer" style={{paddingBottom:this.state.originData.status.toUpperCase()=='TO_PAY' ? 50 : 0}}>
+                {this.state.originData.status.toUpperCase()=='TO_PAY' ? TopErrortoast('付款剩余时间:'+PUBLIC.changeTimestrToHour(this.state.originData.payExpireTime),{textAlign:'center'}) : ''}
                 {this.state.originData.logisticsCompany ? 
                     <div className="ponumber">
                         <span>配送方式:</span>
@@ -137,9 +139,10 @@ export default class Orderdetail extends Component{
                     orderItem={this.state.originData.items}
                     cardDetail={this.cardDetail}
                     contactShop={this.contactShop}
+                    contactShopShow={true}
                 />
                 <Ordercode ordercode={this.state.originData.code} submittime={this.state.originData.creation} paytime={this.state.originData.paidTime}/>
-                {this.state.originData.status.toUpperCase()=='TO_PAY' ? FooterBtns(PUBLIC.transformCharge(this.state.originData.totalPrice),'无优惠折扣','去支付',this.submitCase) : ''}
+                {(this.state.originData.status.toUpperCase()=='TO_PAY' &&  this.state.originData.payExpireTime>Date.now()) ? FooterBtns(PUBLIC.transformCharge(this.state.originData.totalPrice),'无优惠折扣','去支付',this.submitCase) : ''}
                 {this.state.shopnavShow ? 
                     <ShopNavigator 
                         hideFade={this.hideFade} 

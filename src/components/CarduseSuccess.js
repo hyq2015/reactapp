@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {FinishBtn , SuccessTag} from './CommonComponent';
 import '../static/styles/cardusesuccess.less';
+import _ from 'lodash';
 import 'babel-polyfill';
 import CardsuccessStore from '../stores/CardsuccessStore';
 import CardsuccessActions from '../actions/CardsuccessActions';

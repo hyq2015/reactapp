@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import _ from 'lodash';
 import {render} from 'react-dom';
 import '../static/styles/iconfont.css';
 import '../static/styles/Minecard.less';

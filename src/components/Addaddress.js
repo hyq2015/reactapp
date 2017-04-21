@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import {render} from 'react-dom';
+import _ from 'lodash';
 import AreaPicker from './Areaselect';
 import '../static/styles/weui.css';
 import '../static/styles/iconfont.css';

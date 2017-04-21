@@ -50,8 +50,9 @@ function getSmpFormatDate(date, isFull) {
     }
     return getFormatDate(date, pattern);
 }
-module.exports={
-    /*
+
+const PUBLIC={
+     /*
         时间戳转换
     */
     getSmpFormatDateByLong:function(date, isFull){
@@ -105,16 +106,60 @@ module.exports={
     /*
         收货地址
     */
-    getCurrentUserAddress:async function(){
+    getCurrentUserAddress: function(){
         let useraddress=[];
         try{
-            const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.checkUserAddress,{},'get');
-            useraddress=res;
+            const res= XHR(CONFIG.baseUrl+CONFIG.alphaPath.checkUserAddress,{},'get').then((res)=>{
+                useraddress=res
+            })
+            
         }catch(err){
             console.log('请求用户收货地址异常');
         }finally{
             return useraddress
         }
+    },
+
+    /*
+    将毫秒时间差转换成小时,分
+    */
+    changeTimestrToHour:function(timestap){
+        let now=Date.now();
+        let timegap=timestap-now;
+        if(timegap>0){
+            let hour=Math.floor(timegap/3600000);
+            let minitue=Math.ceil((timegap-hour*3600000)/60000);
+            return hour+'小时'+minitue+'分';
+        }else{
+            return '已过期'
+        }
+        
+    },
+    /*
+    redirect from wechat
+    */
+    RedirectToGen:function(){
+        let locationHref=window.location.href;
+        window.location.href='http://'+window.location.host+'/alpha/api/wechat/login?url='+encodeURIComponent(locationHref);
+    },
+    /*
+    getUserFromServer
+    */
+    getUserFromServer: function(){
+        let thisObj=this;
+        let userLogined=false;
+        try{
+             XHR(CONFIG.baseUrl+CONFIG.alphaPath.userlogin,{},'get').then((res)=>{
+                if(res && res.openid){
+                    window.sessionStorage.user=JSON.stringify(res);
+                }else{
+                    PUBLIC.RedirectToGen();
+                }
+            })
+            
+        }catch(err){
+            PUBLIC.RedirectToGen();
+        }
     }
-    
 }
+export default PUBLIC

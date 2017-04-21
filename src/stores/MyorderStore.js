@@ -18,9 +18,9 @@ let MyorderStore = Reflux.createStore({
     return this.data
   },
   
-  onLoadData:async function(jsonobj,originData){
+  onLoadData:async function(jsonobj,originData,path){
     try{
-        const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.allorder,jsonobj,'post');
+        const res=await XHR(path,jsonobj,'post');
         if(originData.content.length<1){
           this.data.originData= res;
         }else{
@@ -32,7 +32,7 @@ let MyorderStore = Reflux.createStore({
     }catch(err){
         this.data.indexLoading=false;
         this.data.originData=originData;
-        alert('请求异常la')
+        alert('请求异常')
     }finally{
         if(this.data.originData.last && this.data.originData.content.length<1){
             this.data.nodata=true;

@@ -53,6 +53,13 @@ export default class ConfirmOrder extends Component{
                     needSetAddress:true
                 })
             }
+            if(state.orderCreated){
+                if(this.state.orders.length>1){
+                    this.context.router.replace('orders');
+                }else{
+                    this.context.router.replace('order/pay?id='+state.orderPayId)
+                }
+            }
         }.bind(this));
         this._loadData();
         if(window.sessionStorage.user && JSON.parse(window.sessionStorage.user).mobilePhone){
@@ -67,18 +74,9 @@ export default class ConfirmOrder extends Component{
         if(!this.state.indexLoading && this.state.addressLoaded){
             AppActions.loaded();
         }
-        if(this.state.orderCreated){
-            if(this.state.orders.length>1){
-                this.context.router.replace('orders');
-            }else{
-                this.context.router.replace('order/pay?id='+this.state.orderPayId)
-            }
-        }
+        
     }
     componentWillUnmount() {
-        this.setState({
-            orderCreated:false
-        })
       if (_.isFunction(this.unsubscribe)){
         this.unsubscribe();
       }
@@ -121,7 +119,7 @@ export default class ConfirmOrder extends Component{
                 obj.amount=single.amount
                 obj.productId=single.product.id;
                 obj.scale=single.scale;
-                obj.shoppingCardItemId=single.shoppingCardItemId ? single.shoppingCardItemId : '';
+                obj.shoppingCardItemId=single.shopCardItemId ? single.shopCardItemId : '';
                 submitItems.push(obj);
 
             }
@@ -148,7 +146,7 @@ export default class ConfirmOrder extends Component{
         this.setState({
             loadingToastShow:true
         })
-        ConfirmorderActions.createOrder(submitData)
+        ConfirmorderActions.createOrder(submitData,this.state)
 
     }
     contactShop(order){

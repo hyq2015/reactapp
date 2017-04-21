@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import PUBLIC from '../static/js/public';
 import '../static/styles/iconfont.css';
 import '../static/styles/commoncomponent.less';
 //FinishBtn
@@ -95,4 +96,39 @@ export const logisticFootPrint=(stationArr)=>{
     
     return logistArr
 }
+
+//topErrortoast
+export const TopErrortoast=(txt,styleObj)=>{
+    return(
+        <div className="phone-toast" style={styleObj}>
+            <span className="icon-cuowu iconfont"></span>
+            <span style={{marginLeft:5}}>{txt}</span>
+        </div>
+    )
+}
+
+//topTxtReminder
+export const topTxtReminder=(txt,styleObj)=>{
+    let defaultSty={
+        padding:10,textAlign:'center',color:'#fff',backgroundColor:'#00c8fb',fontSize:14
+    }
+    let newSty=Object.assign({},defaultSty,styleObj);
+    return(
+        <div style={newSty}>{txt}</div>
+    )
+}
+
+//refundDetail
+export const refundDetail=(refunds)=>{
+    let arr=[];
+   return refunds.map((item,index)=>
+        <div key={item.id} style={{marginTop:10,paddingLeft:15}}>
+            <p className="refund-detailreason" style={{wordBreak:'break-all',lineHeight:1,marginBottom:7}}><span>退款原因：</span>{item.questionDesc}</p>
+            <p style={{wordBreak:'break-all',lineHeight:2}}><span>退款金额：</span>¥{PUBLIC.transformCharge(item.refundAmount)}</p>
+            <p style={{wordBreak:'break-all',lineHeight:2}}><span>退款时间：</span>{item.updateTime}</p>
+        </div>
+    )
+    
+}
+
 

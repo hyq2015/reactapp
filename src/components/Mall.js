@@ -1,9 +1,11 @@
 import React,{Component} from 'react';
 import { Link} from 'react-router';
 import CONFIG from '../static/js/request';
+import PUBLIC from '../static/js/public';
 import Mediacard from './Mediacard';
 import MallSearchbar from './MallSearchbar';
 import Loader from './Loader';
+import _ from 'lodash';
 import 'babel-polyfill';
 import MallStore from '../stores/MallStore';
 import MallActions from '../actions/MallActions';
@@ -122,3 +124,6 @@ export default class Mall extends Component{
         )
     }
 }
+Mall.contextTypes = {  
+    router: React.PropTypes.object.isRequired
+};
