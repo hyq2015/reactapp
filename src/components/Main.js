@@ -40,7 +40,7 @@ class AppComponent extends Component {
   }
   componentDidMount(){
       this.checkRoute(this.props.location.pathname);
-      // this.checkUserLogined();
+      this.checkUserLogined();
       
       // AppActions.loadUser(this.props.route);
       // window.addEventListener('hashchange', this.checkUserLogined) 
