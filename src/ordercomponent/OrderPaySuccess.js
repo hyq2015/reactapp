@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import _ from 'lodash';
+import PUBLIC from '../static/js/public';
 import {FinishBtn , SuccessTag} from '../components/CommonComponent';
 import {Link} from 'react-router';
 import OrderdetailCard from '../components/OrderdetailCard';
@@ -26,7 +27,15 @@ export default class OrderPaySuccess extends Component{
             this.setState(state);
             
         }.bind(this));
-        OrderSuccessActions.loadData(this.props.location.query.id);
+        /*
+        load user from server
+        */
+        let userLoginStatus=PUBLIC.LoadUser().then((res)=>{
+            if(res){
+                OrderSuccessActions.loadData(this.props.location.query.id);
+            }
+        })
+        
     }
     componentDidUpdate(){
         if(!this.state.indexLoading){

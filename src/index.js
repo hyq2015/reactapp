@@ -31,23 +31,6 @@ if ('addEventListener' in document) {
 		FastClick.attach(document.body);
 	}, false);
 }
-
-function checkAuth(nextState, replace, next) {
-  let AppPathName=nextState.location.pathname;
-    if(AppPathName!='/play' && AppPathName!='/mall'){
-      if(!window.sessionStorage.user){
-        PUBLIC.getUserFromServer();
-      }
-    }
-    next();
-  //获取传输过来的数据
-  // if (query.qsparam) {
-    
-  // } else {
-  //   replace('/error')
-  //   next()
-  // }
-}
 // Render the main component into the dom
 class MainApp extends Component{
   render(){
@@ -56,7 +39,7 @@ class MainApp extends Component{
           <Route path="/" component={App}>
             <Route path="play" components={Play} />
             <Route path="mall" components={Mall}/>
-            <Route path="mine" components={Mine} onChange={checkAuth}/>
+            <Route path="mine" components={Mine}/>
             <Route path="address/list" components={AddressList}/>
             <Route path="address/add" components={Addaddress}/>
             <Route path="shopcar" components={Shopcar}/>

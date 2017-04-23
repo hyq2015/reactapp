@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-const PUBLIC=require('../static/js/public.js') ;
+import PUBLIC from '../static/js/public.js';
 export default class FooterBtns extends Component{
     constructor(props){
         super(props);

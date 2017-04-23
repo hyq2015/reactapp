@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import CONFIG,{XHR} from './request';
 //转换时间函数
 Date.prototype.format = function (format) {
@@ -145,20 +146,66 @@ const PUBLIC={
     /*
     getUserFromServer
     */
-    getUserFromServer: function(){
+    getUserFromServer:async function(){
         let thisObj=this;
         let userLogined=false;
         try{
-             XHR(CONFIG.baseUrl+CONFIG.alphaPath.userlogin,{},'get').then((res)=>{
+          const res=  await XHR(CONFIG.baseUrl+CONFIG.alphaPath.userlogin,{},'get');
+            if(res && res.openid){
+                console.log(res)
+                window.sessionStorage.user=JSON.stringify(res);
+                userLogined=true;
+                // window.location.reload();
+            }else{
+                console.log('start redirect')
+                PUBLIC.RedirectToGen();
+            }
+        }catch(err){
+            console.log('start redirect')
+            PUBLIC.RedirectToGen();
+        }finally{
+            return userLogined
+        }
+
+    },
+    LoadUser:async function(){
+        if(window.sessionStorage.user && JSON.parse(window.sessionStorage.user).openid){
+            return true
+        }else{
+            let userLogined=false;
+            try{
+            const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.userlogin,{},'get');
                 if(res && res.openid){
+                    console.log(res)
                     window.sessionStorage.user=JSON.stringify(res);
+                    userLogined=true;
                 }else{
                     PUBLIC.RedirectToGen();
                 }
-            })
-            
-        }catch(err){
-            PUBLIC.RedirectToGen();
+            }catch(err){
+                PUBLIC.RedirectToGen();
+            }finally{
+                return userLogined
+            }
+        }
+    },
+    wxSetTitle:function(title) {
+        document.title = title;
+        var mobile = navigator.userAgent.toLowerCase();
+        if (/iphone|ipad|ipod/.test(mobile)) {
+            var iframe = document.createElement('iframe');
+            iframe.style.visibility = 'hidden';
+            var iframeCallback = function() {
+                setTimeout(function() {
+                    iframe.removeEventListener('load', iframeCallback);
+                    setTimeout(function(){
+                        document.body.removeChild(iframe);
+                    },0)
+                    
+                }, 0);
+            };
+            iframe.addEventListener('load', iframeCallback);
+            document.body.appendChild(iframe);
         }
     }
 }

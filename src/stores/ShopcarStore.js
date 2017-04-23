@@ -23,10 +23,10 @@ let ShopcarStore = Reflux.createStore({
   onLoadData:async function(){
     try{
         const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.currentShopCar,{},'get');
-        this.data.originData=res;
+        this.data.originData= res;
         ShopcarActions.handleData(res);
     }catch(err){
-        alert('请求异常')
+        alert('请求异常llala')
     }
   },
   onCalculateFooter:function(data){

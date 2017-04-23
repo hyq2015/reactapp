@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import _ from 'lodash';
-const PUBLIC=require('../static/js/public.js') ;
+import PUBLIC from '../static/js/public.js';
 import FooterBtns from './Footer';
 import Dialog from './Dialog';
 import SizeDetail from './SizeDetail';
@@ -49,15 +49,18 @@ export default class Shopcar extends Component{
         if (_.isFunction(this.unsubscribe)){
             this.unsubscribe();
         }
-        
     }
     componentDidMount(){
+        PUBLIC.wxSetTitle('购物车');
         this.unsubscribe = ShopcarStore.listen(function(state) {
             this.setState(state);
         }.bind(this));
-        this._fetchData();
-        document.title="购物车";
-        
+        let userLoginStatus=PUBLIC.LoadUser().then((res)=>{
+            console.log(res)
+            if(res){
+                this._fetchData();
+            }
+        })
     }
     
     componentDidUpdate(){

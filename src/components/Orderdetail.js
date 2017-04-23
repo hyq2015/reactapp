@@ -41,11 +41,19 @@ export default class Orderdetail extends Component{
         AppActions.disabletab();
     }
     componentDidMount(){
-        console.log(this.props.location);
+        
         this.unsubscribe = OrderdetailStore.listen(function(state) {
             this.setState(state);
         }.bind(this));
-        this._loadData(this.props.location.query.id)
+        /*
+        load user from server
+        */
+        let userLoginStatus=PUBLIC.LoadUser().then((res)=>{
+            if(res){
+                this._loadData(this.props.location.query.id)
+            }
+        })
+        
         
     }
     componentDidUpdate(){

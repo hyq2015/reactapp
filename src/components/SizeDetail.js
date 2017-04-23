@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {render} from 'react-dom';
-const PUBLIC=require('../static/js/public.js') ;
+import PUBLIC from '../static/js/public.js';
 export default class SizeDetail extends Component{
     constructor(props){
         super(props);

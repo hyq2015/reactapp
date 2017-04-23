@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import _ from 'lodash';
+import PUBLIC from '../static/js/public';
 import 'babel-polyfill';
 import OrderpayStore from '../stores/OrderpayStore';
 import OrderpayActions from '../actions/OrderpayActions';
@@ -18,7 +19,22 @@ export default class OrderPay extends Component{
         this.unsubscribe = OrderpayStore.listen(function(state) {
             this.setState(state);
         }.bind(this));
-        OrderpayActions.pay(this.props.location.query.id);
+        /*
+        load user from server
+        */
+        let userLoginStatus=PUBLIC.LoadUser().then((res)=>{
+            if(res){
+                OrderpayActions.pay(this.props.location.query.id);
+            }
+        })
+         this.context.router.setRouteLeaveHook(this.props.route, (nextLocation)=>{
+            if(nextLocation.pathname=='/orders' || nextLocation.pathname=='/order/confirmorder' || nextLocation.pathname=='/order/detail'){
+                this.context.router.replace('order/detail?id='+this.props.location.query.id);
+            }else{
+                return true
+            }
+        })
+        
     }
     componentDidUpdate(){
         if(this.state.paySuccess){

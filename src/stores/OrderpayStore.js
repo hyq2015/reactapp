@@ -1,5 +1,5 @@
 import Reflux from 'reflux';
-const PUBLIC=require('../static/js/public.js') ;
+import PUBLIC from '../static/js/public.js';
 const pingpp = require('pingpp-js');
 import OrderpayActions from '../actions/OrderpayActions';
 import CONFIG,{XHR} from '../static/js/request';

@@ -42,10 +42,11 @@ export default class ConfirmOrder extends Component{
         this.inputPhone=this.inputPhone.bind(this);
     }
     componentWillMount(){
-        document.title='确认订单';
+        
         AppActions.disabletab();
     }
     componentDidMount(){
+        PUBLIC.wxSetTitle('确认订单');
         this.unsubscribe = ConfirmorderStore.listen(function(state) {
             this.setState(state);
             if(state.needAddress && !state.hasAddress){
@@ -61,7 +62,16 @@ export default class ConfirmOrder extends Component{
                 }
             }
         }.bind(this));
-        this._loadData();
+
+        /*
+        load user from server
+        */
+        let userLoginStatus=PUBLIC.LoadUser().then((res)=>{
+            if(res){
+                this._loadData();
+            }
+        })
+        
         if(window.sessionStorage.user && JSON.parse(window.sessionStorage.user).mobilePhone){
             this.setState({
                 userPhone:JSON.parse(window.sessionStorage.user).mobilePhone

@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import {render} from 'react-dom';
 import { Link} from 'react-router';
 import _ from 'lodash';
-var PUBLIC=require('../static/js/public');
+import PUBLIC from '../static/js/public';
 import Dialog from './Dialog';
 import CS from 'classnames';
 import 'babel-polyfill';
@@ -44,8 +44,15 @@ export default class AddressList extends Component{
       this.unsubscribe = AddresslistStore.listen(function(state) {
         this.setState(state);
       }.bind(this));
-
-      this._fetchData();
+      /*
+        load user from server
+        */
+        let userLoginStatus=PUBLIC.LoadUser().then((res)=>{
+            if(res){
+                this._fetchData();
+            }
+        })
+      
     }
     componentDidUpdate(){
         if(!this.state.indexLoading){

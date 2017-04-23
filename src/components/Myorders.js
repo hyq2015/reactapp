@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import '../static/styles/orderlist.less';
 import _ from 'lodash';
+import PUBLIC from '../static/js/public';
 import Topnavbar from './Topnavbar';
 import Dialog from './Dialog';
 import Loader from './Loader';
@@ -73,13 +74,24 @@ export default class Myorder extends Component{
         }
     }
     componentDidMount(){
-        document.title='我的订单';
+        PUBLIC.wxSetTitle('我的订单');
         this.unsubscribe = MyorderStore.listen(function(state) {
             this.setState(state);
         }.bind(this));
-        this._loadData({'size':CONFIG.pageSize},this.state.originData,CONFIG.baseUrl+CONFIG.alphaPath.allorder);
-        document.getElementById('OrderscrollWrapper').addEventListener('touchmove',this.onScroll);
-        document.getElementById('OrderscrollWrapper').addEventListener('touchend',this.onScrollEnd);
+         /*
+        load user from server
+        */
+        let userLoginStatus=PUBLIC.LoadUser().then((res)=>{
+            console.log(res)
+            if(res){
+                this._loadData({'size':CONFIG.pageSize},this.state.originData,CONFIG.baseUrl+CONFIG.alphaPath.allorder);
+                
+            }
+        })
+        document.getElementById('Ordercontainer').addEventListener('touchmove',this.onScroll);
+        document.getElementById('Ordercontainer').addEventListener('touchend',this.onScrollEnd);
+        
+        
     }
      _refreshScroll(){
          if(this.refs.scroller){
@@ -262,8 +274,6 @@ export default class Myorder extends Component{
     render(){
         return(
             <div id="Ordercontainer">
-                {this.state.userLogined ? 
-                    <div>
                         <Topnavbar navs={this.state.navbars} changeNav={this._changeNav}/>
                         <div style={{height:47}}></div>
                         {this.state.nodata ? NoDataPage(this.state.activenav,'order') : 
@@ -288,10 +298,6 @@ export default class Myorder extends Component{
                         }
                         {this.state.dialogshow ? <Dialog title="确认删除此订单吗" cancelEvent={()=>{this.setState({dialogshow:false})}} confirmEvent={this.confirmEvent}/> : ''}
                     </div>
-                    :''
-                }
-                
-            </div>
         )
     }
 }

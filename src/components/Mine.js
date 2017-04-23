@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {render} from 'react-dom';
 import { Link} from 'react-router';
+import PUBLIC from '../static/js/public';
 import MineCard from './MineCard';
 import _ from 'lodash';
 import 'babel-polyfill';
@@ -33,6 +34,7 @@ export default class Mine extends Component{
       if (_.isFunction(this.unsubscribe)){
         this.unsubscribe();
       }
+      this._init();
         
     }
 
@@ -52,10 +54,14 @@ export default class Mine extends Component{
         }
         
       }.bind(this));
-      this._fetchData();
-      this._init();
-      
-      
+      /*
+        load user from server
+        */
+        let userLoginStatus=PUBLIC.LoadUser().then((res)=>{
+            if(res){
+                this._fetchData();
+            }
+        })
     }
     componentDidUpdate(){
         if(!this.state.indexLoading){

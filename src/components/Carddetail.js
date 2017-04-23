@@ -54,8 +54,16 @@ export default class Carddetail extends Component{
                 this._loadData(this.props.location.query.id)
             }
         }.bind(this));
-        this._loadData(this.props.location.query.id);
-        timer=setInterval(()=>this._checkIfcardUsed(),5000)
+        /*
+        load user from server
+        */
+        let userLoginStatus=PUBLIC.LoadUser().then((res)=>{
+            if(res){
+                this._loadData(this.props.location.query.id);
+                timer=setInterval(()=>this._checkIfcardUsed(),5000)
+            }
+        })
+        
         
     }
     componentDidUpdate(){

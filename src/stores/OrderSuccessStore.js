@@ -1,5 +1,5 @@
 import Reflux from 'reflux';
-const PUBLIC=require('../static/js/public.js') ;
+import PUBLIC from '../static/js/public.js';
 import OrderSuccessActions from '../actions/OrderSuccessActions';
 import CONFIG,{XHR} from '../static/js/request';
 let OrderSuccessStore = Reflux.createStore({

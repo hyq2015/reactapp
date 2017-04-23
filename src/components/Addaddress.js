@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {render} from 'react-dom';
 import _ from 'lodash';
+import PUBLIC from '../static/js/public';
 import AreaPicker from './Areaselect';
 import '../static/styles/weui.css';
 import '../static/styles/iconfont.css';
@@ -94,9 +95,17 @@ export default class Addaddress extends Component{
       this.unsubscribe = AddaddressStore.listen(function(state) {
         this.setState(state);
       }.bind(this));
-      if(this.props.location.query.editId){
-          this._fetchData(this.props.location.query.editId);
-      }
+      /*
+        load user from server
+        */
+        let userLoginStatus=PUBLIC.LoadUser().then((res)=>{
+            if(res){
+                if(this.props.location.query.editId){
+                    this._fetchData(this.props.location.query.editId);
+                }
+            }
+        })
+      
     }
     componentDidUpdate(){
         let thisObj=this;

@@ -24,7 +24,6 @@ class AppComponent extends Component {
       loading:true,
       pagebottom:50
     }
-    this.checkUserLogined=this.checkUserLogined.bind(this);
     this.checkRoute=this.checkRoute.bind(this);
   }
   componentWillMount(){
@@ -40,7 +39,6 @@ class AppComponent extends Component {
   }
   componentDidMount(){
       this.checkRoute(this.props.location.pathname);
-      this.checkUserLogined();
       
       // AppActions.loadUser(this.props.route);
       // window.addEventListener('hashchange', this.checkUserLogined) 
@@ -50,20 +48,13 @@ class AppComponent extends Component {
         
         // browserHistory.getCurrentLocation().pathname
   }
-  checkUserLogined(){
-    let AppPathName=this.props.location.pathname;
-      if(AppPathName!='/play' && AppPathName!='/mall'){
-        if(!window.sessionStorage.user){
-          PUBLIC.getUserFromServer();
-        }
-      }
-  }
-
+  
   componentDidUpdate(prevProps) {
     
     if (this.props.location !== prevProps.location) {
         window.scrollTo(0, 0);
     }
+    // this.checkUserLogined();
 
   }
   checkRoute(name){

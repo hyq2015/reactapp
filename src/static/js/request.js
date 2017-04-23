@@ -72,7 +72,7 @@ export function XHR(url,jsondata,type) {
       CONFIG.http.post(url,jsondata).then((res)=>{
         console.log(res);
         if(res.status==403){//没有权限
-          reject('noRight');
+          window.location.replace("#/play");
         }else if(res.status!=200){
           reject('error');
         }else{
@@ -87,7 +87,7 @@ export function XHR(url,jsondata,type) {
       CONFIG.http.get(url,jsondata).then((res)=>{
         console.log(res);
         if(res.status==403){//没有权限
-          reject('noRight');
+          window.location.replace("#/play");
         }else if(res.status!=200){
           reject('error');
         }else{
