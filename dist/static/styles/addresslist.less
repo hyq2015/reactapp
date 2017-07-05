@@ -1,0 +1,102 @@
+@lineColor:#E5E5E5;
+@bluecolor:#00c8fb;
+@strongColor:#7b7b7b;
+@fadeColor:#bbbbbb;
+@contentColor:#000;
+@graycolor:#f2f2f2;
+#addresscontainer{
+    min-height: calc(100vh);background-color: @graycolor;padding-top:1px;box-sizing: border-box;padding-bottom: 50px;
+    color: @contentColor;
+    .addaddress{
+        position: fixed;bottom: 0;display: block;left: 0;height: 50px;width: 100%;
+        line-height: 50px;text-align: center;
+        color: @bluecolor;background-color: #fff;
+        &:before{
+            content:" ";
+            position:absolute;left: 0;right: 0;top: 0;height: 1px;
+            transform: scaleY(0.5);
+            border-top: 1px solid #c1c1c1;
+        }
+    }
+    .addtext{
+        font-size: 16px;
+    }
+    .icon-llalbumshopselectorcreate{
+        font-size: 20px;margin-right: 5px;
+    }
+    .address-panel{
+        margin: 10px 0 0 0;padding: 0;background-color: #fff;
+        &:first-child{
+            margin-top: 0;
+        }
+        .address-box{
+            padding: 15px;
+        }
+        .address-box__title{
+            font-size: 17px;font-weight: 400;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;word-break: break-all;word-wrap: break-word;margin-bottom: 8px;line-height:1.6;
+            span{
+                font-weight: 400;font-size: 17px;
+                font-family: -apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",STHeiti,"Microsoft Yahei",Tahoma,Simsun,sans-serif;
+            }
+        }
+        .address-box__desc{
+            color: @strongColor;font-size: 13px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
+        .address-box_text{
+            padding: 15px;position: relative;
+            &:before{
+                content: " ";
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 1px;
+                border-top: 1px solid #E5E5E5;
+                color: #E5E5E5;
+                -webkit-transform-origin: 0 0;
+                transform-origin: 0 0;
+                -webkit-transform: scaleY(0.5);
+                transform: scaleY(0.5);
+                left: 15px;
+            }
+            .address-box_text_desc{
+                overflow: hidden;width: 100%;display: flex;align-items: center;color: @strongColor;font-size: 13px;justify-content: space-between;
+            }
+            .blueColor{
+                color: @bluecolor;
+            }
+            .editMenuright{
+                float: right;text-align: right;min-width: 145px;height: 100%;
+            }
+        }
+    }
+    .noAddress{
+        width: 100%;
+        margin: calc(24.8vh) auto 0;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }
+    .noaddress_img{
+        width: 65px;
+        height: 74px;
+        background: url(../images/address_icon_none.png) center center no-repeat;
+        background-size: cover;
+    }
+    .noInfo{
+        color: @strongColor;
+    }
+    
+}

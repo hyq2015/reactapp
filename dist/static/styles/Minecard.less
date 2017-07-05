@@ -1,0 +1,83 @@
+@lineColor:#E5E5E5;
+@bluecolor:#00c8fb;
+@strongColor:#7b7b7b;
+@fadeColor:#bbbbbb;
+@contentColor:#000;
+@graycolor:#f2f2f2;
+.minecard-single{
+    background-color: #fff;width:100%;overflow:hidden;margin-bottom:10px;
+    .normalBlack{
+        color: @contentColor;
+    }
+    .normalBlue{
+        color: @bluecolor;
+    }
+    .normalgray{
+        color: @fadeColor;
+    }
+    .normalBluebg{
+        background-color: @bluecolor;
+    }
+    .normalgraybg{
+        background-color: @fadeColor;
+    }
+    .normalstrong{
+        color: @strongColor;
+    }
+    .minecard-top{
+        height:42px;padding:0 12px;box-sizing: border-box;line-height: 42px;display:flex;flex-direction:row;
+        .text-overflow{
+            flex:1;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;padding-right:4px;
+            font-size: 15px;
+        }
+        .text-intro{
+            width: 50px;text-align: center;
+            font-size: 14px;
+        }
+        
+    }
+    .dot-line{
+        width: 100%;position:relative;height:10px;
+        .leftcircle{
+            position:absolute;left:-5px;top:-5px;height:10px;width:10px;border-radius:5px;background-color:#f2f2f2;
+        }
+        .rightcircle{
+            position:absolute;right:-5px;top:-5px;height:10px;width:10px;border-radius:5px;background-color:#f2f2f2;
+        }
+        .line{
+            height:1px;border-bottom: 0.5px dashed #dfdfdf;width: 100%;
+        }
+    }
+    .minecard-content{
+        align-items: center;
+        padding:16px 12px;display:flex;
+        .iconcircle{
+            width: 50px;height: 50px;border-radius: 25px;text-align: center;line-height: 46px;font-size: 26px;
+        }
+        
+        .carddetail{
+            display: flex;flex: 1;align-items:center;height:50px;
+            .detail-content{
+                display:flex;flex:1;font-size: 14px;height: 100%;flex-direction: column;justify-content: space-around;padding-left: 10px;box-sizing: border-box;
+                >div{
+                    width:100%;
+                    line-height: 1.2;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    white-space: normal;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 1;
+
+                }
+            }
+            .currentnumber{
+                font-size: 26px;height: 30px;line-height: 30px;
+            }
+            .currentnumber-text{
+                font-size: 10px;color: @fadeColor;
+            }
+        }
+
+    }
+}

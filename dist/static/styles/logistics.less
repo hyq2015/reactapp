@@ -1,0 +1,35 @@
+@lineColor:#E5E5E5;
+@bluecolor:#00c8fb;
+@strongColor:#7b7b7b;
+@fadeColor:#bbbbbb;
+@contentColor:#000;
+@graycolor:#f2f2f2;
+#logisticContainer{
+    min-height:calc(100vh);
+    background-color:#fff;
+    .logistic-total{
+        position: relative;
+        color:@strongColor;font-size:14px;padding:15px 12px;
+        &:after{
+            content:" ";
+            position: absolute;bottom: 0;right: 0;left: 12px;
+            border-bottom: 1px solid @lineColor;
+            transform: scaleY(.5);
+        }
+    }
+    .logistic-txt{
+         position: relative;
+         color:@strongColor;font-size:14px;padding:10px 12px 0 12px;
+    }
+    .logistic-detail{
+        position: relative;padding:0 12px;
+        border-bottom: 1px solid @lineColor;
+        &:before{
+            content:" ";
+            position: absolute;top: 14px;left: 23px;bottom:15px;
+            border-left: 1px solid @lineColor;
+
+        }
+        
+    }
+}

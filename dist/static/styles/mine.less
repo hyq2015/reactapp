@@ -1,0 +1,78 @@
+@lineColor:#E5E5E5;
+@bluecolor:#00c8fb;
+@strongColor:#7b7b7b;
+@fadeColor:#bbbbbb;
+@contentColor:#000;
+@graycolor:#f2f2f2;
+@fontFamily:-apple-system, BlinkMacSystemFont, "PingFang SC","Helvetica Neue",STHeiti,"Microsoft Yahei",Tahoma,Simsun,sans-serif;
+#mineContainer{
+    background-color: @graycolor;
+    .topbg{
+        position:relative;background-color: @bluecolor;height:284px;overflow: hidden;
+    }
+    .set-address{
+        position: absolute;top: 20px;right:16px;font-size: 16px;color: #fff;
+    }
+    .avatar-bg{
+        height: 84px;width:84px;border-radius: 42px;margin: 50px auto 0;border: 2px solid #fff;overflow:hidden;
+        .avatar{
+            height: 100%;width:100%;
+        }
+    }
+    .icon-youhuiquan{
+        color: #fff;
+    }
+    .username{
+        margin: 0 auto;font-size: 18px;color: #fff;margin-top: 10px;text-align: center;
+    }
+    .navbar{
+        display: flex;height:48px;width:100%;margin-top:36px;
+        nav{
+            flex:1;position: relative;
+        }
+        .centerbar:after{
+            position: absolute;
+            top:0;bottom: 0;right:0;
+            border-right: 1px solid #fff;
+            content:" ";
+            transform: scaleX(0.5);
+        }
+        .centerbar:before{
+            position: absolute;
+            top:0;bottom: 0;left:0;
+            border-left: 1px solid #fff;
+            content:" ";
+            transform: scaleX(0.5);
+        }
+        a{
+            display: flex;width: 100%;height: 100%;align-items: center;flex-direction: column;
+        }
+        .count{
+            color: #fff;font-size: 16px;height: 24px;display: block;line-height: 24px;padding-top: 2px;box-sizing: border-box;
+        }
+        .navname{
+            color: rgba(255,255,255,0.8);font-size: 12px;display: block;height: 20px;line-height: 24px;
+        }
+    }
+    .pagebd{
+        background-color: @graycolor;
+        .pagebd-top{
+            height: 44px;background-color: #fff;text-align: center;
+        }
+        .recent-card{
+            height: 100%;font-size: 16px;line-height: 44px;color: @contentColor;position: relative;width: 4em;margin: 0 auto;
+            &:after{
+                position: absolute;
+                content: " ";
+                bottom:0;left:0;right:0;
+                height:1px;border-top: 3px solid @bluecolor;
+            }
+        }
+        .pagebd-content{
+            background-color: @graycolor;
+            box-sizing: border-box;padding: 10px 12px 0 12px;
+
+        }
+    }
+    
+}

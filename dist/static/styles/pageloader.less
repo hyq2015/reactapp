@@ -1,0 +1,55 @@
+@lineColor:#E5E5E5;
+@bluecolor:#00c8fb;
+@strongColor:#7b7b7b;
+@fadeColor:#bbbbbb;
+@contentColor:#000;
+@graycolor:#f2f2f2;
+.PageLoadingToast{
+    .R-weui-mask_transparent{
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        right: 0;
+        left: 0;
+    }
+    .R-weui-toast {
+        position: fixed;
+        z-index: 5000;
+        width: 7.6em;
+        min-height: 7.6em;
+        top: 180px;
+        left: 50%;
+        margin-left: -3.8em;
+        text-align: center;
+        border-radius: 5px;
+        color: #fff;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    .R-weui-loading {
+        background: url(../images/refreshing.png) no-repeat center center;
+        background-size: 100% 100%;
+        -webkit-animation: infiniterotate .6s linear infinite;
+        animation: infiniterotate .6s linear infinite;
+        width: 26px;
+        height: 26px;
+        margin: 35px 0 0;
+        vertical-align: baseline;
+        display: inline-block;
+    }
+    .R-weui-toast__content {
+        margin: 5px 0 15px 0;
+        color: @strongColor;
+        font-size: 14px;
+    }
+}
+@keyframes infiniterotate {
+    0% {
+        -webkit-transform: rotateZ(0);
+        transform: rotateZ(0)
+    }
+    100% {
+        -webkit-transform: rotateZ(360deg);
+        transform: rotateZ(360deg)
+    }
+}

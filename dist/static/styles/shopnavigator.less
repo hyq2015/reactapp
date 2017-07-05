@@ -1,0 +1,70 @@
+@lineColor:#E5E5E5;
+@bluecolor:#00c8fb;
+@strongColor:#7b7b7b;
+@fadeColor:#bbbbbb;
+@contentColor:#000;
+@graycolor:#f2f2f2;
+#shopnavigator-mask{
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0,0,0,.5);
+    .contact-bg{
+        padding: 25px 12px 10px 12px;
+        height: auto;
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 2000;
+        background-color: #fff;
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0);
+        -webkit-transition: -webkit-transform .3s;
+        transition: -webkit-transform .3s;
+        transition: transform .3s;
+        transition: transform .3s, -webkit-transform .3s;
+        animation:slideUp 0.4s ease forwards;
+        .shopname{
+            color: @contentColor;
+            font-size: 14px;line-height: 1.4;
+            text-align: center;
+            padding:0 12px;
+        }
+        .address-line{
+            color: @strongColor;
+            font-size: 18px;
+            margin: 10px 0 15px 0;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.4;
+            display: -webkit-box;
+            white-space: normal;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            padding:0 12px;
+        }
+    }
+}
+
+@keyframes SlideUp{
+    0% {
+        -webkit-transform: translate3d(0, 100%, 0);
+        transform: translate3d(0, 100%, 0);
+    }
+
+    100% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+}

@@ -1,0 +1,109 @@
+@lineColor:#E5E5E5;
+@bluecolor:#00c8fb;
+@strongColor:#7b7b7b;
+@fadeColor:#bbbbbb;
+@contentColor:#000;
+@graycolor:#f2f2f2;
+#outercontainer .page{
+    transform: translateY(-38px);
+    
+}
+.page__bd{
+    .weui-cell{
+        padding: 10px 15px;
+    }
+    .weui-cell_vcode{
+        padding-top: 0;
+        padding-right: 0;
+        padding-bottom: 0;
+    }
+}
+.errorBodyShow{
+    animation:fadeDown 2s ease-in-out none
+}
+
+#outercontainer{
+    min-height: calc(100vh);background-color:@graycolor;position:relative;
+    .successShow{
+        display: block;
+    }
+    .hide{
+        display: none;
+    }
+    
+}
+#addaddressContainer{
+    min-height: calc(100vh);background-color:@graycolor;
+    .weui-cells_form{
+        margin-top: 0;line-height: 1;
+    }
+    .zone{
+        height: 100%; width: 100%; opacity: 0; position: absolute; top: 0px; left: 0px; z-index: 10;
+    }
+    .weui-label {
+        width: calc(22.6vw);
+    }
+    .page__bd .saveBtn, .page__bd .weui-btn_disabled {
+        background-color: @bluecolor;
+        margin-top: 2.3em;
+    }
+    .closeBtn{
+        position: absolute; bottom: 0px; right: 0px; font-size: 14px; width: 18px; height: 18px; border-radius: 9px; color: rgb(255, 255, 255); text-align: center; line-height: 18px; background-color: rgb(162, 162, 162);
+    }
+    .errToast {
+        text-align: center;
+        color: #fff;
+        font-size: 16px;
+        height: 38px;
+        line-height: 38px;
+    }
+    
+    
+    .errorToastShow{
+        animation:toastShow 2s ease-in-out none;
+        background-color:#fc5c59
+    }
+    .errorToastHide{
+        background-color:#f2f2f2
+    }
+    
+    @keyframes fadeDown {
+        0% {
+            -webkit-transform: translateY(-38px);
+            transform: translateY(-38px)
+        }
+        25% {
+            -webkit-transform: translateY(0);
+            transform: translateY(0)
+        }
+        50% {
+            -webkit-transform: translateY(0);
+            transform: translateY(0)
+        }
+        75% {
+            -webkit-transform: translateY(0);
+            transform: translateY(0)
+        }
+        100% {
+            -webkit-transform: translateY(-38px);
+            transform: translateY(-38px)
+        }
+    }
+    @keyframes toastShow {
+        0% {
+            opacity: 0
+        }
+        25% {
+            opacity: 1
+        }
+        50% {
+            opacity: 1
+        }
+        75% {
+            opacity: 1
+        }
+        100% {
+            opacity: 0
+        }
+    }
+}

@@ -207,6 +207,122 @@ const PUBLIC={
             iframe.addEventListener('load', iframeCallback);
             document.body.appendChild(iframe);
         }
+    },
+    wxUserSign:async function(){
+        try{
+            const res=await XHR(CONFIG.baseUrl+CONFIG.alphaPath.userSign,encodeURI(decodeURI(window.location.href)),'post');
+            console.log(res);
+            if(!isWechat()){
+                return
+            }else{
+                wx.config({
+                    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                    appId: res.appId, // 必填，公众号的唯一标识
+                    timestamp: res.timestamp, // 必填，生成签名的时间戳
+                    nonceStr: res.nonceStr, // 必填，生成签名的随机串
+                    signature: res.signature, // 必填，签名，见附录1
+                    jsApiList: ['openLocation', 'getLocation', 'onMenuShareAppMessage', 'onMenuShareTimeline', 'previewImage','onMenuShareQQ','onMenuShareWeibo','onMenuShareQZone'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+                });
+                wx.ready(function() {
+                    window.sessionStorage.WechatSupport='ok';
+                    // onWechatReady();
+                    // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+                    // if (shareObject != null) {
+                    //     wx.onMenuShareAppMessage(shareObject);
+                    //     wx.onMenuShareTimeline(shareObject);
+                    // }
+                    var shareObj=getCurrentShareObj('normal');
+                    var shareObj1=getCurrentShareObj('friend');
+                    wx.onMenuShareAppMessage(shareObj);//分享给朋友
+                    wx.onMenuShareTimeline(shareObj1);//分享到朋友圈
+                    wx.onMenuShareQQ(shareObj);//分享到QQ
+                    wx.onMenuShareWeibo(shareObj);//分享到腾讯微博
+                    wx.onMenuShareQZone(shareObj);//分享到QQ空间
+                });
+                wx.error(function(result) {
+                    window.sessionStorage.WechatSupport='error';
+                    console.log('wechat init failed');
+                    console.log(result);
+                    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+                });
+            }
+        }catch(err){
+            window.sessionStorage.WechatSupport='error';
+        }finally{
+        
+        }
+    },
+    shareObj:{
+        'play':'RSharePlay',
+        'mall':'RShareMall'
     }
+}
+
+function isWechat(){
+    var ua = window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+        return true;
+    }else{
+        return false;
+    }
+}
+function getCurrentShareObj(shareType) {
+    var shareObj={type:'link',dataUrl:''};
+    if(window.sessionStorage.ShareName){
+        let ShareName=window.sessionStorage.ShareName;
+        if(ShareName==PUBLIC.shareObj.play){
+            if(shareType!='friend'){
+                shareObj.desc='慢生活 轻旅游  跟我一起乡村游';
+            }
+            shareObj.title='成都市跟我耍乡村休闲自驾周边游';
+            shareObj.imgUrl='http://'+window.location.host+'/src/images/login_img_logo@1x.png';
+            shareObj.link=window.location.host+'/#/play';
+
+        }else if(ShareName=='RShareHot'){
+            if(shareType!='friend'){
+                shareObj.desc=JSON.parse(window.sessionStorage.ThemeObj).highlight;
+            }
+            shareObj.title=decodeURI(getQueryStringByName('name'))+'怎么玩';
+            shareObj.imgUrl=JSON.parse(window.sessionStorage.ThemeObj).imgurl;
+            shareObj.link=window.location.href;
+        }else if(ShareName==PUBLIC.shareObj.mall){
+            if(shareType!='friend'){
+                shareObj.desc='慢生活 轻旅游  跟我一起乡村游';
+            }
+            shareObj.title='成都市跟我耍乡村休闲自驾周边游';
+            shareObj.imgUrl='http://'+window.location.host+'/src/images/login_img_logo@1x.png';
+            shareObj.link=window.location.host+'/#/mall';
+        }else if(ShareName=='PRODUCT'){
+            if(shareType!='friend'){
+                // shareObj.desc=JSON.parse(window.sessionStorage.shopObj).highlight;
+                if(window.sessionStorage.ActualSlogan){
+                    shareObj.desc=window.sessionStorage.ActualSlogan;
+                }else{
+                    shareObj.desc='这个看起来很好玩，要不要一起去玩啊';
+                }
+
+            }
+            shareObj.title=JSON.parse(window.sessionStorage.productObj).title;
+            shareObj.imgUrl=JSON.parse(window.sessionStorage.productObj).imgurl;
+            shareObj.link=window.location.href;
+        }else if(ShareName=='SHOP'){
+            if(shareType!='friend'){
+                shareObj.desc='发现一个好玩的地方，推荐你去玩哦';
+            }
+            shareObj.title=JSON.parse(window.sessionStorage.shopObj).title;
+            shareObj.imgUrl=JSON.parse(window.sessionStorage.shopObj).imgurl;
+            shareObj.link=window.location.href;
+        }else if(ShareName=='TOTALPRODUCT'){
+            if(shareType!='friend'){
+                shareObj.desc='发现一个好玩的地方，推荐你去玩哦';
+            }
+            shareObj.title=JSON.parse(window.sessionStorage.totalObj).name;
+            shareObj.imgUrl=JSON.parse(window.sessionStorage.totalObj).imgurl;
+            shareObj.link=window.location.host+'/alpha/webapp/developversion/mall/detail/shop.html?shopid='+JSON.parse(window.sessionStorage.totalObj).shopid+'&name='+encodeURI(JSON.parse(window.sessionStorage.totalObj).name);
+        }
+        console.log(shareObj)
+    }
+    return shareObj;
+
 }
 export default PUBLIC

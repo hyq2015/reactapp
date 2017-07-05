@@ -52,7 +52,7 @@ export default class Shopcar extends Component{
     }
     componentDidMount(){
         PUBLIC.wxSetTitle('购物车');
-        this.unsubscribe = ShopcarStore.listen(function(state) {
+            this.unsubscribe = ShopcarStore.listen(function(state) {
             this.setState(state);
         }.bind(this));
         let userLoginStatus=PUBLIC.LoadUser().then((res)=>{

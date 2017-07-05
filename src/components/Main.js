@@ -39,6 +39,7 @@ class AppComponent extends Component {
   }
   componentDidMount(){
       this.checkRoute(this.props.location.pathname);
+      PUBLIC.wxUserSign();
       
       // AppActions.loadUser(this.props.route);
       // window.addEventListener('hashchange', this.checkUserLogined) 

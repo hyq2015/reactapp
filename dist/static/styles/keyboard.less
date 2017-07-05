@@ -1,0 +1,78 @@
+.keyboard {
+  width: 100%;
+  background-color: #ffffff;
+  position: absolute;
+  bottom: 0;
+}
+.numberLine {
+  width: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  position: relative;
+}
+.singleNumber {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+  flex: 1;
+  display: inline-block;
+  height: calc(9vh);
+  text-align: center;
+  line-height: calc(9vh);
+  color: #000000;
+  font-size: 18px;
+  position: relative;
+}
+.numberLine:after {
+  content: " ";
+  position: absolute;
+  bottom: -1px;
+  right: 0;
+  height: 1px;
+  border-top: 1px solid #8a8a8a;
+  color: #8a8a8a;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  left: 0;
+}
+.numberLine:nth-last-child(1):after{
+  border-top: none;
+}
+#lastLine:after {
+  content: " ";
+  position: absolute;
+  bottom: -1px;
+  right: 0;
+  height: 1px;
+  border-top: none;
+}
+.singleNumber:after {
+  content: " ";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 1px;
+  border-right: 1px solid #e2e7e8;
+  color: #8a8a8a;
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+  /*-webkit-transform: scaleY(0.5);*/
+  /*transform: scaleY(0.5);*/
+  top: 0;
+}
+#number3:after,
+#number6:after,
+#number9:after,
+#numberDelete:after {
+  content: " ";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 1px;
+  border-right: none;
+}
+.singleNumber:active {
+  background-color: #e1e8ed;
+}

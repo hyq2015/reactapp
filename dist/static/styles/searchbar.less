@@ -1,0 +1,28 @@
+@borderRadius:5px;
+@blueColor:rgba(0,200,251,1);
+@strongColor:#7b7b7b;
+@fadeColor:#bbbbbb;
+@contentColor:#000;
+.search-bar{
+  display: flex;align-items: center;height: 49px;padding:0 15px;background-color:@blueColor;
+  .left-part{
+    display: flex;align-items: center;height: 100%;flex: 1.2;color: #fff;
+  }
+  .city-name{
+    font-size: 16px;
+  }
+  .icon-yw_topicon_Chevron{
+    font-size: 12px;position: relative;top:1px;margin-left:4px;
+  }
+  .search-btn{
+    flex: 5;display: flex;align-items: center;height: 100%;
+    border-radius: @borderRadius;height: 28px;background-color: #fff;
+    color: @contentColor;font-size: 13px;padding-left:10px;box-sizing: border-box;
+    .txt{
+      margin-left:6px;color: @fadeColor;
+    }
+  }
+  .icon-yw_icon_search{
+    color:@blueColor;position: relative;top:1px;
+  }
+}

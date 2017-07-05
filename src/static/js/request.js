@@ -38,7 +38,8 @@ var CONFIG={
   "reviseCardCount":"/api/card/cardUseSign",
   "checkIfCardUsed":"/api/card/useVerifyQuery",
   "cardUseSuccess":"/api/card/cardUseLog",
-  "afterSale":"/api/afterSale/mobileQuery"
+  "afterSale":"/api/afterSale/mobileQuery",
+  "userSign":"/api/wechat/sign"
   },
   'CurrentVersion':'developversion/',
   'pageSize':10,

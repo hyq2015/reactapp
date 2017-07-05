@@ -12,9 +12,9 @@ console.log(path.join(__dirname, '/src/index1.html'));
 console.log(path.posix.join('static', 'css/all.css'));
 module.exports={
   entry: {
-    app:path.join(__dirname, '/src/main'),
+    app:path.join(__dirname, '/src/index'),
     vendor: ['react','react-dom','react-router','react-mixin','reflux'],
-    vendor1:['fastclick','swiper']
+    vendor1:['fastclick']
   },
   output: {
     path: path.join(__dirname, '/dist/'),
@@ -63,6 +63,10 @@ module.exports={
         include: [].concat(
           [ path.join(__dirname, '/src/') ]
         )
+      },
+      {
+        test: /\.json$/,
+        loader: 'json'
       }
     ]
   },

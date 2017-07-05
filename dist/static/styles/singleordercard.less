@@ -1,0 +1,103 @@
+@lineColor:#E5E5E5;
+@bluecolor:#00c8fb;
+@strongColor:#7b7b7b;
+@fadeColor:#bbbbbb;
+@contentColor:#000;
+@graycolor:#f2f2f2;
+@redColor:#ff7e4f;
+.singleorder-card{
+    background-color: #fff;margin-top: 10px;
+    padding: 0 12px;font-size: 15px;
+    box-sizing: border-box;
+    .shopname-container{
+        padding:8px 0;display:flex;
+        .textoverflow{
+            text-overflow: ellipsis;overflow: hidden;white-space: nowrap;word-break: break-all;flex:1;
+            padding-right: 10px;box-sizing: border-box;
+        }
+    }
+    .order-cell{
+        position: relative;
+        &:after{
+            position: absolute;
+        content:" ";left: 0;right: -12px;bottom: 0;border-top: 1px solid @lineColor;
+        transform: scaleY(0.5);
+        }
+    }
+    .order-rightpart{
+        flex:1;
+        .orderright-top{
+            width:100%;display: flex;height:70px*0.85;
+        }
+    }
+    .checkcode{
+        padding:5px 10px;border-radius: 2px;font-size: 14px;
+        text-align: center;float: right;line-height: 1;
+    }
+    .active{
+        color: @redColor;border: 1px solid @redColor;
+    }
+    .inactive{
+        color: @fadeColor;border: 1px solid @fadeColor;
+    }
+    .blue-font{
+        color: @bluecolor;float: right;font-size: 14px;
+    }
+    .black-font{
+        color: @contentColor;float: right;font-size: 14px;
+    }
+    .order-mediacell{
+        display: flex;padding: 15px 0;
+    }
+    .product-scale{
+        font-size: 12px;color: @strongColor;
+    }
+    .order-img{
+        width: 70px;height: 70px*0.85;border-radius: 2px;margin-right: 10px;
+    }
+    .order-desc{
+        flex:3
+    }
+    .order-detail{
+        flex:1;text-align: right;line-height: 1.2;
+        color: @contentColor;font-size: 14px;
+    }
+    .product-name{
+        font-size: 15px;
+        line-height: 1.2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        white-space: normal;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        font-weight: 400;
+        width: auto;
+        text-overflow: ellipsis;
+        word-wrap: normal;
+        word-wrap: break-word;
+        word-break: break-all;
+    }
+    .order-totalprice{
+        font-size: 15px;text-align: right;color: @contentColor;
+        padding: 8px 0;
+    }
+    .total-pay{
+        color: @fadeColor;
+    }
+    .order-handlebar{
+        padding: 10px 0;overflow: hidden;text-align:right;
+        .order-btn{
+            padding:5px 10px;color: @strongColor;text-align: center;font-size: 14px;text-decoration: none;
+            border: 1px solid @fadeColor;border-radius: 2px;
+        }
+        .remindshop{
+            background-color: @redColor;color: #fff;border: none;
+        }
+        .pay-lefttime{
+            color: @bluecolor;font-size: 14px;
+        }
+    }
+    
+    
+}

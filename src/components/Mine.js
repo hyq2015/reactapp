@@ -30,12 +30,13 @@ export default class Mine extends Component{
         this._init=this._init.bind(this);
         this.goDetail=this.goDetail.bind(this);
     }
+    componentWillMount(){
+        this._init();
+    }
     componentWillUnmount() {
       if (_.isFunction(this.unsubscribe)){
         this.unsubscribe();
       }
-      this._init();
-        
     }
 
     componentDidMount(){

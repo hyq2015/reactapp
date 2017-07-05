@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import {render} from 'react-dom';
 import { Link} from 'react-router';
 import _ from 'lodash';
+import PUBLIC from '../static/js/public';
 import Searchbar from './Searchbar';
 import Swiper from './Swipper';
 import NewSwiper from 'swiper';
@@ -58,7 +59,7 @@ export default class Play extends Component{
 
       this._fetchData();
       this._fetchNearby();
-     
+      
     }
     componentDidUpdate(){
         if(_.has(this.state.indexData,'RANK')){

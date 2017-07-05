@@ -117,7 +117,19 @@ export default class Orderdetail extends Component{
         })
     }
     navToMap(){
-        console.log(this.state.originData.shop.lat,this.state.originData.shop.lng)
+        let shopLat=this.state.originData.shop.lat;
+        let shopLng=this.state.originData.shop.lng;
+        let shopName=this.state.originData.shop.name;
+        if(window.sessionStorage.WechatSupport=='ok'){
+            wx.openLocation({
+                latitude: shopLat, // 纬度，浮点数，范围为90 ~ -90
+                longitude: shopLng, // 经度，浮点数，范围为180 ~ -180。
+                scale: 16, // 地图缩放级别,整形值,范围从1~28。默认为最大
+                name: shopName, // 位置名
+                address: shopName // 地址详情说明
+            });
+        }
+        
     }
     render(){
         return(
